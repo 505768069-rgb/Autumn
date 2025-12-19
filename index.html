@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 编程知识闯关游戏</title>
+    <title>🍂 Autumn Study</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body class="bg-gray-900 min-h-screen">
-<!-- 动态视频背景 -->
+    <!-- 动态视频背景 -->
     <video class="video-background" autoplay muted loop playsinline id="bg-video-0">
         <source src="【哲风壁纸】五条悟-咒术回战.mp4" type="video/mp4">
     </video>
@@ -26,47 +29,54 @@
         <source src="【哲风壁纸】光点-动态-古风美女.mp4" type="video/mp4">
     </video>
     <div class="video-overlay" id="video-overlay"></div>
-    
+
     <!-- 全屏雨滴效果 -->
     <div class="fullscreen-rain" id="fullscreen-rain"></div>
-    
+
     <!-- 视频控制按钮 - 环形菜单 -->
     <div class="fixed bottom-28 left-24 z-50" id="wallpaper-menu">
         <!-- 主按钮 -->
-        <button onclick="toggleWallpaperMenu()" id="wallpaper-btn" 
-                class="relative bg-black/60 text-white w-14 h-14 rounded-full text-xl backdrop-blur hover:bg-black/80 transition-all duration-300 flex items-center justify-center shadow-lg border border-white/20">
+        <button onclick="toggleWallpaperMenu()" id="wallpaper-btn"
+            class="relative bg-black/60 text-white w-14 h-14 rounded-full text-xl backdrop-blur hover:bg-black/80 transition-all duration-300 flex items-center justify-center shadow-lg border border-white/20">
             🎬
         </button>
-        
+
         <!-- 环形选项 - 围绕中心按钮 -->
-        <div id="wallpaper-options" class="absolute pointer-events-none opacity-0 transition-all duration-500" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div id="wallpaper-options" class="absolute pointer-events-none opacity-0 transition-all duration-500"
+            style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
             <div class="wallpaper-option" data-index="0" style="--angle: 0deg; --delay: 0s;">
-                <button onclick="selectWallpaper(0)" class="w-11 h-11 rounded-full bg-purple-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
+                <button onclick="selectWallpaper(0)"
+                    class="w-11 h-11 rounded-full bg-purple-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
                     五条悟
                 </button>
             </div>
             <div class="wallpaper-option" data-index="1" style="--angle: 60deg; --delay: 0.05s;">
-                <button onclick="selectWallpaper(1)" class="w-11 h-11 rounded-full bg-blue-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
+                <button onclick="selectWallpaper(1)"
+                    class="w-11 h-11 rounded-full bg-blue-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
                     双马尾
                 </button>
             </div>
             <div class="wallpaper-option" data-index="2" style="--angle: 120deg; --delay: 0.1s;">
-                <button onclick="selectWallpaper(2)" class="w-11 h-11 rounded-full bg-pink-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
+                <button onclick="selectWallpaper(2)"
+                    class="w-11 h-11 rounded-full bg-pink-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
                     少女
                 </button>
             </div>
             <div class="wallpaper-option" data-index="3" style="--angle: 180deg; --delay: 0.15s;">
-                <button onclick="selectWallpaper(3)" class="w-11 h-11 rounded-full bg-orange-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
+                <button onclick="selectWallpaper(3)"
+                    class="w-11 h-11 rounded-full bg-orange-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
                     光影
                 </button>
             </div>
             <div class="wallpaper-option" data-index="4" style="--angle: 240deg; --delay: 0.2s;">
-                <button onclick="selectWallpaper(4)" class="w-11 h-11 rounded-full bg-red-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
+                <button onclick="selectWallpaper(4)"
+                    class="w-11 h-11 rounded-full bg-red-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
                     古风
                 </button>
             </div>
             <div class="wallpaper-option" data-index="5" style="--angle: 300deg; --delay: 0.25s;">
-                <button onclick="selectWallpaper(5)" class="w-11 h-11 rounded-full bg-gray-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
+                <button onclick="selectWallpaper(5)"
+                    class="w-11 h-11 rounded-full bg-gray-600/90 backdrop-blur text-white text-xs flex items-center justify-center hover:scale-110 transition-all border-2 border-white/30 shadow-lg">
                     关闭
                 </button>
             </div>
@@ -74,7 +84,22 @@
     </div>
     <div id="app"></div>
 
-    <!-- Load JavaScript -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- 应用脚本 -->
+    <script src="js/firebase-auth.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- 初始化 Firebase -->
+    <script>
+        // 页面加载完成后初始化 Firebase
+        window.addEventListener('DOMContentLoaded', () => {
+            initFirebase();
+        });
+    </script>
 </body>
+
 </html>
